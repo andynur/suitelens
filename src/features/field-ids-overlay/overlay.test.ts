@@ -15,6 +15,14 @@ describe('field ID badges', () => {
     expect(readFieldLabels(doc).find((l) => l.id === 'memo')?.label).toBe('Memo');
   });
 
+  it('keeps the field ID lowercase even inside uppercase NetSuite labels', () => {
+    const doc = loadFixturePage('salesorder-view.html');
+    showFieldIdBadges(doc);
+    const css = doc.getElementById('netsuite-loupe-field-id-style')?.textContent ?? '';
+    expect(css).toContain('text-transform:none!important');
+    expect(css).toContain('letter-spacing:normal!important');
+  });
+
   it('removes badges and the injected style', () => {
     const doc = loadFixturePage('salesorder-view.html');
     showFieldIdBadges(doc);

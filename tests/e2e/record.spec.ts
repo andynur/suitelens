@@ -37,6 +37,11 @@ test('Record tab: "Show field IDs on page" adds badges to form labels', async ({
 
   await panel.getByRole('switch', { name: 'Show field IDs on page' }).click();
   await expect(page.locator('#memo_fs_lbl [data-loupe="field-id"]')).toHaveText('memo');
+  // NetSuite labels are uppercase; the badge must still show the ID as scripts use it.
+  await expect(page.locator('#memo_fs_lbl [data-loupe="field-id"]')).toHaveCSS(
+    'text-transform',
+    'none',
+  );
   const labels = await page.locator('span[id$="_fs_lbl"]').count();
   const badges = await page.locator('[data-loupe="field-id"]').count();
   expect(badges / labels).toBeGreaterThanOrEqual(0.9);

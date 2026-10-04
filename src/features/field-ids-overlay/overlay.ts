@@ -10,10 +10,13 @@ const BADGE_ATTR = 'data-loupe';
 const BADGE_VALUE = 'field-id';
 const STYLE_ID = 'netsuite-loupe-field-id-style';
 
+// NetSuite labels use `text-transform: uppercase` (Redwood theme). Badges must show the
+// field ID exactly as scripts use it, so inherited text styles are reset with !important.
 const CSS = `
 [${BADGE_ATTR}="${BADGE_VALUE}"]{display:inline-block;margin-left:4px;padding:0 3px;border-radius:3px;
   font:500 9px/12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;vertical-align:baseline;
-  color:#1e3a8a;background:#dbeafe;border:1px solid #93c5fd;cursor:copy;white-space:nowrap}
+  color:#1e3a8a;background:#dbeafe;border:1px solid #93c5fd;cursor:copy;white-space:nowrap;
+  text-transform:none!important;letter-spacing:normal!important;font-variant:normal!important}
 [${BADGE_ATTR}="${BADGE_VALUE}"]:hover{background:#bfdbfe}`;
 
 export function showFieldIdBadges(doc: Document): number {
