@@ -1,0 +1,8 @@
+.output/
+.wxt/
+coverage/
+pnpm-lock.yaml
+fixtures/pages/
+playwright-report/
+test-results/
+**/*.md
