@@ -1,4 +1,5 @@
 import type { DomSignals } from '../context/detect';
+import { isSensitiveFieldId } from './sensitiveFields';
 
 /**
  * Readers for NetSuite form DOM. They take a `ParentNode` so they work on the live page
@@ -31,7 +32,7 @@ export function readFieldLabels(root: ParentNode): DomFieldLabel[] {
   const seen = new Set<string>();
   for (const el of Array.from(root.querySelectorAll(FIELD_LABEL_SELECTOR))) {
     const id = fieldIdFromLabelElement(el);
-    if (!id || seen.has(id)) continue;
+    if (!id || seen.has(id) || isSensitiveFieldId(id)) continue;
     seen.add(id);
     const wrapper = el.parentElement;
     const mandatory =

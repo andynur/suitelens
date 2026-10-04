@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <nsResponse>
   <record recordType="salesorder" id="1001" perm="4">
+    <_csrf>FAKE-CSRF-TOKEN-NOT-REAL</_csrf>
+    <_eml_nkey_>0000000~0~0~N</_eml_nkey_>
     <tranid>SO-FAKE-1001</tranid>
     <entity>2001</entity>
     <trandate>1/15/2026</trandate>

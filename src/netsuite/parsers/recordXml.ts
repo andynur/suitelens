@@ -1,4 +1,5 @@
 import { LoupeError } from '../errors';
+import { isSensitiveFieldId } from './sensitiveFields';
 
 /**
  * Parser for the record XML NetSuite returns when `xml=T` is added to a record URL.
@@ -68,7 +69,7 @@ export function parseRecordXml(xml: string, parse: XmlParse = defaultParse): Par
       if (sublist) result.sublists.push(sublist);
       continue;
     }
-    if (!FIELD_ID_RE.test(tag) || seen.has(tag)) continue;
+    if (!FIELD_ID_RE.test(tag) || seen.has(tag) || isSensitiveFieldId(tag)) continue;
     seen.add(tag);
     result.fields.push({ id: tag, value: truncate(child.textContent ?? '') });
   }
@@ -83,7 +84,7 @@ function parseMachine(machine: Element): ParsedXmlSublist | undefined {
   const seen = new Set<string>();
   const add = (id: string) => {
     const lower = id.toLowerCase();
-    if (FIELD_ID_RE.test(lower) && !seen.has(lower)) {
+    if (FIELD_ID_RE.test(lower) && !seen.has(lower) && !isSensitiveFieldId(lower)) {
       seen.add(lower);
       fieldIds.push(lower);
     }

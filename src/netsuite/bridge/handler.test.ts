@@ -110,6 +110,25 @@ describe('createBridgeHandler', () => {
     });
   });
 
+  it('getCurrentRecordFields never reads token fields', async () => {
+    const reads: string[] = [];
+    const spy = {
+      ...record,
+      getValue: ({ fieldId }: { fieldId: string }) => (reads.push(fieldId), 'v'),
+    };
+    const handle = createBridgeHandler({
+      globals: { require: fakeRequire({ 'N/currentRecord': { get: () => spy } }) },
+    });
+    const res = await handle({
+      op: 'getCurrentRecordFields',
+      fieldIds: ['_csrf', 'memo'],
+      sublists: [{ id: 'item', fieldIds: ['_eml_nkey_'] }],
+    });
+    expect(reads).toEqual(['memo']);
+    expect(JSON.stringify(res)).not.toContain('_csrf');
+    expect(JSON.stringify(res)).not.toContain('_eml_nkey_');
+  });
+
   it('reports missing loader, missing module, broken get() and timeouts', async () => {
     const op = { op: 'getCurrentRecordFields' as const, fieldIds: [], sublists: [] };
     expect(await createBridgeHandler({ globals: {} })(op)).toMatchObject({

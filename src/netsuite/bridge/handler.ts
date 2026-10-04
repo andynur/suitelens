@@ -1,5 +1,6 @@
 import { classifySuiteQLError, LoupeError, toLoupeError } from '../errors';
 import type { BridgeField, CurrentRecordFields } from '../parsers/mergeFields';
+import { isSensitiveFieldId } from '../parsers/sensitiveFields';
 import { AUTOMATION_QUERIES } from '../queries/automation';
 import { resolveQuerySql } from '../queries/runner';
 import type { BridgeOp, Result } from './protocol';
@@ -131,6 +132,8 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
       if (id) result.recordId = id;
 
       for (const fieldId of op.fieldIds) {
+        // Never read token fields, even when asked (see sensitiveFields.ts).
+        if (isSensitiveFieldId(fieldId)) continue;
         const field = safe(() => rec.getField?.({ fieldId }));
         const info = describeField(fieldId, field);
         const value = stringifyValue(safe(() => rec.getValue?.({ fieldId })));
@@ -144,6 +147,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
         const lineCount = Number(safe(() => rec.getLineCount?.({ sublistId: sublist.id })) ?? 0);
         const fields: BridgeField[] = [];
         for (const fieldId of sublist.fieldIds) {
+          if (isSensitiveFieldId(fieldId)) continue;
           const field =
             lineCount > 0
               ? safe(() => rec.getSublistField?.({ sublistId: sublist.id, fieldId, line: 0 }))

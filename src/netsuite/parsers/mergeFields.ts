@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { FieldSource, RecordFieldInfo, SublistInfo } from '../types';
 import type { DomFieldLabel } from './formDom';
 import type { ParsedRecordXml } from './recordXml';
+import { isSensitiveFieldId } from './sensitiveFields';
 
 /** Field metadata read through `N/currentRecord` by the bridge (edit/create mode). */
 export const BridgeFieldSchema = z.object({
@@ -65,6 +66,7 @@ export function mergeFieldSources(input: MergeInput): MergeOutput {
 
   const order: string[] = [];
   const byId = new Map<string, RecordFieldInfo>();
+  // Defence in depth: the parsers already drop these, the bridge input is checked here.
   const get = (id: string): RecordFieldInfo => {
     let field = byId.get(id);
     if (!field) {
@@ -76,17 +78,20 @@ export function mergeFieldSources(input: MergeInput): MergeOutput {
   };
 
   for (const f of input.xml?.fields ?? []) {
+    if (isSensitiveFieldId(f.id)) continue;
     const field = get(f.id);
     field.value = f.value;
     addSource(field, 'xml');
   }
   for (const l of input.domLabels ?? []) {
+    if (isSensitiveFieldId(l.id)) continue;
     const field = get(l.id);
     if (l.label) field.label = l.label;
     if (l.mandatory) field.mandatory = true;
     addSource(field, 'dom');
   }
   for (const b of input.currentRecord?.fields ?? []) {
+    if (isSensitiveFieldId(b.id)) continue;
     applyBridgeField(get(b.id), b);
   }
 
@@ -103,13 +108,16 @@ function mergeSublists(input: MergeInput): SublistInfo[] {
     out.set(s.id, {
       id: s.id,
       lineCount: s.lineCount,
-      fields: s.fieldIds.map((id) => ({ id, custom: isCustomFieldId(id), sources: ['xml'] })),
+      fields: s.fieldIds
+        .filter((id) => !isSensitiveFieldId(id))
+        .map((id) => ({ id, custom: isCustomFieldId(id), sources: ['xml'] })),
     });
   }
   for (const s of input.currentRecord?.sublists ?? []) {
     const existing = out.get(s.id) ?? { id: s.id, lineCount: s.lineCount, fields: [] };
     existing.lineCount = Math.max(existing.lineCount, s.lineCount);
     for (const b of s.fields) {
+      if (isSensitiveFieldId(b.id)) continue;
       let field = existing.fields.find((f) => f.id === b.id);
       if (!field) {
         field = { id: b.id, custom: isCustomFieldId(b.id), sources: [] };

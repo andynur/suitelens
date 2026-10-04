@@ -23,6 +23,21 @@ describe('parseRecordXml', () => {
     expect(parsed.sublists.map((s) => s.id)).toEqual(['item', 'salesteam']);
   });
 
+  it('drops session token fields such as _csrf and _eml_nkey_', () => {
+    const parsed = parseRecordXml(readFixture('records/salesorder-1001.xml'));
+    const ids = parsed.fields.map((f) => f.id);
+    expect(ids).not.toContain('_csrf');
+    expect(ids).not.toContain('_eml_nkey_');
+    expect(JSON.stringify(parsed)).not.toContain('FAKE-CSRF-TOKEN');
+  });
+
+  it('drops token columns in sublists', () => {
+    const xml = `<nsResponse><record recordtype="x" id="1">
+      <machine name="lines" fields="_csrf,a"><line><a>1</a><_tok>2</_tok></line></machine>
+      </record></nsResponse>`;
+    expect(parseRecordXml(xml).sublists[0]?.fieldIds).toEqual(['a']);
+  });
+
   it('parses the custom record fixture', () => {
     const parsed = parseRecordXml(readFixture('records/customrecord_loupe_demo-5.xml'));
     expect(parsed.recordType).toBe('customrecord_loupe_demo');

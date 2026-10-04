@@ -83,6 +83,25 @@ describe('mergeFieldSources', () => {
     expect(out.sublists.map((s) => s.id)).toEqual(['item', 'extra']);
   });
 
+  it('never passes token fields through, whatever the source', () => {
+    const out = mergeFieldSources({
+      xml: {
+        fields: [{ id: '_csrf', value: 'x' }],
+        sublists: [{ id: 's', lineCount: 1, fieldIds: ['_k', 'a'] }],
+      },
+      domLabels: [{ id: '_eml_nkey_', label: 'k', mandatory: false }],
+      currentRecord: {
+        fields: [
+          { id: 'sessiontoken', value: 'x' },
+          { id: 'memo', value: 'm' },
+        ],
+        sublists: [{ id: 's', lineCount: 1, fields: [{ id: '_t' }] }],
+      },
+    });
+    expect(out.fields.map((f) => f.id)).toEqual(['memo']);
+    expect(out.sublists[0]?.fields.map((f) => f.id)).toEqual(['a']);
+  });
+
   it('handles empty input', () => {
     expect(mergeFieldSources({})).toEqual({ fields: [], sublists: [], sources: [] });
     expect(mergeFieldSources({ domLabels: [] }).sources).toEqual([]);
