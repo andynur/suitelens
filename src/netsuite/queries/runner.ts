@@ -1,4 +1,4 @@
-import { LoupeError, toLoupeError } from '../errors';
+import { SuiteLensError, toSuiteLensError } from '../errors';
 import type { AutomationResult } from '../types';
 import {
   mapScriptDeploymentRows,
@@ -34,17 +34,17 @@ export async function runWithFallback(
   def: QueryDefinition,
   run: RunQueryVariant,
 ): Promise<{ rows: unknown[]; variantId: string; reduced: boolean }> {
-  let lastError: LoupeError | undefined;
+  let lastError: SuiteLensError | undefined;
   for (const [index, variant] of def.variants.entries()) {
     try {
       const rows = await run(def.id, variant.id);
       return { rows, variantId: variant.id, reduced: index > 0 };
     } catch (err) {
-      lastError = toLoupeError(err);
+      lastError = toSuiteLensError(err);
       if (NO_FALLBACK.has(lastError.code)) throw lastError;
     }
   }
-  throw lastError ?? new LoupeError('QUERY_FAILED', `Query ${def.id} has no variants`);
+  throw lastError ?? new SuiteLensError('QUERY_FAILED', `Query ${def.id} has no variants`);
 }
 
 export async function loadAutomations(
@@ -59,7 +59,7 @@ export async function loadAutomations(
   ]);
 
   if (scripts.status === 'rejected' && workflows.status === 'rejected') {
-    throw toLoupeError(scripts.reason);
+    throw toSuiteLensError(scripts.reason);
   }
 
   const warnings: string[] = [];

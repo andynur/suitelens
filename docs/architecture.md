@@ -1,4 +1,4 @@
-# Technical Architecture — Loupe for NetSuite
+# Technical Architecture — SuiteLens for NetSuite
 
 Status: draft v1 · Owner: maintainer · Applies from v0.1
 
@@ -57,7 +57,7 @@ type NetSuiteAdapter = {
 
 - `LiveAdapter`: the real implementation through the content script and bridge.
 - `FixtureAdapter`: reads `fixtures/**` and simulates latency and errors.
-- Adapter selection: dev and fixture builds (`__LOUPE_FIXTURES__`) plus a toggle in Settings
+- Adapter selection: dev and fixture builds (`__SUITELENS_FIXTURES__`) plus a toggle in Settings
   (dev builds only). Production builds contain no fixture code.
 - `getPageContext()` returns `null` when the tab is not a NetSuite page (ADR 0002).
 
@@ -90,7 +90,7 @@ indicators (VERIFY); otherwise production. Users can override per account.
 | --- | --- | --- | --- |
 | Global settings | `chrome.storage.local` | `settings` | permanent |
 | Per-account settings (colors, env override) | `chrome.storage.local` | `acct:<id>:settings` | permanent |
-| Metadata cache (fields, tables, scripts) | IndexedDB `netsuite-loupe` (opened by the side panel, ADR 0002) | `[accountId, kind, key]` | 24 h default TTL, manual refresh |
+| Metadata cache (fields, tables, scripts) | IndexedDB `netsuite-suitelens` (opened by the side panel, ADR 0002) | `[accountId, kind, key]` | 24 h default TTL, manual refresh |
 | Quick Go-to history | `chrome.storage.local` | `acct:<id>:goto` | last 10 |
 | SuiteQL history and snippets | IndexedDB | `[accountId, 'snippet', id]` | until deleted |
 | AI API key (BYOK) | `chrome.storage.local` encrypted (AES-GCM, key derived from a passphrase) or `chrome.storage.session` when the user picks "don't remember" | `secret:ai` | user's choice |
@@ -109,7 +109,7 @@ indicators (VERIFY); otherwise production. Users can override per account.
   configurable, never hardcoded. Always show a preview of the context that will be sent.
 - **AI Context export:** generates context files (Markdown/JSON) with record schemas, custom fields
   and script lists for Claude Code, Codex or Cline.
-- **Local MCP bridge (v1.0):** a separate package `packages/mcp-bridge` (npm: `netsuite-loupe-mcp`;
+- **Local MCP bridge (v1.0):** a separate package `packages/mcp-bridge` (npm: `netsuite-suitelens-mcp`;
   Node, TypeScript, official MCP SDK) that talks to the extension through **Native Messaging**.
   Exposed tools are read-only, allow-listed, and require approval in the extension per session.
 - **Pro/licensing (v1.1):** a `licensing` module with a swappable provider
@@ -123,7 +123,7 @@ indicators (VERIFY); otherwise production. Users can override per account.
 /                           # pnpm workspace
 ├── apps/extension          # WXT app
 ├── packages/core           # types, Zod schemas, queries, parsers (no browser APIs)
-├── packages/mcp-bridge     # v1.0 – published as netsuite-loupe-mcp
+├── packages/mcp-bridge     # v1.0 – published as netsuite-suitelens-mcp
 └── packages/suitescript    # v1.2 – Bridge RESTlet (SDF project)
 ```
 

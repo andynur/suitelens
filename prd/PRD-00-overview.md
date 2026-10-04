@@ -1,4 +1,4 @@
-# PRD-00 — Product Overview: Loupe for NetSuite
+# PRD-00 — Product Overview: SuiteLens for NetSuite
 
 | | |
 | --- | --- |
@@ -6,11 +6,11 @@
 | Date | October 4, 2026 |
 | Owner | Maintainer (Product + Engineering) |
 | Scope | Vision, personas, principles, business model, cross-version metrics |
-| Slug | `netsuite-loupe` |
+| Slug | `netsuite-suitelens` |
 
 ## 1. Summary
 
-Loupe is a free, open-source developer workbench for NetSuite, delivered as a Chrome extension.
+SuiteLens is a free, open-source developer workbench for NetSuite, delivered as a Chrome extension.
 Its focus is not just "seeing what is inside a record" but **change & context**: understanding everything
 a record is connected to, what breaks when something changes, how to move changes between environments,
 and giving AI the right account-specific context.

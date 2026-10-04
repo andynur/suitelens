@@ -1,6 +1,6 @@
 # Security Policy
 
-Loupe for NetSuite runs inside an ERP that holds companies' financial data. We treat security
+SuiteLens for NetSuite runs inside an ERP that holds companies' financial data. We treat security
 reports as the highest priority.
 
 ## Reporting a vulnerability

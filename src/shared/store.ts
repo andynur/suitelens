@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { NetSuiteAdapter } from '../netsuite/adapter/NetSuiteAdapter';
-import { toLoupeError, type LoupeErrorShape } from '../netsuite/errors';
+import { toSuiteLensError, type SuiteLensErrorShape } from '../netsuite/errors';
 import type { PageContext } from '../netsuite/types';
 import {
   DEFAULT_SETTINGS,
@@ -21,7 +21,7 @@ type AppState = {
   adapter?: NetSuiteAdapter;
   context: PageContext | null;
   contextStatus: ContextStatus;
-  contextError?: LoupeErrorShape;
+  contextError?: SuiteLensErrorShape;
   activeTab: PanelTab;
   gotoOpen: boolean;
   toasts: Toast[];
@@ -71,7 +71,7 @@ export const useAppStore = create<AppState>()((set, get) => ({
       set({ context, contextStatus: 'ready', contextError: undefined });
     } catch (err) {
       if (request !== contextRequest) return;
-      set({ context: null, contextStatus: 'error', contextError: toLoupeError(err).toShape() });
+      set({ context: null, contextStatus: 'error', contextError: toSuiteLensError(err).toShape() });
     }
   },
 

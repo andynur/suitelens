@@ -9,7 +9,7 @@
 
 ## 1. Goal
 
-Make Loupe the standard way of working for implementation teams (small and mid-sized partners and in-house teams),
+Make SuiteLens the standard way of working for implementation teams (small and mid-sized partners and in-house teams),
 and open a partner channel for services and subcontracting.
 
 ## 2. Functional requirements

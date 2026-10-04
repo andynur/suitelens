@@ -1,5 +1,5 @@
 import type { NetSuiteAdapter } from '../../netsuite/adapter/NetSuiteAdapter';
-import { LoupeError } from '../../netsuite/errors';
+import { SuiteLensError } from '../../netsuite/errors';
 import { AutomationResultSchema, type AutomationResult } from '../../netsuite/types';
 import type { MetadataCache } from '../../shared/storage/cache';
 
@@ -32,7 +32,7 @@ export async function loadAutomationsCached(
   }
   const result = await adapter.getAutomations(recordType);
   if (result.accountId !== accountId) {
-    throw new LoupeError('ACCOUNT_MISMATCH', 'Account changed while loading.');
+    throw new SuiteLensError('ACCOUNT_MISMATCH', 'Account changed while loading.');
   }
   await cache.set(accountId, 'automations', key, result).catch(() => undefined);
   return { result, fromCache: false, storedAt: result.fetchedAt };

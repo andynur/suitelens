@@ -99,7 +99,7 @@ export function resolveEnvironment(
   return { environment, color: account.color ?? settings.envColors[environment] };
 }
 
-/** Subscribes to changes of any Loupe key in storage.local. Returns an unsubscribe function. */
+/** Subscribes to changes of any SuiteLens key in storage.local. Returns an unsubscribe function. */
 export function onStorageChange(callback: (keys: string[]) => void): () => void {
   const listener = (changes: Record<string, unknown>, area: string) => {
     if (area === 'local') callback(Object.keys(changes));

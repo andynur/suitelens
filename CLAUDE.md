@@ -5,7 +5,7 @@ These rules apply to every change in this repository. Also read by Codex/Cline a
 
 ## Product
 
-Loupe for NetSuite — a free, open-source MV3 Chrome extension that gives NetSuite developers,
+SuiteLens for NetSuite — a free, open-source MV3 Chrome extension that gives NetSuite developers,
 admins and consultants context about records, automations, data and change impact.
 Source of truth for scope: `prd/`. Source of truth for architecture: `docs/architecture.md`.
 

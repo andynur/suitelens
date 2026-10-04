@@ -7,7 +7,7 @@ import { isValidAccountId } from '../../netsuite/context/environment';
  * their data never mixes.
  */
 
-export const CACHE_DB_NAME = 'netsuite-loupe';
+export const CACHE_DB_NAME = 'netsuite-suitelens';
 export const DEFAULT_TTL_MS = 24 * 60 * 60 * 1000;
 
 export type CacheKind = 'automations';
@@ -21,7 +21,7 @@ type CacheEntry = {
   ttlMs: number;
 };
 
-interface LoupeDB extends DBSchema {
+interface SuiteLensDB extends DBSchema {
   cache: {
     key: [string, string, string];
     value: CacheEntry;
@@ -42,10 +42,10 @@ export function createMetadataCache(
   options: { dbName?: string; now?: () => number } = {},
 ): MetadataCache {
   const { dbName = CACHE_DB_NAME, now = Date.now } = options;
-  let dbPromise: Promise<IDBPDatabase<LoupeDB>> | undefined;
+  let dbPromise: Promise<IDBPDatabase<SuiteLensDB>> | undefined;
 
   const db = () =>
-    (dbPromise ??= openDB<LoupeDB>(dbName, 1, {
+    (dbPromise ??= openDB<SuiteLensDB>(dbName, 1, {
       upgrade(database) {
         const store = database.createObjectStore('cache', {
           keyPath: ['accountId', 'kind', 'key'],

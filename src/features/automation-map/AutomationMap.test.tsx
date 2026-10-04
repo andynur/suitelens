@@ -19,7 +19,7 @@ describe('AutomationMap', () => {
     ]);
     expect(screen.getByText(/Order is approximate/)).toBeInTheDocument();
     const ue = within(groups[1]!);
-    expect(ue.getByText('customdeploy_loupe_so_ue')).toBeInTheDocument();
+    expect(ue.getByText('customdeploy_suitelens_so_ue')).toBeInTheDocument();
     expect(ue.getByText('USERINTERFACE, WEBSERVICES, CSVIMPORT')).toBeInTheDocument();
     expect(ue.getByText('Not deployed')).toBeInTheDocument();
     // A deployment set to all contexts reads "All contexts", not a list of 36 names.

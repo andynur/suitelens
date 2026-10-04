@@ -93,25 +93,25 @@
       "type": "select"
     },
     {
-      "id": "custbody_loupe_priority",
-      "label": "Loupe Priority",
+      "id": "custbody_suitelens_priority",
+      "label": "SuiteLens Priority",
       "type": "select",
       "mandatory": true,
       "text": "Normal"
     },
     {
-      "id": "custbody_loupe_approved",
-      "label": "Loupe Approved",
+      "id": "custbody_suitelens_approved",
+      "label": "SuiteLens Approved",
       "type": "checkbox"
     },
     {
-      "id": "custbody_loupe_notes",
-      "label": "Loupe Internal Notes",
+      "id": "custbody_suitelens_notes",
+      "label": "SuiteLens Internal Notes",
       "type": "textarea"
     },
     {
-      "id": "custbody_loupe_hidden_key",
-      "label": "Loupe Hidden Key",
+      "id": "custbody_suitelens_hidden_key",
+      "label": "SuiteLens Hidden Key",
       "type": "text",
       "hidden": true,
       "value": "HK-1"
@@ -150,8 +150,8 @@
           "type": "currency"
         },
         {
-          "id": "custcol_loupe_batch",
-          "label": "Loupe Batch",
+          "id": "custcol_suitelens_batch",
+          "label": "SuiteLens Batch",
           "type": "text"
         }
       ]

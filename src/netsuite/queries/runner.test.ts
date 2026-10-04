@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { readFixture } from '../../test/fixtures';
-import { LoupeError } from '../errors';
+import { SuiteLensError } from '../errors';
 import { AUTOMATION_QUERIES, SCRIPT_DEPLOYMENTS_QUERY } from './automation';
 import {
   AUTOMATION_WARNINGS,
@@ -16,7 +16,7 @@ const fixtureRun: RunQueryVariant = async (queryId, variantId) =>
 describe('runWithFallback', () => {
   it('returns the first variant that works', async () => {
     const run = vi.fn<RunQueryVariant>(async (_q, v) => {
-      if (v === 'full') throw new LoupeError('TABLE_UNAVAILABLE', 'bad column');
+      if (v === 'full') throw new SuiteLensError('TABLE_UNAVAILABLE', 'bad column');
       return [{ a: 1 }];
     });
     await expect(runWithFallback(SCRIPT_DEPLOYMENTS_QUERY, run)).resolves.toEqual({
@@ -29,7 +29,7 @@ describe('runWithFallback', () => {
 
   it('does not fall back on permission errors', async () => {
     const run = vi.fn<RunQueryVariant>(async () => {
-      throw new LoupeError('PERMISSION_DENIED', 'no');
+      throw new SuiteLensError('PERMISSION_DENIED', 'no');
     });
     await expect(runWithFallback(SCRIPT_DEPLOYMENTS_QUERY, run)).rejects.toMatchObject({
       code: 'PERMISSION_DENIED',
@@ -74,8 +74,8 @@ describe('loadAutomations', () => {
 
   it('reports partial data when one query fails or uses reduced columns', async () => {
     const result = await loadAutomations('1', 'salesorder', async (q, v) => {
-      if (q === 'automation.workflows') throw new LoupeError('PERMISSION_DENIED', 'no');
-      if (v === 'full') throw new LoupeError('TABLE_UNAVAILABLE', 'x');
+      if (q === 'automation.workflows') throw new SuiteLensError('PERMISSION_DENIED', 'no');
+      if (v === 'full') throw new SuiteLensError('TABLE_UNAVAILABLE', 'x');
       return fixtureRun(q, v);
     });
     expect(result.complete).toBe(false);
@@ -88,8 +88,8 @@ describe('loadAutomations', () => {
 
   it('reports scripts unavailable and reduced workflow columns', async () => {
     const result = await loadAutomations('1', 'salesorder', async (q, v) => {
-      if (q === 'automation.scriptDeployments') throw new LoupeError('PERMISSION_DENIED', 'no');
-      if (v === 'full') throw new LoupeError('TABLE_UNAVAILABLE', 'x');
+      if (q === 'automation.scriptDeployments') throw new SuiteLensError('PERMISSION_DENIED', 'no');
+      if (v === 'full') throw new SuiteLensError('TABLE_UNAVAILABLE', 'x');
       return fixtureRun(q, v);
     });
     expect(result.warnings).toEqual([
@@ -103,7 +103,7 @@ describe('loadAutomations', () => {
   it('throws when both queries fail', async () => {
     await expect(
       loadAutomations('1', 'salesorder', async () => {
-        throw new LoupeError('PERMISSION_DENIED', 'no');
+        throw new SuiteLensError('PERMISSION_DENIED', 'no');
       }),
     ).rejects.toMatchObject({ code: 'PERMISSION_DENIED' });
   });

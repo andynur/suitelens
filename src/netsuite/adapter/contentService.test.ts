@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { loadFixturePage, readFixture, SO_URL } from '../../test/fixtures';
 import type { BridgeClient } from '../bridge/transport';
-import { LoupeError } from '../errors';
+import { SuiteLensError } from '../errors';
 import { createContentService, fetchSameOriginText, RECORD_WARNINGS } from './contentService';
 
 const currentRecord = JSON.parse(readFixture('current-record/salesorder-1001.json')) as unknown;
@@ -12,7 +12,7 @@ function fakeBridge(
   return {
     call: vi.fn(async (payload: { op: string }) => {
       const fn = impl[payload.op];
-      if (!fn) throw new LoupeError('MODULE_UNAVAILABLE', 'n/a');
+      if (!fn) throw new SuiteLensError('MODULE_UNAVAILABLE', 'n/a');
       return fn(payload);
     }) as unknown as BridgeClient['call'],
     dispose: vi.fn(),
@@ -55,7 +55,7 @@ describe('contentService.getPageContext', () => {
       'customrecord-view.html',
     );
     expect(await custom.svc.getPageContext()).toMatchObject({
-      recordType: 'customrecord_loupe_demo',
+      recordType: 'customrecord_suitelens_demo',
       recordTypeSource: 'dom',
     });
   });

@@ -9,7 +9,7 @@ import { createNonce } from '../netsuite/bridge/nonce';
 import { ContentMessageSchema, type ContextChangedMessage } from '../netsuite/bridge/protocol';
 import { createBridgeClient, type BridgeClient } from '../netsuite/bridge/transport';
 import { detectFromUrl } from '../netsuite/context/detect';
-import { LoupeError } from '../netsuite/errors';
+import { SuiteLensError } from '../netsuite/errors';
 import { createLogger } from '../shared/logger';
 import {
   getAccountSettings,
@@ -33,7 +33,7 @@ export default defineContentScript({
 
   main(ctx) {
     // Guard against double execution when the background re-injects this script.
-    const flag = '__netsuiteLoupeContent';
+    const flag = '__netsuiteSuiteLensContent';
     const marker = document.documentElement;
     if (marker.dataset[flag]) return;
     marker.dataset[flag] = '1';
@@ -103,7 +103,7 @@ export default defineContentScript({
     const publish = async () => {
       try {
         const context = await service.getPageContext();
-        const message: ContextChangedMessage = { type: 'loupe:context-changed', context };
+        const message: ContextChangedMessage = { type: 'suitelens:context-changed', context };
         await browser.runtime.sendMessage(message);
       } catch {
         // No side panel open: nothing to notify.
@@ -127,18 +127,18 @@ async function connectBridge(): Promise<BridgeClient> {
   try {
     await injectScript('/bridge.js', {
       modifyScript: (script) => {
-        script.dataset.loupeNonce = nonce;
+        script.dataset.suitelensNonce = nonce;
       },
     });
   } catch (err) {
-    throw new LoupeError('BRIDGE_UNAVAILABLE', 'Could not load the page bridge.', String(err));
+    throw new SuiteLensError('BRIDGE_UNAVAILABLE', 'Could not load the page bridge.', String(err));
   }
   const client = createBridgeClient(window, nonce);
   try {
     await client.call({ op: 'ping' }, 5000);
   } catch (err) {
     client.dispose();
-    throw new LoupeError('BRIDGE_UNAVAILABLE', 'The page bridge did not answer.', String(err));
+    throw new SuiteLensError('BRIDGE_UNAVAILABLE', 'The page bridge did not answer.', String(err));
   }
   return client;
 }

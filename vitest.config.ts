@@ -4,8 +4,8 @@ import { WxtVitest } from 'wxt/testing/vitest-plugin';
 export default defineConfig({
   plugins: [WxtVitest()],
   define: {
-    __LOUPE_FIXTURES__: 'true',
-    __LOUPE_DEFAULT_ADAPTER__: JSON.stringify('fixture'),
+    __SUITELENS_FIXTURES__: 'true',
+    __SUITELENS_DEFAULT_ADAPTER__: JSON.stringify('fixture'),
   },
   test: {
     environment: 'jsdom',

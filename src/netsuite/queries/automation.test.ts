@@ -30,9 +30,9 @@ describe('matchesRecordType', () => {
     expect(matchesRecordType('salesorder', 'SALESORDER', undefined)).toBe(true);
     expect(matchesRecordType('salesorder', undefined, 'Sales Order')).toBe(true);
     expect(matchesRecordType('salesorder', 'INVOICE, SALESORDER', undefined)).toBe(true);
-    expect(matchesRecordType('customrecord_loupe_demo', 'CUSTOMRECORD_LOUPE_DEMO', undefined)).toBe(
-      true,
-    );
+    expect(
+      matchesRecordType('customrecord_suitelens_demo', 'CUSTOMRECORD_SUITELENS_DEMO', undefined),
+    ).toBe(true);
     expect(matchesRecordType('salesorder', 'INVOICE', 'Invoice')).toBe(false);
     expect(matchesRecordType('salesorder', undefined, undefined)).toBe(false);
   });
@@ -42,22 +42,22 @@ describe('mapScriptDeploymentRows', () => {
   it('maps the full variant for sales orders', () => {
     const items = mapScriptDeploymentRows(rows('automation.scriptDeployments.full'), 'salesorder');
     expect(items.map((i) => i.scriptId)).toEqual([
-      'customscript_loupe_so_ue',
-      'customscript_loupe_so_cs',
-      'customscript_loupe_tax_ue',
-      'customscript_loupe_wfa_notify',
+      'customscript_suitelens_so_ue',
+      'customscript_suitelens_so_cs',
+      'customscript_suitelens_tax_ue',
+      'customscript_suitelens_wfa_notify',
     ]);
     expect(items[0]).toEqual({
       kind: 'user_event',
-      name: 'Loupe SO Validation UE',
+      name: 'SuiteLens SO Validation UE',
       internalId: '101',
-      scriptId: 'customscript_loupe_so_ue',
+      scriptId: 'customscript_suitelens_so_ue',
       deploymentInternalId: '201',
-      deploymentId: 'customdeploy_loupe_so_ue',
+      deploymentId: 'customdeploy_suitelens_so_ue',
       status: 'RELEASED',
       logLevel: 'DEBUG',
       scriptFileId: '9001',
-      scriptFileName: 'loupe_so_ue.js',
+      scriptFileName: 'suitelens_so_ue.js',
       isDeployed: true,
       isInactive: false,
       executionContexts: ['USERINTERFACE', 'WEBSERVICES', 'CSVIMPORT'],
@@ -119,9 +119,9 @@ describe('mapWorkflowRows', () => {
     expect(items.map((i) => i.internalId)).toEqual(['301', '302', '304']);
     expect(items[0]).toEqual({
       kind: 'workflow',
-      name: 'Loupe SO Approval',
+      name: 'SuiteLens SO Approval',
       internalId: '301',
-      scriptId: 'customworkflow_loupe_so_approval',
+      scriptId: 'customworkflow_suitelens_so_approval',
       status: 'RELEASED',
       trigger: 'BEFORESUBMIT',
       isInactive: false,

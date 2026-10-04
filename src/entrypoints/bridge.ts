@@ -11,8 +11,8 @@ import { installBridgeListener } from '../netsuite/bridge/transport';
 
 // document.currentScript is only set while this script is being evaluated.
 const scriptEl = document.currentScript;
-const nonce = scriptEl?.dataset.loupeNonce;
-scriptEl?.removeAttribute('data-loupe-nonce');
+const nonce = scriptEl?.dataset.suitelensNonce;
+scriptEl?.removeAttribute('data-suitelens-nonce');
 
 export default defineUnlistedScript(() => {
   if (!nonce || !/^[a-f0-9]{32}$/.test(nonce)) return;

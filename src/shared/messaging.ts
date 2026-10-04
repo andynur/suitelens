@@ -8,12 +8,12 @@ export async function sendToTabViaBackground(
   tabId: number,
   request: ContentRequest,
 ): Promise<unknown> {
-  const message: ForwardMessage = { type: 'loupe:forward', tabId, request };
+  const message: ForwardMessage = { type: 'suitelens:forward', tabId, request };
   return browser.runtime.sendMessage(message);
 }
 
 /**
- * The tab Loupe works against: the active tab of the side panel's window. When the side
+ * The tab SuiteLens works against: the active tab of the side panel's window. When the side
  * panel page itself is open as a tab (development/E2E), falls back to the most recently
  * used NetSuite tab. (`tabs.getCurrent()` is only defined for pages shown in a tab.)
  */

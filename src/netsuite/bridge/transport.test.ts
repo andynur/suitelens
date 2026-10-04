@@ -15,7 +15,7 @@ describe('bridge transport', () => {
     client.dispose();
   });
 
-  it('propagates bridge errors as LoupeError', async () => {
+  it('propagates bridge errors as SuiteLensError', async () => {
     const { win } = createFakeWindow();
     installBridgeListener(win, NONCE, async () => ({
       ok: false,

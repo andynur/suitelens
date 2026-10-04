@@ -55,13 +55,13 @@
       "text": "CUSTOMER-Closed Won"
     },
     {
-      "id": "custentity_loupe_segment",
-      "label": "Loupe Segment",
+      "id": "custentity_suitelens_segment",
+      "label": "SuiteLens Segment",
       "type": "text"
     },
     {
-      "id": "custentity_loupe_vip",
-      "label": "Loupe VIP",
+      "id": "custentity_suitelens_vip",
+      "label": "SuiteLens VIP",
       "type": "checkbox"
     }
   ],

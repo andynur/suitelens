@@ -33,7 +33,7 @@ export type CurrentRecordFields = z.infer<typeof CurrentRecordFieldsSchema>;
 
 /**
  * Custom field prefixes. `custpage` fields are added by scripts at runtime.
- * VERIFY: list is complete for the field types Loupe shows.
+ * VERIFY: list is complete for the field types SuiteLens shows.
  */
 const CUSTOM_PREFIX_RE =
   /^(custbody|custcol|custentity|custitem|custevent|custrecord|custitemnumber|custpage)[_\d]/;

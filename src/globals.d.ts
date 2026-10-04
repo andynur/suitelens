@@ -1,3 +1,3 @@
 /** Build-time constants defined in wxt.config.ts. */
-declare const __LOUPE_FIXTURES__: boolean;
-declare const __LOUPE_DEFAULT_ADAPTER__: 'live' | 'fixture';
+declare const __SUITELENS_FIXTURES__: boolean;
+declare const __SUITELENS_DEFAULT_ADAPTER__: 'live' | 'fixture';

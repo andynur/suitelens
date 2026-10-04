@@ -9,7 +9,7 @@ import {
   type Result,
 } from '../netsuite/bridge/protocol';
 import { isNetSuiteUrl } from '../netsuite/context/environment';
-import { LoupeError, toLoupeError } from '../netsuite/errors';
+import { SuiteLensError, toSuiteLensError } from '../netsuite/errors';
 import { createLogger } from '../shared/logger';
 import { PENDING_VIEW_KEY } from '../shared/sessionKeys';
 
@@ -51,16 +51,16 @@ async function forward(tabId: number, request: ContentRequest): Promise<Result<u
   try {
     const tab = await browser.tabs.get(tabId);
     if (!isNetSuiteUrl(tab.url)) {
-      throw new LoupeError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
+      throw new SuiteLensError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
     }
-    const raw = await sendWithInjection(tabId, { type: 'loupe:content', request });
+    const raw = await sendWithInjection(tabId, { type: 'suitelens:content', request });
     const parsed = ContentResponseSchemas[request.op].safeParse(raw);
     if (!parsed.success) {
-      throw new LoupeError('INVALID_RESPONSE', 'Unexpected response from the NetSuite page.');
+      throw new SuiteLensError('INVALID_RESPONSE', 'Unexpected response from the NetSuite page.');
     }
     return parsed.data;
   } catch (err) {
-    const error = toLoupeError(err);
+    const error = toSuiteLensError(err);
     log.debug('forward failed', { op: request.op, code: error.code });
     return { ok: false, error: error.toShape() };
   }
@@ -80,9 +80,9 @@ async function sendWithInjection(tabId: number, message: ContentMessage): Promis
     await browser.scripting.executeScript({ target: { tabId }, files: [CONTENT_SCRIPT_FILE] });
     return await browser.tabs.sendMessage(tabId, message);
   } catch (err) {
-    throw new LoupeError(
+    throw new SuiteLensError(
       'NO_CONTENT_SCRIPT',
-      'Loupe cannot reach this tab. Reload the NetSuite page.',
+      'SuiteLens cannot reach this tab. Reload the NetSuite page.',
       String(err),
     );
   }

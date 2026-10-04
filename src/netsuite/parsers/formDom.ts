@@ -57,8 +57,8 @@ function inputValue(doc: Document, name: string): string | null {
 
 function cleanLabel(el: Element): string {
   const clone = el.cloneNode(true) as Element;
-  // Remove injected Loupe badges and required markers from the label text.
-  clone.querySelectorAll(`${MANDATORY_SELECTOR}, [data-loupe]`).forEach((n) => n.remove());
+  // Remove injected SuiteLens badges and required markers from the label text.
+  clone.querySelectorAll(`${MANDATORY_SELECTOR}, [data-suitelens]`).forEach((n) => n.remove());
   return (clone.textContent ?? '')
     .replace(/\s+/g, ' ')
     .replace(/\s*\*$/, '')

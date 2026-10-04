@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { toLoupeError, type LoupeErrorShape } from '../../netsuite/errors';
+import { toSuiteLensError, type SuiteLensErrorShape } from '../../netsuite/errors';
 
 export type AsyncState<T> =
   | { status: 'loading'; data?: undefined; error?: undefined }
   | { status: 'success'; data: T; error?: undefined }
-  | { status: 'error'; data?: undefined; error: LoupeErrorShape };
+  | { status: 'error'; data?: undefined; error: SuiteLensErrorShape };
 
 type Settled<T> = { key: string; token: number; value: AsyncState<T> };
 
@@ -36,7 +36,7 @@ export function useAsync<T>(load: (force: boolean) => Promise<T>, key: string | 
           setSettled({
             key,
             token,
-            value: { status: 'error', error: toLoupeError(err).toShape() },
+            value: { status: 'error', error: toSuiteLensError(err).toShape() },
           });
         }
       },

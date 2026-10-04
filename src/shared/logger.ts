@@ -9,7 +9,7 @@ const minLevel: Level = import.meta.env.DEV ? 'debug' : 'warn';
 
 function log(level: Level, scope: string, message: string, meta?: Record<string, unknown>): void {
   if (ORDER[level] < ORDER[minLevel]) return;
-  const line = `[Loupe:${scope}] ${message}`;
+  const line = `[SuiteLens:${scope}] ${message}`;
   const fn = level === 'debug' ? console.debug : console[level];
   if (meta) fn(line, meta);
   else fn(line);

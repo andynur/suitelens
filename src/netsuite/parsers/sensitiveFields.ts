@@ -1,5 +1,5 @@
 /**
- * Field IDs that carry session or security tokens instead of record data. Loupe never
+ * Field IDs that carry session or security tokens instead of record data. SuiteLens never
  * reads, shows or copies them (docs/security-privacy.md: no session tokens).
  *
  * Seen in a sandbox record XML: `_csrf` (CSRF token) and `_eml_nkey_` (account, user and

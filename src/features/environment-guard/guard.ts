@@ -7,9 +7,9 @@ import type { Environment } from '../../netsuite/types';
  * `textContent` for text.
  */
 
-export const BANNER_HOST_ID = 'netsuite-loupe-env-banner';
-const FAVICON_MARK = 'data-loupe-favicon';
-const ORIGINAL_HREF = 'data-loupe-original-href';
+export const BANNER_HOST_ID = 'netsuite-suitelens-env-banner';
+const FAVICON_MARK = 'data-suitelens-favicon';
+const ORIGINAL_HREF = 'data-suitelens-original-href';
 
 export type GuardState = {
   enabled: boolean;
@@ -38,7 +38,7 @@ function renderBanner(doc: Document, state: GuardState): void {
   if (!host) {
     host = doc.createElement('div');
     host.id = BANNER_HOST_ID;
-    host.setAttribute('data-loupe', 'banner');
+    host.setAttribute('data-suitelens', 'banner');
     host.setAttribute('role', 'status');
     // The host does not take layout space or block clicks.
     host.style.cssText =
@@ -90,8 +90,8 @@ async function tintFavicon(doc: Document, color: string): Promise<void> {
   for (const l of links) {
     if (l === link) continue;
     if (!l.hasAttribute(ORIGINAL_HREF)) l.setAttribute(ORIGINAL_HREF, l.href);
-    l.setAttribute('data-loupe-disabled-rel', l.rel);
-    l.rel = 'loupe-original-icon';
+    l.setAttribute('data-suitelens-disabled-rel', l.rel);
+    l.rel = 'suitelens-original-icon';
   }
   if (!link) {
     link = doc.createElement('link');
@@ -106,10 +106,10 @@ async function tintFavicon(doc: Document, color: string): Promise<void> {
 function restoreFavicon(doc: Document): void {
   doc.querySelector(`link[${FAVICON_MARK}]`)?.remove();
   for (const l of Array.from(
-    doc.querySelectorAll<HTMLLinkElement>('link[data-loupe-disabled-rel]'),
+    doc.querySelectorAll<HTMLLinkElement>('link[data-suitelens-disabled-rel]'),
   )) {
-    l.rel = l.getAttribute('data-loupe-disabled-rel') ?? 'icon';
-    l.removeAttribute('data-loupe-disabled-rel');
+    l.rel = l.getAttribute('data-suitelens-disabled-rel') ?? 'icon';
+    l.removeAttribute('data-suitelens-disabled-rel');
   }
 }
 

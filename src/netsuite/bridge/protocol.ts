@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LoupeErrorShapeSchema } from '../errors';
+import { SuiteLensErrorShapeSchema } from '../errors';
 import { CurrentRecordFieldsSchema } from '../parsers/mergeFields';
 import { AUTOMATION_QUERY_IDS } from '../queries/automation';
 import { PageContextSchema, RecordFieldsResultSchema, RecordRefSchema } from '../types';
@@ -14,11 +14,11 @@ import { PageContextSchema, RecordFieldsResultSchema, RecordRefSchema } from '..
 export const resultSchema = <T extends z.ZodType>(data: T) =>
   z.discriminatedUnion('ok', [
     z.object({ ok: z.literal(true), data }),
-    z.object({ ok: z.literal(false), error: LoupeErrorShapeSchema }),
+    z.object({ ok: z.literal(false), error: SuiteLensErrorShapeSchema }),
   ]);
 
 export type Result<T> =
-  { ok: true; data: T } | { ok: false; error: z.infer<typeof LoupeErrorShapeSchema> };
+  { ok: true; data: T } | { ok: false; error: z.infer<typeof SuiteLensErrorShapeSchema> };
 
 // ---------------------------------------------------------------------------
 // Content script operations (requested by the side panel through the background).
@@ -47,7 +47,7 @@ export const ContentResponseSchemas = {
 // ---------------------------------------------------------------------------
 
 export const ForwardMessageSchema = z.object({
-  type: z.literal('loupe:forward'),
+  type: z.literal('suitelens:forward'),
   tabId: z.number().int().nonnegative(),
   request: ContentRequestSchema,
 });
@@ -55,14 +55,14 @@ export type ForwardMessage = z.infer<typeof ForwardMessageSchema>;
 
 /** Background → content script. */
 export const ContentMessageSchema = z.object({
-  type: z.literal('loupe:content'),
+  type: z.literal('suitelens:content'),
   request: ContentRequestSchema,
 });
 export type ContentMessage = z.infer<typeof ContentMessageSchema>;
 
 /** Content script → side panel (broadcast) when the page context changes. */
 export const ContextChangedMessageSchema = z.object({
-  type: z.literal('loupe:context-changed'),
+  type: z.literal('suitelens:context-changed'),
   context: PageContextSchema,
 });
 export type ContextChangedMessage = z.infer<typeof ContextChangedMessageSchema>;
@@ -71,8 +71,8 @@ export type ContextChangedMessage = z.infer<typeof ContextChangedMessageSchema>;
 // Bridge (MAIN world) protocol over window.postMessage. Fixed operation allow-list.
 // ---------------------------------------------------------------------------
 
-export const BRIDGE_REQUEST_SOURCE = 'netsuite-loupe:content';
-export const BRIDGE_RESPONSE_SOURCE = 'netsuite-loupe:bridge';
+export const BRIDGE_REQUEST_SOURCE = 'netsuite-suitelens:content';
+export const BRIDGE_RESPONSE_SOURCE = 'netsuite-suitelens:bridge';
 
 const NonceSchema = z.string().regex(/^[a-f0-9]{32}$/);
 const FieldIdSchema = z.string().regex(/^[a-z0-9_]{1,100}$/);
@@ -115,7 +115,7 @@ export const BridgeResponseSchema = z.object({
   id: z.string(),
   result: z.discriminatedUnion('ok', [
     z.object({ ok: z.literal(true), data: z.unknown() }),
-    z.object({ ok: z.literal(false), error: LoupeErrorShapeSchema }),
+    z.object({ ok: z.literal(false), error: SuiteLensErrorShapeSchema }),
   ]),
 });
 export type BridgeResponse = z.infer<typeof BridgeResponseSchema>;

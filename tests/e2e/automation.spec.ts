@@ -16,8 +16,8 @@ test('Automation tab: shows scripts and workflows in execution-group order', asy
     /Workflow Action scripts/,
     /Workflows/,
   ]);
-  await expect(panel.getByText('customdeploy_loupe_so_ue')).toBeVisible();
-  await expect(panel.getByText('customdeploy_loupe_so_cs')).toBeVisible();
+  await expect(panel.getByText('customdeploy_suitelens_so_ue')).toBeVisible();
+  await expect(panel.getByText('customdeploy_suitelens_so_cs')).toBeVisible();
   await expect(panel.getByText(/Order is approximate/)).toBeVisible();
 
   // Second load comes from the per-account cache; refresh bypasses it.
@@ -35,5 +35,5 @@ test('Automation tab: custom record types are resolved and mapped', async ({
   await openNetSuite(`${SANDBOX}/app/common/custom/custrecordentry.nl?rectype=123&id=5`);
   const panel = await openSidePanel();
   await panel.getByRole('tab', { name: 'Automation' }).click();
-  await expect(panel.getByText('customdeploy_loupe_demo_cs')).toBeVisible();
+  await expect(panel.getByText('customdeploy_suitelens_demo_cs')).toBeVisible();
 });

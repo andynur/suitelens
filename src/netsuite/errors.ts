@@ -19,39 +19,39 @@ export const ErrorCodeSchema = z.enum([
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
-export const LoupeErrorShapeSchema = z.object({
+export const SuiteLensErrorShapeSchema = z.object({
   code: ErrorCodeSchema,
   message: z.string(),
   detail: z.string().optional(),
 });
-export type LoupeErrorShape = z.infer<typeof LoupeErrorShapeSchema>;
+export type SuiteLensErrorShape = z.infer<typeof SuiteLensErrorShapeSchema>;
 
-export class LoupeError extends Error {
+export class SuiteLensError extends Error {
   readonly code: ErrorCode;
   readonly detail?: string;
 
   constructor(code: ErrorCode, message: string, detail?: string) {
     super(message);
-    this.name = 'LoupeError';
+    this.name = 'SuiteLensError';
     this.code = code;
     this.detail = detail;
   }
 
-  toShape(): LoupeErrorShape {
+  toShape(): SuiteLensErrorShape {
     return this.detail === undefined
       ? { code: this.code, message: this.message }
       : { code: this.code, message: this.message, detail: this.detail };
   }
 
-  static fromShape(shape: LoupeErrorShape): LoupeError {
-    return new LoupeError(shape.code, shape.message, shape.detail);
+  static fromShape(shape: SuiteLensErrorShape): SuiteLensError {
+    return new SuiteLensError(shape.code, shape.message, shape.detail);
   }
 }
 
-export function toLoupeError(err: unknown): LoupeError {
-  if (err instanceof LoupeError) return err;
+export function toSuiteLensError(err: unknown): SuiteLensError {
+  if (err instanceof SuiteLensError) return err;
   const message = err instanceof Error ? err.message : String(err);
-  return new LoupeError('UNKNOWN', message);
+  return new SuiteLensError('UNKNOWN', message);
 }
 
 /**

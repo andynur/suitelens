@@ -1,10 +1,10 @@
-# Privacy Policy — Loupe for NetSuite
+# Privacy Policy — SuiteLens for NetSuite
 
 Last updated: October 4, 2026 · Applies to version 0.1
 
-## What data Loupe accesses
+## What data SuiteLens accesses
 
-When you open a NetSuite page (`https://<account>.app.netsuite.com`), Loupe reads, in your browser:
+When you open a NetSuite page (`https://<account>.app.netsuite.com`), SuiteLens reads, in your browser:
 
 - the page URL (to find the account, environment, record type and record ID);
 - the page's form labels (to show field IDs);
@@ -12,7 +12,7 @@ When you open a NetSuite page (`https://<account>.app.netsuite.com`), Loupe read
   `N/currentRecord` module, using **your existing session and permissions**;
 - script, deployment and workflow metadata, through SuiteQL queries run with your session.
 
-Loupe never reads or stores your NetSuite password, session cookies or tokens.
+SuiteLens never reads or stores your NetSuite password, session cookies or tokens.
 
 ## Where data is stored
 
@@ -24,7 +24,7 @@ Loupe never reads or stores your NetSuite password, session cookies or tokens.
 
 ## When data leaves your browser
 
-Never, in version 0.1. Loupe makes no network requests except same-origin requests to the
+Never, in version 0.1. SuiteLens makes no network requests except same-origin requests to the
 NetSuite page you have open. There is no analytics, telemetry, advertising or remote code.
 
 Future versions may add optional AI features that send data only when you explicitly trigger
@@ -35,7 +35,7 @@ and described here before release.
 
 - **Settings → Data → Clear cache for this account** removes cached metadata and Quick Go-to
   history for the current NetSuite account.
-- **Settings → Data → Delete all Loupe data** removes every setting and all cached data.
+- **Settings → Data → Delete all SuiteLens data** removes every setting and all cached data.
 - Uninstalling the extension removes all of its data from the browser.
 
 ## Contact

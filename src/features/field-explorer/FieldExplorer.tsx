@@ -1,6 +1,6 @@
 import { useDeferredValue, useMemo, useState } from 'react';
 import type { NetSuiteAdapter } from '../../netsuite/adapter/NetSuiteAdapter';
-import { LoupeError } from '../../netsuite/errors';
+import { SuiteLensError } from '../../netsuite/errors';
 import type { PageContext, RecordFieldInfo, RecordFieldsResult } from '../../netsuite/types';
 import { useAsync } from '../../shared/hooks/useAsync';
 import { isMessageKey, t } from '../../shared/i18n';
@@ -48,7 +48,7 @@ export function FieldExplorer({
     const result = await adapter.getRecordFields(ref);
     // Never show data that belongs to another account (tab switched meanwhile).
     if (result.accountId !== context.accountId) {
-      throw new LoupeError('ACCOUNT_MISMATCH', 'Account changed.');
+      throw new SuiteLensError('ACCOUNT_MISMATCH', 'Account changed.');
     }
     return result;
   }, key);

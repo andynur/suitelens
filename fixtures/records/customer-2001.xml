@@ -10,8 +10,8 @@
     <terms>2</terms>
     <creditlimit>50000.00</creditlimit>
     <entitystatus>13</entitystatus>
-    <custentity_loupe_segment>Wholesale</custentity_loupe_segment>
-    <custentity_loupe_vip>F</custentity_loupe_vip>
+    <custentity_suitelens_segment>Wholesale</custentity_suitelens_segment>
+    <custentity_suitelens_vip>F</custentity_suitelens_vip>
     <machine name="addressbook" type="edit">
       <line>
         <label>HQ</label>

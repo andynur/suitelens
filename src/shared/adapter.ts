@@ -6,11 +6,11 @@ import type { Settings } from './storage/settings';
 export type AdapterMode = 'live' | 'fixture';
 
 /** True in dev and fixture (E2E) builds only; constant-folded in production builds. */
-export const FIXTURES_AVAILABLE: boolean = __LOUPE_FIXTURES__;
+export const FIXTURES_AVAILABLE: boolean = __SUITELENS_FIXTURES__;
 
 export function effectiveAdapterMode(settings: Pick<Settings, 'adapterMode'>): AdapterMode {
   if (!FIXTURES_AVAILABLE) return 'live';
-  return settings.adapterMode ?? __LOUPE_DEFAULT_ADAPTER__;
+  return settings.adapterMode ?? __SUITELENS_DEFAULT_ADAPTER__;
 }
 
 export async function createAdapter(mode: AdapterMode): Promise<NetSuiteAdapter> {

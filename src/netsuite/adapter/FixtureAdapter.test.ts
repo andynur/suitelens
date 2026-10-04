@@ -19,12 +19,12 @@ describe('loadFixtureSet', () => {
   it('loads every fixture folder', () => {
     expect(Object.keys(fixtures.records).sort()).toEqual([
       'customer-2001',
-      'customrecord_loupe_demo-5',
+      'customrecord_suitelens_demo-5',
       'salesorder-1001',
     ]);
     expect(Object.keys(fixtures.currentRecords)).toHaveLength(3);
     expect(fixtures.suiteql['automation.scriptDeployments.full']?.length).toBeGreaterThan(0);
-    expect(fixtures.customRecordTypes['123']).toBe('customrecord_loupe_demo');
+    expect(fixtures.customRecordTypes['123']).toBe('customrecord_suitelens_demo');
   });
 });
 
@@ -50,7 +50,10 @@ describe('FixtureAdapter', () => {
     const ctx = await adapterFor(
       'https://1234567-sb1.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=123&id=5',
     ).getPageContext();
-    expect(ctx).toMatchObject({ recordType: 'customrecord_loupe_demo', recordTypeSource: 'dom' });
+    expect(ctx).toMatchObject({
+      recordType: 'customrecord_suitelens_demo',
+      recordTypeSource: 'dom',
+    });
     const unknown = await adapterFor(
       'https://1234567-sb1.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=999&id=5',
     ).getPageContext();

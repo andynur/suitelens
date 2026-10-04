@@ -33,21 +33,21 @@ test('Record tab: "Show field IDs on page" adds badges to form labels', async ({
 }) => {
   const page = await openNetSuite(`${SANDBOX}${SO_PATH}`);
   const panel = await openSidePanel();
-  await expect(page.locator('[data-loupe="field-id"]')).toHaveCount(0);
+  await expect(page.locator('[data-suitelens="field-id"]')).toHaveCount(0);
 
   await panel.getByRole('switch', { name: 'Show field IDs on page' }).click();
-  await expect(page.locator('#memo_fs_lbl [data-loupe="field-id"]')).toHaveText('memo');
+  await expect(page.locator('#memo_fs_lbl [data-suitelens="field-id"]')).toHaveText('memo');
   // NetSuite labels are uppercase; the badge must still show the ID as scripts use it.
-  await expect(page.locator('#memo_fs_lbl [data-loupe="field-id"]')).toHaveCSS(
+  await expect(page.locator('#memo_fs_lbl [data-suitelens="field-id"]')).toHaveCSS(
     'text-transform',
     'none',
   );
   const labels = await page.locator('span[id$="_fs_lbl"]').count();
-  const badges = await page.locator('[data-loupe="field-id"]').count();
+  const badges = await page.locator('[data-suitelens="field-id"]').count();
   expect(badges / labels).toBeGreaterThanOrEqual(0.9);
 
   await panel.getByRole('switch', { name: 'Show field IDs on page' }).click();
-  await expect(page.locator('[data-loupe="field-id"]')).toHaveCount(0);
+  await expect(page.locator('[data-suitelens="field-id"]')).toHaveCount(0);
 });
 
 test('Record tab: list pages show the "not a record" state', async ({

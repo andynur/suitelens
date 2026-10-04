@@ -2,7 +2,7 @@ import type { z } from 'zod';
 import { ContentResponseSchemas, type ContentRequest, type Result } from '../bridge/protocol';
 import { detectFromUrl } from '../context/detect';
 import { isNetSuiteUrl } from '../context/environment';
-import { LoupeError, toLoupeError } from '../errors';
+import { SuiteLensError, toSuiteLensError } from '../errors';
 import { loadAutomations } from '../queries/runner';
 import type { NetSuiteAdapter, GetTargetTab, TargetTab } from './NetSuiteAdapter';
 
@@ -29,7 +29,7 @@ export function createLiveAdapter(deps: LiveAdapterDeps): NetSuiteAdapter {
   const requireNetSuiteTab = async (): Promise<TargetTab & { url: string }> => {
     const tab = await deps.getTargetTab();
     if (!tab || !tab.url || !isNetSuiteUrl(tab.url)) {
-      throw new LoupeError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
+      throw new SuiteLensError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
     }
     return { ...tab, url: tab.url };
   };
@@ -43,9 +43,9 @@ export function createLiveAdapter(deps: LiveAdapterDeps): NetSuiteAdapter {
     const schema = ContentResponseSchemas[req.op] as unknown as z.ZodType<Result<ResponseData[Op]>>;
     const parsed = schema.safeParse(raw);
     if (!parsed.success) {
-      throw new LoupeError('INVALID_RESPONSE', 'Unexpected response from the NetSuite page.');
+      throw new SuiteLensError('INVALID_RESPONSE', 'Unexpected response from the NetSuite page.');
     }
-    if (!parsed.data.ok) throw LoupeError.fromShape(parsed.data.error);
+    if (!parsed.data.ok) throw SuiteLensError.fromShape(parsed.data.error);
     return parsed.data.data;
   }
 
@@ -59,7 +59,8 @@ export function createLiveAdapter(deps: LiveAdapterDeps): NetSuiteAdapter {
         return await request(tab.id, { op: 'getPageContext' });
       } catch (err) {
         // Content script not reachable (e.g. page still loading): URL-only detection.
-        if (toLoupeError(err).code === 'NO_CONTENT_SCRIPT') return detectFromUrl(tab.url) ?? null;
+        if (toSuiteLensError(err).code === 'NO_CONTENT_SCRIPT')
+          return detectFromUrl(tab.url) ?? null;
         throw err;
       }
     },
@@ -72,7 +73,7 @@ export function createLiveAdapter(deps: LiveAdapterDeps): NetSuiteAdapter {
     async getAutomations(recordType) {
       const tab = await requireNetSuiteTab();
       const ctx = detectFromUrl(tab.url);
-      if (!ctx) throw new LoupeError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
+      if (!ctx) throw new SuiteLensError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
       return loadAutomations(ctx.accountId, recordType, async (queryId, variantId) =>
         request(tab.id, { op: 'runQuery', queryId, variantId }),
       );

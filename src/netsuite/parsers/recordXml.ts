@@ -1,4 +1,4 @@
-import { LoupeError } from '../errors';
+import { SuiteLensError } from '../errors';
 import { isSensitiveFieldId } from './sensitiveFields';
 
 /**
@@ -41,18 +41,18 @@ export function parseRecordXml(xml: string, parse: XmlParse = defaultParse): Par
     !trimmed.startsWith('<record')
   ) {
     // Usually an HTML login/error page instead of XML.
-    throw new LoupeError(
+    throw new SuiteLensError(
       'XML_UNAVAILABLE',
       'NetSuite did not return record XML. You may be logged out or lack access to this record.',
     );
   }
   const doc = parse(trimmed);
   if (doc.getElementsByTagName('parsererror').length > 0) {
-    throw new LoupeError('XML_UNAVAILABLE', 'The record XML could not be parsed.');
+    throw new SuiteLensError('XML_UNAVAILABLE', 'The record XML could not be parsed.');
   }
   const record = doc.getElementsByTagName('record')[0];
   if (!record) {
-    throw new LoupeError('XML_UNAVAILABLE', 'The XML response contains no record element.');
+    throw new SuiteLensError('XML_UNAVAILABLE', 'The XML response contains no record element.');
   }
 
   const result: ParsedRecordXml = { fields: [], sublists: [] };

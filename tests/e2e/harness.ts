@@ -16,7 +16,7 @@ function xmlFor(pathname: string): string | undefined {
   const path = pathname.toLowerCase();
   if (path.endsWith('/salesord.nl')) return 'salesorder-1001.xml';
   if (path.endsWith('/custjob.nl')) return 'customer-2001.xml';
-  if (path.endsWith('/custrecordentry.nl')) return 'customrecord_loupe_demo-5.xml';
+  if (path.endsWith('/custrecordentry.nl')) return 'customrecord_suitelens_demo-5.xml';
   return undefined;
 }
 

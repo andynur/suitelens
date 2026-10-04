@@ -7,7 +7,7 @@
     <entity>2001</entity>
     <trandate>1/15/2026</trandate>
     <orderstatus>B</orderstatus>
-    <memo>Fake order for Loupe fixtures</memo>
+    <memo>Fake order for SuiteLens fixtures</memo>
     <otherrefnum>PO-0042</otherrefnum>
     <subsidiary>1</subsidiary>
     <location>3</location>
@@ -18,9 +18,9 @@
     <total>1250.00</total>
     <shipdate>1/20/2026</shipdate>
     <shipmethod></shipmethod>
-    <custbody_loupe_priority>2</custbody_loupe_priority>
-    <custbody_loupe_approved>T</custbody_loupe_approved>
-    <custbody_loupe_notes></custbody_loupe_notes>
+    <custbody_suitelens_priority>2</custbody_suitelens_priority>
+    <custbody_suitelens_approved>T</custbody_suitelens_approved>
+    <custbody_suitelens_notes></custbody_suitelens_notes>
     <machine name="item" type="edit">
       <line>
         <item>501</item>
@@ -28,7 +28,7 @@
         <quantity>10</quantity>
         <rate>100.00</rate>
         <amount>1000.00</amount>
-        <custcol_loupe_batch>BATCH-A</custcol_loupe_batch>
+        <custcol_suitelens_batch>BATCH-A</custcol_suitelens_batch>
       </line>
       <line>
         <item>502</item>
@@ -36,7 +36,7 @@
         <quantity>5</quantity>
         <rate>50.00</rate>
         <amount>250.00</amount>
-        <custcol_loupe_batch></custcol_loupe_batch>
+        <custcol_suitelens_batch></custcol_suitelens_batch>
       </line>
     </machine>
     <machine name="salesteam" type="edit">

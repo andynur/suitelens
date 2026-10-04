@@ -12,7 +12,7 @@ const f = (id: string, extra: Partial<RecordFieldInfo> = {}): RecordFieldInfo =>
 const fields = [
   f('memo', { label: 'Memo', value: 'hello' }),
   f('entity', { label: 'Customer', mandatory: true, value: '1' }),
-  f('custbody_x', { label: 'Loupe X', custom: true }),
+  f('custbody_x', { label: 'SuiteLens X', custom: true }),
   f('custbody_memo_ext', { label: 'Extra', custom: true, value: '' }),
 ];
 

@@ -1,5 +1,5 @@
 {
-  "recordType": "customrecord_loupe_demo",
+  "recordType": "customrecord_suitelens_demo",
   "recordId": "5",
   "fields": [
     {
@@ -14,19 +14,19 @@
       "type": "checkbox"
     },
     {
-      "id": "custrecord_loupe_demo_threshold",
+      "id": "custrecord_suitelens_demo_threshold",
       "label": "Threshold",
       "type": "integer",
       "mandatory": true
     },
     {
-      "id": "custrecord_loupe_demo_customer",
+      "id": "custrecord_suitelens_demo_customer",
       "label": "Customer",
       "type": "select",
       "text": "CUST-FAKE-2001 Example Trading Co (Fake)"
     },
     {
-      "id": "custrecord_loupe_demo_mode",
+      "id": "custrecord_suitelens_demo_mode",
       "label": "Mode",
       "type": "select",
       "text": "Strict"

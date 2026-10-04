@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import { LoupeError } from '../errors';
+import { SuiteLensError } from '../errors';
 import { nonceEquals } from './nonce';
 import {
   BRIDGE_REQUEST_SOURCE,
@@ -77,18 +77,20 @@ export function createBridgeClient(
       return new Promise((resolve, reject) => {
         const timer = setTimeout(() => {
           pending.delete(id);
-          reject(new LoupeError('TIMEOUT', 'The page did not answer in time.'));
+          reject(new SuiteLensError('TIMEOUT', 'The page did not answer in time.'));
         }, timeoutMs);
         pending.set(id, (result) => {
           clearTimeout(timer);
           if (!result.ok) {
-            reject(LoupeError.fromShape(result.error));
+            reject(SuiteLensError.fromShape(result.error));
             return;
           }
           const schema = BridgeDataSchemas[payload.op];
           const data = schema.safeParse(result.data);
           if (!data.success) {
-            reject(new LoupeError('INVALID_RESPONSE', 'Unexpected response from the page bridge.'));
+            reject(
+              new SuiteLensError('INVALID_RESPONSE', 'Unexpected response from the page bridge.'),
+            );
             return;
           }
           resolve(data.data as DataFor<typeof payload.op>);

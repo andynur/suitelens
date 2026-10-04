@@ -1,6 +1,6 @@
 import { detectFromUrl } from '../context/detect';
 import { isNetSuiteUrl } from '../context/environment';
-import { LoupeError, type ErrorCode } from '../errors';
+import { SuiteLensError, type ErrorCode } from '../errors';
 import { mergeFieldSources, type CurrentRecordFields } from '../parsers/mergeFields';
 import { parseRecordXml, type XmlParse } from '../parsers/recordXml';
 import { loadAutomations } from '../queries/runner';
@@ -54,7 +54,7 @@ export function createFixtureAdapter(options: FixtureAdapterOptions): NetSuiteAd
 
   const requireContext = async (): Promise<PageContext> => {
     const ctx = await currentContext();
-    if (!ctx) throw new LoupeError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
+    if (!ctx) throw new SuiteLensError('NOT_NETSUITE', 'The active tab is not a NetSuite page.');
     return ctx;
   };
 
@@ -78,7 +78,7 @@ export function createFixtureAdapter(options: FixtureAdapterOptions): NetSuiteAd
       const xmlKey = findKey(fixtures.records, ref.recordType, ref.id);
       const crKey = findKey(fixtures.currentRecords, ref.recordType, ref.id);
       if (!xmlKey && !crKey) {
-        throw new LoupeError('XML_UNAVAILABLE', `No fixture for ${ref.recordType}.`);
+        throw new SuiteLensError('XML_UNAVAILABLE', `No fixture for ${ref.recordType}.`);
       }
       const xmlText = xmlKey ? fixtures.records[xmlKey] : undefined;
       const xml = xmlText ? parseRecordXml(xmlText, options.xmlParse) : undefined;
@@ -98,7 +98,7 @@ export function createFixtureAdapter(options: FixtureAdapterOptions): NetSuiteAd
       await delay();
       const ctx = await requireContext();
       if (options.failAutomations) {
-        throw new LoupeError(options.failAutomations, 'Simulated failure (fixture mode).');
+        throw new SuiteLensError(options.failAutomations, 'Simulated failure (fixture mode).');
       }
       return loadAutomations(
         ctx.accountId,
@@ -106,7 +106,10 @@ export function createFixtureAdapter(options: FixtureAdapterOptions): NetSuiteAd
         async (queryId, variantId) => {
           const rows = fixtures.suiteql[`${queryId}.${variantId}`];
           if (!rows) {
-            throw new LoupeError('TABLE_UNAVAILABLE', `No fixture for ${queryId}.${variantId}.`);
+            throw new SuiteLensError(
+              'TABLE_UNAVAILABLE',
+              `No fixture for ${queryId}.${variantId}.`,
+            );
           }
           return rows;
         },

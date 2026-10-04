@@ -29,7 +29,7 @@ so trust is feature number one.
 
 - Public privacy policy from the first release.
 - Minimum content: what data is accessed, where it is stored, when it leaves the browser, how to delete it.
-- "Delete all data for this account" and "Delete all Loupe data" buttons in Settings.
+- "Delete all data for this account" and "Delete all SuiteLens data" buttons in Settings.
 - Be ready for GDPR/CCPA-style requests even though no personal data is collected by default.
 
 ## 4. Chrome Web Store compliance
@@ -41,7 +41,7 @@ so trust is feature number one.
 
 ## 5. Trademarks
 
-- Display name: "Loupe for NetSuite". Technical slug: `netsuite-loupe`.
+- Display name: "SuiteLens for NetSuite". Technical slug: `netsuite-suitelens`.
 - Disclaimer in the README, store listing and About screen:
   "NetSuite is a trademark of Oracle Corporation. This project is not affiliated with Oracle."
 

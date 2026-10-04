@@ -98,9 +98,9 @@ describe('refineWithDom', () => {
 
   it('fills the record type from the DOM', () => {
     expect(
-      refineWithDom(base, { baseRecordType: 'CustomRecord_Loupe_Demo', recordId: '5' }),
+      refineWithDom(base, { baseRecordType: 'CustomRecord_SuiteLens_Demo', recordId: '5' }),
     ).toMatchObject({
-      recordType: 'customrecord_loupe_demo',
+      recordType: 'customrecord_suitelens_demo',
       recordTypeSource: 'dom',
     });
   });

@@ -12,7 +12,7 @@ needed, and page scripts must not be able to drive it.
 
 - The bridge (`src/entrypoints/bridge.ts`) is a WXT unlisted script injected **lazily** (first
   request that needs it) with WXT's `injectScript`, keeping page-load cost low (NF-1.2).
-- The content script creates a 128-bit random nonce per tab and passes it as `data-loupe-nonce`
+- The content script creates a 128-bit random nonce per tab and passes it as `data-suitelens-nonce`
   on the bridge's own `<script>` element. The bridge reads `document.currentScript`
   synchronously, deletes the attribute, and the element is removed from the DOM right after
   load.

@@ -8,7 +8,7 @@ amounts, internal IDs from a client account). Account `1234567` / `1234567-sb1` 
 | Folder | Content | Shape status |
 | --- | --- | --- |
 | `records/<recordType>-<id>.xml` | Response of a record URL with `xml=T` | VERIFY against a sandbox |
-| `current-record/<recordType>-<id>.json` | What the bridge returns for `getCurrentRecordFields` | Loupe's own format |
+| `current-record/<recordType>-<id>.json` | What the bridge returns for `getCurrentRecordFields` | SuiteLens's own format |
 | `suiteql/<queryId>.<variantId>.json` | `asMappedResults()` rows for each query variant | VERIFY column names/values |
 | `custom-record-types.json` | numeric custom record type ID → script ID | Fixture helper |
 | `pages/*.html` | Simplified NetSuite page snapshots for E2E | VERIFY DOM structure |

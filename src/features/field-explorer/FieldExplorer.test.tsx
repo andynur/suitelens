@@ -12,7 +12,7 @@ describe('FieldExplorer', () => {
     const sublists = screen.getByRole('region', { name: 'Sublists' });
     expect(within(sublists).getByText('item', { selector: 'summary span' })).toBeInTheDocument();
     expect(
-      within(sublists).getByRole('button', { name: 'custcol_loupe_batch' }),
+      within(sublists).getByRole('button', { name: 'custcol_suitelens_batch' }),
     ).toBeInTheDocument();
     expect(screen.getByText('Source: record XML + N/currentRecord')).toBeInTheDocument();
   });

@@ -1,7 +1,7 @@
 import type { BridgeClient } from '../bridge/transport';
 import type { ContentRequest, Result } from '../bridge/protocol';
 import { detectFromUrl, isRecordPage, refineWithBridge, refineWithDom } from '../context/detect';
-import { LoupeError, toLoupeError } from '../errors';
+import { SuiteLensError, toSuiteLensError } from '../errors';
 import { readDomSignals, readFieldLabels } from '../parsers/formDom';
 import { mergeFieldSources, type CurrentRecordFields } from '../parsers/mergeFields';
 import { buildRecordXmlUrl, parseRecordXml, type ParsedRecordXml } from '../parsers/recordXml';
@@ -33,7 +33,7 @@ export function createContentService(deps: ContentServiceDeps) {
 
   async function getPageContext(): Promise<PageContext> {
     const fromUrl = detectFromUrl(deps.getUrl(), now());
-    if (!fromUrl) throw new LoupeError('NOT_NETSUITE', 'This is not a NetSuite page.');
+    if (!fromUrl) throw new SuiteLensError('NOT_NETSUITE', 'This is not a NetSuite page.');
     let ctx = refineWithDom(fromUrl, readDomSignals(deps.doc));
     if (isRecordPage(ctx) && !ctx.recordType) {
       try {
@@ -48,10 +48,10 @@ export function createContentService(deps: ContentServiceDeps) {
 
   async function getRecordFields(ref: RecordRef): Promise<RecordFieldsResult> {
     const ctx = await getPageContext();
-    if (!isRecordPage(ctx)) throw new LoupeError('NOT_A_RECORD', 'This page is not a record.');
+    if (!isRecordPage(ctx)) throw new SuiteLensError('NOT_A_RECORD', 'This page is not a record.');
     if (ctx.recordType !== ref.recordType || (ref.id && ctx.recordId !== ref.id)) {
       // v0.1 reads the record open in the tab only.
-      throw new LoupeError('UNSUPPORTED', 'Only the record open in this tab can be inspected.');
+      throw new SuiteLensError('UNSUPPORTED', 'Only the record open in this tab can be inspected.');
     }
 
     const warnings: string[] = [];
@@ -103,7 +103,7 @@ export function createContentService(deps: ContentServiceDeps) {
     }
 
     if (!xml && !currentRecord && domLabels.length === 0) {
-      throw new LoupeError(
+      throw new SuiteLensError(
         'XML_UNAVAILABLE',
         'NetSuite did not return record data. You may be logged out or lack access.',
       );
@@ -141,7 +141,7 @@ export function createContentService(deps: ContentServiceDeps) {
           return { ok: true, data: await runQuery(request.queryId, request.variantId) };
       }
     } catch (err) {
-      return { ok: false, error: toLoupeError(err).toShape() };
+      return { ok: false, error: toSuiteLensError(err).toShape() };
     }
   }
 
@@ -157,11 +157,11 @@ const MAX_XML_BYTES = 5 * 1024 * 1024;
 /** Same-origin fetch with the user's session. Never cross-origin. */
 export async function fetchSameOriginText(url: string, origin: string): Promise<string> {
   if (new URL(url).origin !== origin)
-    throw new LoupeError('UNSUPPORTED', 'Cross-origin request blocked.');
+    throw new SuiteLensError('UNSUPPORTED', 'Cross-origin request blocked.');
   const res = await fetch(url, { credentials: 'same-origin', redirect: 'error' });
-  if (!res.ok) throw new LoupeError('XML_UNAVAILABLE', `NetSuite returned HTTP ${res.status}.`);
+  if (!res.ok) throw new SuiteLensError('XML_UNAVAILABLE', `NetSuite returned HTTP ${res.status}.`);
   const text = await res.text();
   if (text.length > MAX_XML_BYTES)
-    throw new LoupeError('XML_UNAVAILABLE', 'Record XML is too large.');
+    throw new SuiteLensError('XML_UNAVAILABLE', 'Record XML is too large.');
   return text;
 }

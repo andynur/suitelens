@@ -6,9 +6,9 @@ import { fieldIdFromLabelElement, FIELD_LABEL_SELECTOR } from '../../netsuite/pa
  * re-inserted as HTML.
  */
 
-const BADGE_ATTR = 'data-loupe';
+const BADGE_ATTR = 'data-suitelens';
 const BADGE_VALUE = 'field-id';
-const STYLE_ID = 'netsuite-loupe-field-id-style';
+const STYLE_ID = 'netsuite-suitelens-field-id-style';
 
 // NetSuite labels use `text-transform: uppercase` (Redwood theme). Badges must show the
 // field ID exactly as scripts use it, so inherited text styles are reset with !important.

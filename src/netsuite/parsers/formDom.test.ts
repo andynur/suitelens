@@ -15,12 +15,12 @@ describe('readFieldLabels', () => {
       label: 'Customer',
       mandatory: true,
     });
-    expect(labels.find((l) => l.id === 'custbody_loupe_priority')?.mandatory).toBe(true);
+    expect(labels.find((l) => l.id === 'custbody_suitelens_priority')?.mandatory).toBe(true);
   });
 
   it('ignores injected badges, duplicates and invalid IDs', () => {
     const doc = new DOMParser().parseFromString(
-      `<span id="memo_fs_lbl">Memo <span data-loupe="field-id">memo</span></span>
+      `<span id="memo_fs_lbl">Memo <span data-suitelens="field-id">memo</span></span>
        <span id="memo_fs_lbl">Dup</span>
        <span id="bad-id_fs_lbl">Bad</span>`,
       'text/html',
@@ -44,7 +44,7 @@ describe('fieldIdFromLabelElement', () => {
 describe('readDomSignals', () => {
   it('reads hidden record inputs', () => {
     expect(readDomSignals(loadFixturePage('customrecord-view.html'))).toEqual({
-      baseRecordType: 'customrecord_loupe_demo',
+      baseRecordType: 'customrecord_suitelens_demo',
       recordId: '5',
     });
     expect(readDomSignals(loadFixturePage('list.html'))).toEqual({

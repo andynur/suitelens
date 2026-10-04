@@ -3,7 +3,7 @@
  * with the same keys. Placeholders use {name}.
  */
 export const en = {
-  'app.name': 'Loupe for NetSuite',
+  'app.name': 'SuiteLens for NetSuite',
   'app.loading': 'Loading…',
   'app.retry': 'Try again',
   'app.refresh': 'Refresh',
@@ -29,11 +29,11 @@ export const en = {
 
   'state.notNetSuite.title': 'Not on a NetSuite page',
   'state.notNetSuite.body':
-    'Open a NetSuite account page (*.app.netsuite.com) in this window to use Loupe.',
+    'Open a NetSuite account page (*.app.netsuite.com) in this window to use SuiteLens.',
   'state.notRecord.title': 'This page is not a record',
   'state.notRecord.body':
     'Open a record (for example a sales order or customer) to see its fields and automations.',
-  'state.unknownRecordType': 'Loupe could not tell which record type this page shows.',
+  'state.unknownRecordType': 'SuiteLens could not tell which record type this page shows.',
   'state.featureOff': 'This feature is switched off in Settings.',
 
   'record.search': 'Search fields by label or ID',
@@ -115,16 +115,17 @@ export const en = {
     "NetSuite's module loader is not available on this page. Try a record page in view or edit mode.",
   'error.MODULE_UNAVAILABLE': 'A NetSuite module is not available on this page.',
   'error.TIMEOUT': 'NetSuite did not answer in time. Reload the page and try again.',
-  'error.NO_CONTENT_SCRIPT': 'Loupe cannot reach this tab. Reload the NetSuite page and try again.',
+  'error.NO_CONTENT_SCRIPT':
+    'SuiteLens cannot reach this tab. Reload the NetSuite page and try again.',
   'error.BRIDGE_UNAVAILABLE':
-    'Loupe could not connect to the NetSuite page. Reload the page and try again.',
+    'SuiteLens could not connect to the NetSuite page. Reload the page and try again.',
   'error.XML_UNAVAILABLE':
     'NetSuite did not return the record data. You may be logged out or lack access to this record.',
   'error.NOT_NETSUITE': 'The active tab is not a NetSuite page.',
   'error.NOT_A_RECORD': 'This page is not a record.',
   'error.ACCOUNT_MISMATCH':
     'The active tab changed to another account. Refresh to load data for the current account.',
-  'error.INVALID_RESPONSE': 'Loupe received an unexpected response.',
+  'error.INVALID_RESPONSE': 'SuiteLens received an unexpected response.',
   'error.UNSUPPORTED': 'This action is not supported here.',
   'error.UNKNOWN': 'An unexpected error occurred.',
   'error.detail': 'Details',
@@ -139,7 +140,7 @@ export const en = {
   'goto.open': 'Open',
   'goto.recent': 'Recent',
   'goto.invalid': 'Enter a numeric internal ID.',
-  'goto.noAccount': 'Open a NetSuite page first so Loupe knows which account to use.',
+  'goto.noAccount': 'Open a NetSuite page first so SuiteLens knows which account to use.',
 
   'settings.appearance': 'Appearance',
   'settings.theme': 'Theme',
@@ -158,10 +159,10 @@ export const en = {
   'settings.data': 'Data',
   'settings.clearAccountCache': 'Clear cache for this account',
   'settings.clearAccountCache.done': 'Cache cleared for {accountId}',
-  'settings.deleteAll': 'Delete all Loupe data',
+  'settings.deleteAll': 'Delete all SuiteLens data',
   'settings.deleteAll.confirm':
-    'Delete all Loupe settings, history and cached data in this browser? This cannot be undone.',
-  'settings.deleteAll.done': 'All Loupe data deleted',
+    'Delete all SuiteLens settings, history and cached data in this browser? This cannot be undone.',
+  'settings.deleteAll.done': 'All SuiteLens data deleted',
   'settings.developer': 'Developer',
   'settings.adapterMode': 'Data source',
   'settings.adapterMode.live': 'Live NetSuite page',
@@ -186,7 +187,7 @@ export const en = {
   'about.disclaimer':
     'NetSuite is a trademark of Oracle Corporation. This project is not affiliated with Oracle.',
   'about.local':
-    'Loupe works with your NetSuite session in this browser. No data leaves your browser.',
+    'SuiteLens works with your NetSuite session in this browser. No data leaves your browser.',
 } as const;
 
 export type MessageKey = keyof typeof en;

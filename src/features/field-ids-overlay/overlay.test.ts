@@ -9,7 +9,7 @@ describe('field ID badges', () => {
     const labels = doc.querySelectorAll('span[id$="_fs_lbl"]').length;
     const added = showFieldIdBadges(doc);
     expect(added / labels).toBeGreaterThanOrEqual(0.9);
-    expect(doc.querySelector('#memo_fs_lbl [data-loupe="field-id"]')?.textContent).toBe('memo');
+    expect(doc.querySelector('#memo_fs_lbl [data-suitelens="field-id"]')?.textContent).toBe('memo');
     // Idempotent, and labels are still read correctly with badges present.
     expect(showFieldIdBadges(doc)).toBe(0);
     expect(readFieldLabels(doc).find((l) => l.id === 'memo')?.label).toBe('Memo');
@@ -18,7 +18,7 @@ describe('field ID badges', () => {
   it('keeps the field ID lowercase even inside uppercase NetSuite labels', () => {
     const doc = loadFixturePage('salesorder-view.html');
     showFieldIdBadges(doc);
-    const css = doc.getElementById('netsuite-loupe-field-id-style')?.textContent ?? '';
+    const css = doc.getElementById('netsuite-suitelens-field-id-style')?.textContent ?? '';
     expect(css).toContain('text-transform:none!important');
     expect(css).toContain('letter-spacing:normal!important');
   });
@@ -27,8 +27,8 @@ describe('field ID badges', () => {
     const doc = loadFixturePage('salesorder-view.html');
     showFieldIdBadges(doc);
     hideFieldIdBadges(doc);
-    expect(doc.querySelectorAll('[data-loupe="field-id"]')).toHaveLength(0);
-    expect(doc.getElementById('netsuite-loupe-field-id-style')).toBeNull();
+    expect(doc.querySelectorAll('[data-suitelens="field-id"]')).toHaveLength(0);
+    expect(doc.getElementById('netsuite-suitelens-field-id-style')).toBeNull();
   });
 
   it('watch mode re-applies badges to new labels and cleans up on stop', async () => {
@@ -38,8 +38,8 @@ describe('field ID badges', () => {
     label.textContent = 'Late';
     document.body.append(label);
     await new Promise((r) => setTimeout(r, 300));
-    expect(label.querySelector('[data-loupe="field-id"]')?.textContent).toBe('custbody_late');
+    expect(label.querySelector('[data-suitelens="field-id"]')?.textContent).toBe('custbody_late');
     stop();
-    expect(document.querySelectorAll('[data-loupe="field-id"]')).toHaveLength(0);
+    expect(document.querySelectorAll('[data-suitelens="field-id"]')).toHaveLength(0);
   });
 });

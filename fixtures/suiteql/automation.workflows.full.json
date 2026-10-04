@@ -1,8 +1,8 @@
 [
   {
     "id": 301,
-    "scriptid": "customworkflow_loupe_so_approval",
-    "name": "Loupe SO Approval",
+    "scriptid": "customworkflow_suitelens_so_approval",
+    "name": "SuiteLens SO Approval",
     "recordtype": "SALESORDER",
     "recordtypename": "Sales Order",
     "recordtypes": "SALESORDER",
@@ -13,8 +13,8 @@
   },
   {
     "id": 302,
-    "scriptid": "customworkflow_loupe_so_legacy",
-    "name": "Loupe SO Legacy Flow",
+    "scriptid": "customworkflow_suitelens_so_legacy",
+    "name": "SuiteLens SO Legacy Flow",
     "recordtype": "SALESORDER",
     "recordtypename": "Sales Order",
     "recordtypes": "SALESORDER",
@@ -25,8 +25,8 @@
   },
   {
     "id": 303,
-    "scriptid": "customworkflow_loupe_cust_onboard",
-    "name": "Loupe Customer Onboarding",
+    "scriptid": "customworkflow_suitelens_cust_onboard",
+    "name": "SuiteLens Customer Onboarding",
     "recordtype": "CUSTOMER",
     "recordtypename": "Customer",
     "recordtypes": "CUSTOMER",
@@ -37,8 +37,8 @@
   },
   {
     "id": 304,
-    "scriptid": "customworkflow_loupe_multi_notify",
-    "name": "Loupe Multi-Record Notify",
+    "scriptid": "customworkflow_suitelens_multi_notify",
+    "name": "SuiteLens Multi-Record Notify",
     "recordtype": null,
     "recordtypename": null,
     "recordtypes": "INVOICE,SALESORDER",

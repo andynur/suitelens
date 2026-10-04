@@ -1,8 +1,8 @@
-# MASTER PROMPT — Loupe for NetSuite (Chrome Extension)
+# MASTER PROMPT — SuiteLens for NetSuite (Chrome Extension)
 
 > Paste everything below the line into your coding agent (Claude Code, Codex, Cline, etc.)
 > from the root of an empty repository that already contains `CLAUDE.md`, `docs/` and `prd/`.
-> Display name: "Loupe for NetSuite". Technical slug for the repo and packages: `netsuite-loupe`.
+> Display name: "SuiteLens for NetSuite". Technical slug for the repo and packages: `netsuite-suitelens`.
 
 ---
 
@@ -15,7 +15,7 @@ the codebase small, typed and testable.
 
 ## Mission
 
-Build **Loupe for NetSuite** (repo and package slug: `netsuite-loupe`): a free, open-source, context-aware developer workbench for
+Build **SuiteLens for NetSuite** (repo and package slug: `netsuite-suitelens`): a free, open-source, context-aware developer workbench for
 NetSuite developers, admins and consultants, delivered as a Manifest V3 Chrome extension.
 
 It combines and goes beyond the ideas of existing tools (field explorers, scripted-record

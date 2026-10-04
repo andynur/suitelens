@@ -28,14 +28,14 @@
 
 ### Architecture
 ```
-Coding agent (MCP client) ──stdio──► netsuite-loupe-mcp (Node, MCP SDK)
+Coding agent (MCP client) ──stdio──► netsuite-suitelens-mcp (Node, MCP SDK)
                                          │ Native Messaging
                                          ▼
                                   Extension background ──► content/bridge ──► NetSuite (user session)
 ```
 
 ### Requirements
-- F-6.9 Package `packages/mcp-bridge`, published to npm as `netsuite-loupe-mcp`, installable with a single command; the installer writes the Chrome Native Messaging manifest for the user's OS.
+- F-6.9 Package `packages/mcp-bridge`, published to npm as `netsuite-suitelens-mcp`, installable with a single command; the installer writes the Chrome Native Messaging manifest for the user's OS.
 - F-6.10 Read-only, allow-listed tools: `get_page_context`, `get_record_schema(recordType)`, `get_automations(recordType)`, `run_suiteql(sql, params, limit)` with a row cap, `where_used(id)`, `get_script_source(scriptId)`.
 - F-6.11 Resources: AI Context files per record type.
 - F-6.12 Per-session approval in the extension: "Agent X is requesting access to account 1234567-sb1 (sandbox) — allow for 1 hour / deny". Production is denied by default unless the user allows it per account.

@@ -1,6 +1,6 @@
 import { expect, PRODUCTION, SANDBOX, SO_PATH, test } from './harness';
 
-const banner = '#netsuite-loupe-env-banner';
+const banner = '#netsuite-suitelens-env-banner';
 
 test('Settings tab: Environment Guard banner uses the configured color and label', async ({
   openNetSuite,

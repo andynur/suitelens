@@ -1,22 +1,22 @@
 import { describe, expect, it } from 'vitest';
-import { classifySuiteQLError, LoupeError, toLoupeError } from './errors';
+import { classifySuiteQLError, SuiteLensError, toSuiteLensError } from './errors';
 
-describe('LoupeError', () => {
+describe('SuiteLensError', () => {
   it('round-trips through its shape', () => {
-    const err = new LoupeError('TIMEOUT', 'slow', 'detail');
-    expect(LoupeError.fromShape(err.toShape())).toMatchObject({
+    const err = new SuiteLensError('TIMEOUT', 'slow', 'detail');
+    expect(SuiteLensError.fromShape(err.toShape())).toMatchObject({
       code: 'TIMEOUT',
       message: 'slow',
       detail: 'detail',
     });
-    expect(new LoupeError('UNKNOWN', 'x').toShape()).toEqual({ code: 'UNKNOWN', message: 'x' });
+    expect(new SuiteLensError('UNKNOWN', 'x').toShape()).toEqual({ code: 'UNKNOWN', message: 'x' });
   });
 
   it('wraps unknown errors', () => {
-    expect(toLoupeError(new Error('boom'))).toMatchObject({ code: 'UNKNOWN', message: 'boom' });
-    expect(toLoupeError('text').message).toBe('text');
-    const same = new LoupeError('TIMEOUT', 'x');
-    expect(toLoupeError(same)).toBe(same);
+    expect(toSuiteLensError(new Error('boom'))).toMatchObject({ code: 'UNKNOWN', message: 'boom' });
+    expect(toSuiteLensError('text').message).toBe('text');
+    const same = new SuiteLensError('TIMEOUT', 'x');
+    expect(toSuiteLensError(same)).toBe(same);
   });
 });
 

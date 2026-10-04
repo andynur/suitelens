@@ -1,6 +1,6 @@
 {
-  "name": "netsuite-loupe",
-  "displayName": "Loupe for NetSuite",
+  "name": "netsuite-suitelens",
+  "displayName": "SuiteLens for NetSuite",
   "description": "Developer and admin productivity tools for NetSuite.",
   "version": "0.1.0",
   "private": true,
@@ -8,9 +8,9 @@
   "packageManager": "pnpm@10.28.2",
   "scripts": {
     "dev": "wxt",
-    "dev:fixtures": "cross-env VITE_LOUPE_ADAPTER=fixture wxt",
+    "dev:fixtures": "cross-env VITE_SUITELENS_ADAPTER=fixture wxt",
     "build": "wxt build",
-    "build:e2e": "cross-env VITE_LOUPE_ADAPTER=fixture wxt build --mode e2e",
+    "build:e2e": "cross-env VITE_SUITELENS_ADAPTER=fixture wxt build --mode e2e",
     "zip": "wxt zip",
     "postinstall": "wxt prepare",
     "lint": "eslint . && prettier --check .",

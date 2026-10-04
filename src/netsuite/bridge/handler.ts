@@ -1,4 +1,4 @@
-import { classifySuiteQLError, LoupeError, toLoupeError } from '../errors';
+import { classifySuiteQLError, SuiteLensError, toSuiteLensError } from '../errors';
 import type { BridgeField, CurrentRecordFields } from '../parsers/mergeFields';
 import { isSensitiveFieldId } from '../parsers/sensitiveFields';
 import { AUTOMATION_QUERIES } from '../queries/automation';
@@ -38,7 +38,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
 
   const getRequire = (): AmdRequire => {
     if (typeof globals.require !== 'function') {
-      throw new LoupeError(
+      throw new SuiteLensError(
         'REQUIRE_UNAVAILABLE',
         "NetSuite's module loader is not available on this page.",
       );
@@ -51,7 +51,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
     const req = getRequire();
     return new Promise((resolve, reject) => {
       const timer = setTimeout(
-        () => reject(new LoupeError('TIMEOUT', `Loading ${name} timed out.`)),
+        () => reject(new SuiteLensError('TIMEOUT', `Loading ${name} timed out.`)),
         moduleTimeoutMs,
       );
       try {
@@ -62,13 +62,13 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
             if (mod) resolve(mod);
             else
               reject(
-                new LoupeError('MODULE_UNAVAILABLE', `${name} is not available on this page.`),
+                new SuiteLensError('MODULE_UNAVAILABLE', `${name} is not available on this page.`),
               );
           },
           (err) => {
             clearTimeout(timer);
             reject(
-              new LoupeError(
+              new SuiteLensError(
                 'MODULE_UNAVAILABLE',
                 `${name} is not available on this page.`,
                 errText(err),
@@ -79,7 +79,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
       } catch (err) {
         clearTimeout(timer);
         reject(
-          new LoupeError(
+          new SuiteLensError(
             'MODULE_UNAVAILABLE',
             `${name} is not available on this page.`,
             errText(err),
@@ -92,12 +92,12 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
   const getCurrentRecord = async (): Promise<CurrentRecordLike> => {
     const mod = (await loadModule('N/currentRecord')) as { get?: () => unknown };
     if (typeof mod.get !== 'function') {
-      throw new LoupeError('MODULE_UNAVAILABLE', 'N/currentRecord.get is not available.');
+      throw new SuiteLensError('MODULE_UNAVAILABLE', 'N/currentRecord.get is not available.');
     }
     try {
       return mod.get() as CurrentRecordLike;
     } catch (err) {
-      throw new LoupeError(
+      throw new SuiteLensError(
         'MODULE_UNAVAILABLE',
         'The current record is not available on this page.',
         errText(err),
@@ -136,7 +136,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
     async getLoadedRecordFields(op: Extract<BridgeOp, { op: 'getLoadedRecordFields' }>) {
       const mod = (await loadModule('N/record')) as RecordModule;
       if (typeof mod.load !== 'function') {
-        throw new LoupeError('MODULE_UNAVAILABLE', 'N/record.load is not available.');
+        throw new SuiteLensError('MODULE_UNAVAILABLE', 'N/record.load is not available.');
       }
       const options = { type: op.recordType, id: op.recordId, isDynamic: false };
       let rec: CurrentRecordLike;
@@ -146,7 +146,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
             ? await mod.load.promise(options)
             : mod.load(options);
       } catch (err) {
-        throw new LoupeError(
+        throw new SuiteLensError(
           'MODULE_UNAVAILABLE',
           'The record could not be loaded through N/record.',
           errText(err),
@@ -157,10 +157,10 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
 
     async runSuiteQL(op: Extract<BridgeOp, { op: 'runSuiteQL' }>) {
       const sql = resolveQuerySql(AUTOMATION_QUERIES, op.queryId, op.variantId);
-      if (!sql) throw new LoupeError('UNSUPPORTED', 'Unknown query.');
+      if (!sql) throw new SuiteLensError('UNSUPPORTED', 'Unknown query.');
       const query = (await loadModule('N/query')) as QueryModule;
       if (typeof query.runSuiteQL !== 'function') {
-        throw new LoupeError('MODULE_UNAVAILABLE', 'N/query.runSuiteQL is not available.');
+        throw new SuiteLensError('MODULE_UNAVAILABLE', 'N/query.runSuiteQL is not available.');
       }
       try {
         // VERIFY: `runSuiteQL.promise` exists in client context; fall back to the sync call.
@@ -173,7 +173,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
         return rows.slice(0, maxRows);
       } catch (err) {
         const text = errText(err);
-        throw new LoupeError(classifySuiteQLError(text), 'The SuiteQL query failed.', text);
+        throw new SuiteLensError(classifySuiteQLError(text), 'The SuiteQL query failed.', text);
       }
     },
   };
@@ -193,7 +193,7 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
           return { ok: true, data: await ops.runSuiteQL(op) };
       }
     } catch (err) {
-      return { ok: false, error: toLoupeError(err).toShape() };
+      return { ok: false, error: toSuiteLensError(err).toShape() };
     }
   };
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readFixture } from '../../test/fixtures';
-import { LoupeError } from '../errors';
+import { SuiteLensError } from '../errors';
 import { buildRecordXmlUrl, parseRecordXml } from './recordXml';
 
 describe('parseRecordXml', () => {
@@ -8,7 +8,9 @@ describe('parseRecordXml', () => {
     const parsed = parseRecordXml(readFixture('records/salesorder-1001.xml'));
     expect(parsed.recordType).toBe('salesorder');
     expect(parsed.id).toBe('1001');
-    expect(parsed.fields.find((f) => f.id === 'memo')?.value).toBe('Fake order for Loupe fixtures');
+    expect(parsed.fields.find((f) => f.id === 'memo')?.value).toBe(
+      'Fake order for SuiteLens fixtures',
+    );
     expect(parsed.fields.map((f) => f.id)).not.toContain('machine');
     const item = parsed.sublists.find((s) => s.id === 'item');
     expect(item?.lineCount).toBe(2);
@@ -18,7 +20,7 @@ describe('parseRecordXml', () => {
       'quantity',
       'rate',
       'amount',
-      'custcol_loupe_batch',
+      'custcol_suitelens_batch',
     ]);
     expect(parsed.sublists.map((s) => s.id)).toEqual(['item', 'salesteam']);
   });
@@ -39,8 +41,8 @@ describe('parseRecordXml', () => {
   });
 
   it('parses the custom record fixture', () => {
-    const parsed = parseRecordXml(readFixture('records/customrecord_loupe_demo-5.xml'));
-    expect(parsed.recordType).toBe('customrecord_loupe_demo');
+    const parsed = parseRecordXml(readFixture('records/customrecord_suitelens_demo-5.xml'));
+    expect(parsed.recordType).toBe('customrecord_suitelens_demo');
     expect(parsed.sublists).toEqual([]);
   });
 
@@ -64,12 +66,12 @@ describe('parseRecordXml', () => {
 
   it('rejects an HTML login page', () => {
     expect(() => parseRecordXml('<!doctype html><html><body>Login</body></html>')).toThrowError(
-      LoupeError,
+      SuiteLensError,
     );
     try {
       parseRecordXml('<html></html>');
     } catch (err) {
-      expect((err as LoupeError).code).toBe('XML_UNAVAILABLE');
+      expect((err as SuiteLensError).code).toBe('XML_UNAVAILABLE');
     }
   });
 
