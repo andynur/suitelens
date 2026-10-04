@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens. Contrast pairs meet WCAG AA in both themes (NF-1.5). */
+:root {
+  --c-surface: #ffffff;
+  --c-canvas: #f8fafc;
+  --c-muted: #f1f5f9;
+  --c-line: #e2e8f0;
+  --c-fg: #0f172a;
+  --c-fg-muted: #475569;
+  --c-accent: #1d4ed8;
+  --c-accent-fg: #ffffff;
+  --c-info: #1d4ed8;
+  --c-success: #15803d;
+  --c-warning: #b45309;
+  --c-danger: #b91c1c;
+  color-scheme: light;
+}
+
+.dark {
+  --c-surface: #0f172a;
+  --c-canvas: #020617;
+  --c-muted: #1e293b;
+  --c-line: #334155;
+  --c-fg: #f1f5f9;
+  --c-fg-muted: #94a3b8;
+  --c-accent: #60a5fa;
+  --c-accent-fg: #0f172a;
+  --c-info: #60a5fa;
+  --c-success: #4ade80;
+  --c-warning: #fbbf24;
+  --c-danger: #f87171;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-surface: var(--c-surface);
+  --color-canvas: var(--c-canvas);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-fg: var(--c-fg);
+  --color-fg-muted: var(--c-fg-muted);
+  --color-accent: var(--c-accent);
+  --color-accent-fg: var(--c-accent-fg);
+  --color-info: var(--c-info);
+  --color-success: var(--c-success);
+  --color-warning: var(--c-warning);
+  --color-danger: var(--c-danger);
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--c-canvas);
+  color: var(--c-fg);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  font-size: 14px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 1px;
+}
