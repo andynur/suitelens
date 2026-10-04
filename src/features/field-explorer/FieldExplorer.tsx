@@ -12,6 +12,7 @@ import { cn } from '../../shared/ui/cn';
 import { ErrorPanel } from '../../shared/ui/ErrorPanel';
 import { Switch } from '../../shared/ui/Switch';
 import { COPY_FORMATS, formatFieldCopy, type CopyFormat } from './copy';
+import { displayValue, partitionByForm } from './display';
 import { EMPTY_FILTERS, filterFields, type FieldFilters } from './filter';
 
 const COPY_LABEL = {
@@ -62,6 +63,9 @@ export function FieldExplorer({
     () => (allFields ? filterFields(allFields, active) : []),
     [allFields, active],
   );
+  const hasPageLabels = state.status === 'success' && state.data.sources.includes('dom');
+  const groups = useMemo(() => partitionByForm(fields, hasPageLabels), [fields, hasPageLabels]);
+  const searching = active.query.trim() !== '';
 
   const onCopy = (fieldId: string, sublistId?: string) =>
     void copyWithToast(formatFieldCopy(fieldId, copyFormat, sublistId));
@@ -144,7 +148,27 @@ export function FieldExplorer({
             {fields.length === 0 ? (
               <p className="py-3 text-center text-xs text-fg-muted">{t('record.noMatches')}</p>
             ) : (
-              <FieldTable fields={fields} onCopy={(id) => onCopy(id)} showValue />
+              <>
+                {groups.onForm.length > 0 && (
+                  <FieldTable fields={groups.onForm} onCopy={(id) => onCopy(id)} showValue />
+                )}
+                {groups.notOnForm.length > 0 && (
+                  // Folded by default; opened while searching so matches stay visible.
+                  <details
+                    key={searching ? 'search' : 'browse'}
+                    open={searching || groups.onForm.length === 0}
+                    className="mt-2 rounded-md border border-line"
+                  >
+                    <summary className="cursor-pointer px-2 py-1 text-xs font-medium text-fg">
+                      {t('record.notOnForm', { count: groups.notOnForm.length })}{' '}
+                      <span className="font-normal text-fg-muted">
+                        · {t('record.notOnFormHint')}
+                      </span>
+                    </summary>
+                    <FieldTable fields={groups.notOnForm} onCopy={(id) => onCopy(id)} showValue />
+                  </details>
+                )}
+              </>
             )}
           </section>
           {state.data.sublists.length > 0 && (
@@ -228,8 +252,11 @@ function FieldTable({
             <td className="py-1 pr-1 font-mono text-fg-muted">{f.type ?? t('record.unknown')}</td>
             {showValue && (
               <td className="py-1 pr-1 text-fg">
-                <span className="line-clamp-3 break-words" title={f.value}>
-                  {f.value || ''}
+                <span
+                  className="line-clamp-3 break-words whitespace-pre-line"
+                  title={displayValue(f.value)}
+                >
+                  {displayValue(f.value)}
                 </span>
               </td>
             )}

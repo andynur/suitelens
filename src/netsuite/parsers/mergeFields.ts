@@ -55,7 +55,8 @@ export type MergeOutput = {
 };
 
 /**
- * Combines the three field sources (F-1.10). Precedence:
+ * Combines the three field sources (F-1.10). Fields with a form label come first, in page
+ * order. Precedence:
  * label: currentRecord > DOM; type/flags: currentRecord; value: currentRecord text > value > XML.
  */
 export function mergeFieldSources(input: MergeInput): MergeOutput {
@@ -95,8 +96,17 @@ export function mergeFieldSources(input: MergeInput): MergeOutput {
     applyBridgeField(get(b.id), b);
   }
 
+  // Fields on the form come first, in the order the page shows them; the rest keep the
+  // record data order.
+  const domIndex = new Map((input.domLabels ?? []).map((l, i) => [l.id, i]));
+  const rank = (id: string) => domIndex.get(id) ?? Number.MAX_SAFE_INTEGER;
+  const sorted = order
+    .map((id, i) => ({ id, i }))
+    .sort((a, b) => rank(a.id) - rank(b.id) || a.i - b.i)
+    .map(({ id }) => id);
+
   return {
-    fields: order.map((id) => byId.get(id)).filter((f): f is RecordFieldInfo => !!f),
+    fields: sorted.map((id) => byId.get(id)).filter((f): f is RecordFieldInfo => !!f),
     sublists: mergeSublists(input),
     sources,
   };

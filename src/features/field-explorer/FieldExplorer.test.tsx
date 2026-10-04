@@ -51,6 +51,43 @@ describe('FieldExplorer', () => {
     await waitFor(() => expect(useAppStore.getState().toasts.at(-1)?.text).toContain('Copied'));
   });
 
+  it('folds fields that are not on the form and shows address line breaks', async () => {
+    const base = fixtureAdapter();
+    const adapter = {
+      ...base,
+      getRecordFields: async () => ({
+        accountId: recordContext().accountId,
+        recordType: 'salesorder',
+        fields: [
+          { id: 'entity', label: 'Customer', custom: false, sources: ['xml', 'dom'] as const },
+          {
+            id: 'billaddress',
+            value: 'Fake Co.<br>1 Test Road',
+            custom: false,
+            sources: ['xml'] as const,
+          },
+        ].map((f) => ({ ...f, sources: [...f.sources] })),
+        sublists: [],
+        sources: ['xml', 'dom'] as ('xml' | 'dom')[],
+        warnings: [],
+        fetchedAt: 1,
+      }),
+    };
+    render(<FieldExplorer adapter={adapter} context={recordContext()} />);
+    await screen.findByRole('button', { name: 'entity' });
+    const folded = screen.getByText('Not on this form (1)').closest('details');
+    expect(folded).not.toHaveAttribute('open');
+    expect(within(folded!).getByRole('button', { name: 'billaddress' })).toBeInTheDocument();
+    expect(
+      within(folded!).getByTitle('Fake Co.\n1 Test Road', { normalizer: (text) => text }),
+    ).toHaveTextContent('Fake Co. 1 Test Road');
+
+    await userEvent.setup().type(screen.getByRole('searchbox'), 'bill');
+    await waitFor(() =>
+      expect(screen.getByText('Not on this form (1)').closest('details')).toHaveAttribute('open'),
+    );
+  });
+
   it('explains errors without crashing', async () => {
     const adapter = fixtureAdapter();
     vi.spyOn(adapter, 'getRecordFields').mockRejectedValue(new Error('boom'));

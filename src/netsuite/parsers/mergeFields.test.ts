@@ -62,7 +62,8 @@ describe('mergeFieldSources', () => {
     });
 
     expect(out.sources).toEqual(['xml', 'dom', 'currentRecord']);
-    expect(out.fields.map((f) => f.id)).toEqual(['memo', 'entity', 'custbody_dom', 'custpage_x']);
+    // Form fields first (page order), then the rest in record data order.
+    expect(out.fields.map((f) => f.id)).toEqual(['memo', 'custbody_dom', 'entity', 'custpage_x']);
     expect(out.fields[0]).toEqual({
       id: 'memo',
       label: 'Memo',
@@ -72,8 +73,8 @@ describe('mergeFieldSources', () => {
       custom: false,
       sources: ['xml', 'dom', 'currentRecord'],
     });
-    expect(out.fields[1]?.value).toBe('ACME (fake)');
-    expect(out.fields[2]).toMatchObject({ custom: true, mandatory: true, sources: ['dom'] });
+    expect(out.fields[2]?.value).toBe('ACME (fake)');
+    expect(out.fields[1]).toMatchObject({ custom: true, mandatory: true, sources: ['dom'] });
     expect(out.fields[3]).toMatchObject({ hidden: true, disabled: true, custom: true });
 
     const item = out.sublists.find((s) => s.id === 'item');

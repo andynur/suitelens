@@ -46,6 +46,8 @@ export const en = {
   'record.copyFormat.snippet': 'getValue snippet',
   'record.showIdsOnPage': 'Show field IDs on page',
   'record.bodyFields': 'Body fields',
+  'record.notOnForm': 'Not on this form ({count})',
+  'record.notOnFormHint': 'Hidden and system fields from the record data.',
   'record.sublists': 'Sublists',
   'record.sublistLines': '{count} lines',
   'record.col.label': 'Label',
