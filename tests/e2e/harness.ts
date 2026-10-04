@@ -5,10 +5,20 @@ import { resolve } from 'node:path';
 const ROOT = resolve(import.meta.dirname, '../..');
 const EXTENSION_PATH = resolve(ROOT, '.output/chrome-mv3-e2e');
 const PAGES = resolve(ROOT, 'fixtures/pages');
+const RECORDS = resolve(ROOT, 'fixtures/records');
 
 export const SANDBOX = 'https://1234567-sb1.app.netsuite.com';
 export const PRODUCTION = 'https://1234567.app.netsuite.com';
 export const SO_PATH = '/app/accounting/transactions/salesord.nl?id=1001';
+
+/** Fake NetSuite routing for `xml=T` requests: URL path → record XML fixture. */
+function xmlFor(pathname: string): string | undefined {
+  const path = pathname.toLowerCase();
+  if (path.endsWith('/salesord.nl')) return 'salesorder-1001.xml';
+  if (path.endsWith('/custjob.nl')) return 'customer-2001.xml';
+  if (path.endsWith('/custrecordentry.nl')) return 'customrecord_loupe_demo-5.xml';
+  return undefined;
+}
 
 /** Fake NetSuite routing: URL path → fixture page. */
 function fixtureFor(pathname: string): string | undefined {
@@ -39,6 +49,15 @@ export const test = base.extend<Fixtures>({
       const url = new URL(route.request().url());
       if (url.protocol === 'chrome-extension:') return route.continue();
       if (!url.hostname.endsWith('.app.netsuite.com')) return route.abort();
+      if (url.searchParams.get('xml') === 'T') {
+        const xml = xmlFor(url.pathname);
+        if (!xml) return route.fulfill({ status: 404, body: 'not found' });
+        return route.fulfill({
+          status: 200,
+          contentType: 'text/xml; charset=utf-8',
+          body: readFileSync(resolve(RECORDS, xml), 'utf8'),
+        });
+      }
       const page = fixtureFor(url.pathname);
       if (!page) return route.fulfill({ status: 404, body: 'not found' });
       return route.fulfill({
