@@ -1,6 +1,10 @@
-# Loupe for NetSuite
+# SuiteLens for NetSuite
 
-**Loupe for NetSuite** (`netsuite-loupe`) is a free, open-source Chrome extension (Manifest V3)
+[![CI](https://github.com/andynur-id/suitelens/actions/workflows/ci.yml/badge.svg)](https://github.com/andynur-id/suitelens/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-informational)](wxt.config.ts)
+
+**SuiteLens for NetSuite** (`netsuite-suitelens`) is a free, open-source Chrome extension (Manifest V3)
 for NetSuite developers, admins and consultants. It shows the context of the record you are on:
 every field with its ID, and every script and workflow that runs on that record type.
 
@@ -35,7 +39,7 @@ Then in Chrome:
 
 1. Open `chrome://extensions` and switch on **Developer mode**.
 2. Click **Load unpacked** and select `.output/chrome-mv3`.
-3. Open a NetSuite page (`https://<account>.app.netsuite.com/...`) and click the Loupe icon.
+3. Open a NetSuite page (`https://<account>.app.netsuite.com/...`) and click the SuiteLens icon.
 
 ## Development
 
@@ -76,12 +80,12 @@ docs/            architecture, security & privacy, ADRs
 prd/             product requirements per version
 ```
 
-Things Loupe cannot confirm without a real account are marked `VERIFY` in the code. See
+Things SuiteLens cannot confirm without a real account are marked `VERIFY` in the code. See
 `docs/decisions/0001-v0.1-foundation.md` for the list of what needs checking in a sandbox.
 
 ## Privacy summary
 
-- Loupe uses **your existing NetSuite session** in the browser. It never stores passwords,
+- SuiteLens uses **your existing NetSuite session** in the browser. It never stores passwords,
   cookies or tokens.
 - It is **read-only**: v0.1 performs no writes to NetSuite.
 - **No data leaves your browser.** The only network requests are same-origin requests to the
@@ -107,7 +111,18 @@ Inspired by the NetSuite developer community and existing free tools such as fie
 scripted-record viewers and SuiteQL consoles. No code, UI text or assets were copied from other
 extensions.
 
+## Contributing
+
+Issues and small PRs welcome. Read [CLAUDE.md](CLAUDE.md) for repo rules (security, folder layout,
+required checks) before opening a PR. Run `pnpm lint && pnpm typecheck && pnpm test && pnpm build`
+before pushing.
+
+## License
+
+[MIT](LICENSE)
+
 ## Disclaimer
 
 NetSuite, SuiteScript, SuiteQL, SuiteCloud and SuiteApp are trademarks of Oracle Corporation.
 This project is not affiliated with, sponsored by or endorsed by Oracle.
+# suitelens
