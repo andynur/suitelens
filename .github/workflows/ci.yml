@@ -29,11 +29,10 @@ jobs:
       - run: pnpm test:coverage
       - run: pnpm build
       - run: pnpm zip
-      - run: ls -la "$GITHUB_WORKSPACE/.output"
       - uses: actions/upload-artifact@v4
         with:
           name: netsuite-suitelens-chrome
-          path: .output/*-chrome.zip
+          path: ./.output/*-chrome.zip
           if-no-files-found: error
 
   e2e:
