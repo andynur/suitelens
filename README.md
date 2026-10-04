@@ -1,67 +1,111 @@
-# Loupe for NetSuite — Starter Kit (Master Prompt + PRDs)
+# Loupe for NetSuite
 
-**Loupe for NetSuite** (`netsuite-loupe`) is a free, open-source, context-aware developer workbench
-for NetSuite developers, admins and consultants, delivered as a Manifest V3 Chrome extension.
+**Loupe for NetSuite** (`netsuite-loupe`) is a free, open-source Chrome extension (Manifest V3)
+for NetSuite developers, admins and consultants. It shows the context of the record you are on:
+every field with its ID, and every script and workflow that runs on that record type.
 
-> **Naming convention**
-> - Display name (Chrome Web Store, UI, website): **Loupe for NetSuite**
-> - Technical slug (repo, npm packages, folders): **`netsuite-loupe`**
-> - Avoid putting "NetSuite" first in the display name: it is an Oracle trademark, and names that
->   start with a third-party brand are more likely to be flagged during store review.
-> - Before going public, check availability on the Chrome Web Store, GitHub, npm, domains and
->   trademark databases (USPTO, WIPO Global Brand Database).
+> Status: **v0.1 (MVP Foundation)** — in development. See [`prd/`](prd/) for the roadmap.
 
-This kit contains everything needed to start building the extension with a coding agent
-(Claude Code, Codex, Cline, etc.).
+## Features (v0.1)
 
-## Contents
+| Feature | What it does |
+| --- | --- |
+| **Field Explorer** (Record tab) | Body and sublist fields with label, field ID, type, value, mandatory/custom flags. Search, filters, copy as `fieldId`, `'fieldId'` or a `getValue` snippet. |
+| **Show field IDs on page** | Small badge with the field ID next to each form label. Off by default. |
+| **Automation Map** (Automation tab) | Client, User Event and Workflow Action scripts and workflows for the record type, with deployment status, log level, execution context and links. Cached per account for 24 h. |
+| **Environment Guard** | Colored banner and favicon tint per account: production red, sandbox amber, release preview purple. Custom label and color per account. |
+| **Quick Go-to** | Open a record by type and internal ID; last 10 per account. |
+| **Settings** | Theme (system/light/dark), feature toggles, environment colors, clear cache for an account, delete all data. |
 
-```
-netsuite-loupe-kit/
-├── README.md                     ← this file
-├── 00-MASTER-PROMPT.md           ← paste into your coding agent to scaffold the project
-├── CLAUDE.md                     ← repository rules for agents (copy to repo root)
-├── docs/
-│   ├── architecture.md           ← technical architecture and design decisions
-│   ├── security-privacy.md       ← security, privacy and Chrome Web Store compliance
-│   └── glossary.md               ← NetSuite and technical terms
-├── prd/
-│   ├── PRD-00-overview.md        ← vision, personas, principles, business model, metrics
-│   ├── PRD-01-v0.1-mvp-foundation.md
-│   ├── PRD-02-v0.2-suiteql-console.md
-│   ├── PRD-03-v0.3-dev-toolbox.md
-│   ├── PRD-04-v0.4-impact-analysis.md
-│   ├── PRD-05-v0.5-ai-assist.md
-│   ├── PRD-06-v1.0-public-launch-mcp.md
-│   ├── PRD-07-v1.1-pro-health-docs.md
-│   ├── PRD-08-v1.2-pro-envdiff-cutover.md
-│   ├── PRD-09-v1.3-team-partner.md
-│   └── PRD-10-backlog-ideas.md   ← future ideas with scoring
-└── prompts/
-    └── phase-prompts.md          ← ready-to-use prompts per version/phase
+Keyboard shortcuts (change them at `chrome://extensions/shortcuts`):
+
+- `Alt+Shift+L` — open the side panel
+- `Alt+Shift+G` — open Quick Go-to
+
+## Install from source
+
+Requirements: Node.js ≥ 22.22 (see `.nvmrc`) and pnpm 10.
+
+```bash
+pnpm install
+pnpm build
 ```
 
-## How to use
+Then in Chrome:
 
-1. Create an empty repository named `netsuite-loupe`, then copy `CLAUDE.md`, `docs/` and `prd/` into it.
-2. Open your coding agent at the repo root and paste the contents of **`00-MASTER-PROMPT.md`**.
-   The agent reads the PRDs and scaffolds v0.1.
-3. When v0.1 is done, use the prompts in **`prompts/phase-prompts.md`** for each following phase, one at a time.
-4. Keep the PRDs updated when decisions change. The PRDs, not the chat history, are the source of truth.
+1. Open `chrome://extensions` and switch on **Developer mode**.
+2. Click **Load unpacked** and select `.output/chrome-mv3`.
+3. Open a NetSuite page (`https://<account>.app.netsuite.com/...`) and click the Loupe icon.
 
-## Roadmap at a glance
+## Development
 
-| Version | Theme | Target window | Tier |
-| --- | --- | --- | --- |
-| v0.1 | MVP Foundation: context, Field Explorer, Automation Map, Environment Guard | Oct–Nov 2026 | Free |
-| v0.2 | SuiteQL Console + metadata cache | Nov–Dec 2026 | Free |
-| v0.3 | Dev Toolbox: Record Inspector, RESTlet Tester, Log Viewer | Dec 2026–Jan 2027 | Free |
-| v0.4 | Impact Analysis ("where used") | Jan–Feb 2027 | Free (per object) |
-| v0.5 | AI Assist (BYOK) + AI Context export | Feb–Mar 2027 | Free |
-| v1.0 | Public launch + local MCP bridge | Mar 2027 | Free |
-| v1.1 | Pro: Health Scan + Documentation Generator + licensing | Apr–Jun 2027 | Pro |
-| v1.2 | Pro: Environment Diff + Cutover/SDF Builder | Jul–Aug 2027 | Pro |
-| v1.3 | Team/Partner: sharing, branding, seat licensing | Sep 2027 | Team |
+| Command | Purpose |
+| --- | --- |
+| `pnpm dev` | Dev build with hot reload; opens a Chrome instance with the extension loaded. |
+| `pnpm dev:fixtures` | Same, but the side panel uses `FixtureAdapter` (fake data, no NetSuite account needed). |
+| `pnpm lint` | ESLint + Prettier check. |
+| `pnpm typecheck` | `tsc --noEmit`. |
+| `pnpm test` | Unit tests (Vitest). `pnpm test:coverage` for coverage. |
+| `pnpm test:e2e` | Builds the fixture build and runs Playwright against `fixtures/pages/*.html`. |
+| `pnpm build` / `pnpm zip` | Production build / zipped extension. |
+
+Run `pnpm lint && pnpm typecheck && pnpm test && pnpm build` before every PR.
+
+### Working without a NetSuite account
+
+All NetSuite access goes through `NetSuiteAdapter` (`src/netsuite/adapter/`):
+
+- `LiveAdapter` talks to the NetSuite tab through the background worker, the content script and a
+  MAIN-world bridge that uses NetSuite's own `require(['N/query'])` with your session.
+- `FixtureAdapter` reads fake data from [`fixtures/`](fixtures/).
+
+In dev builds, **Settings → Developer → Data source** switches between them. With fixtures, the
+side panel works on any page (it falls back to a fake sandbox sales order).
+
+### Project layout
+
+```
+src/
+  entrypoints/   background, content script, MAIN-world bridge, side panel
+  netsuite/      adapter, bridge protocol (Zod), context detection, queries, parsers
+  features/      field-explorer, automation-map, environment-guard, field-ids-overlay, quick-goto, settings
+  shared/        storage, i18n (t()), feature flags, logger, UI primitives
+fixtures/        fake NetSuite responses and page snapshots (no real data)
+tests/e2e/       Playwright tests
+docs/            architecture, security & privacy, ADRs
+prd/             product requirements per version
+```
+
+Things Loupe cannot confirm without a real account are marked `VERIFY` in the code. See
+`docs/decisions/0001-v0.1-foundation.md` for the list of what needs checking in a sandbox.
+
+## Privacy summary
+
+- Loupe uses **your existing NetSuite session** in the browser. It never stores passwords,
+  cookies or tokens.
+- It is **read-only**: v0.1 performs no writes to NetSuite.
+- **No data leaves your browser.** The only network requests are same-origin requests to the
+  NetSuite page you have open. There is no analytics or telemetry.
+- Settings live in `chrome.storage.local`; cached metadata lives in IndexedDB, separated per
+  NetSuite account ID. Settings → Data deletes it.
+
+Full policy: [PRIVACY.md](PRIVACY.md). Security reports: [SECURITY.md](SECURITY.md).
+
+## Permissions
+
+| Permission | Why |
+| --- | --- |
+| `sidePanel` | The workbench UI lives in Chrome's side panel. |
+| `storage` | Settings and per-account preferences. |
+| `scripting` | Re-inject the content script into NetSuite tabs that were open before install/update. |
+| `activeTab` | Act on the current tab when you use the toolbar button or a keyboard shortcut. |
+| `https://*.app.netsuite.com/*` | Read the NetSuite page you are on. No other sites. |
+
+## Credits
+
+Inspired by the NetSuite developer community and existing free tools such as field explorers,
+scripted-record viewers and SuiteQL consoles. No code, UI text or assets were copied from other
+extensions.
 
 ## Disclaimer
 

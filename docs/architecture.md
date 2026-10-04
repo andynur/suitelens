@@ -57,7 +57,9 @@ type NetSuiteAdapter = {
 
 - `LiveAdapter`: the real implementation through the content script and bridge.
 - `FixtureAdapter`: reads `fixtures/**` and simulates latency and errors.
-- Adapter selection: `import.meta.env.MODE === 'development'` plus a toggle in Settings (dev builds only).
+- Adapter selection: dev and fixture builds (`__LOUPE_FIXTURES__`) plus a toggle in Settings
+  (dev builds only). Production builds contain no fixture code.
+- `getPageContext()` returns `null` when the tab is not a NetSuite page (ADR 0002).
 
 ## 4. Context detection (`PageContext`)
 
@@ -88,7 +90,8 @@ indicators (VERIFY); otherwise production. Users can override per account.
 | --- | --- | --- | --- |
 | Global settings | `chrome.storage.local` | `settings` | permanent |
 | Per-account settings (colors, env override) | `chrome.storage.local` | `acct:<id>:settings` | permanent |
-| Metadata cache (fields, tables, scripts) | IndexedDB `netsuite-loupe` | `[accountId, kind, key]` | 24 h default TTL, manual refresh |
+| Metadata cache (fields, tables, scripts) | IndexedDB `netsuite-loupe` (opened by the side panel, ADR 0002) | `[accountId, kind, key]` | 24 h default TTL, manual refresh |
+| Quick Go-to history | `chrome.storage.local` | `acct:<id>:goto` | last 10 |
 | SuiteQL history and snippets | IndexedDB | `[accountId, 'snippet', id]` | until deleted |
 | AI API key (BYOK) | `chrome.storage.local` encrypted (AES-GCM, key derived from a passphrase) or `chrome.storage.session` when the user picks "don't remember" | `secret:ai` | user's choice |
 

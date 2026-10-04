@@ -82,16 +82,29 @@ automation that runs on that record type.
 
 ## 5. Acceptance criteria
 
-- [ ] On a Sales Order page (fixture and real account), Field Explorer shows body fields and the `item` sublist.
-- [ ] Searching "memo" finds the `memo` field in < 100 ms.
-- [ ] Clicking a field ID copies it to the clipboard and shows a toast.
-- [ ] Show Field IDs places a badge on ≥ 90% of field labels on standard forms.
-- [ ] Automation Map shows at least the UE and CS scripts deployed to the record type (verified on a real account).
-- [ ] When the automation query fails, the UI explains likely causes (permission, table unavailable) without crashing.
-- [ ] The Environment Guard banner appears on sandbox in the configured color.
-- [ ] Cached data from account A never appears while viewing account B.
-- [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm build` is green in CI.
-- [ ] The extension loads unpacked with no unnecessary permission warnings.
+Status as of 2026-10-04 (build session). "Fixture" = verified with `FixtureAdapter` and
+`fixtures/pages`; items needing a real account stay open until checked in a sandbox.
+
+- [ ] On a Sales Order page (fixture and real account), Field Explorer shows body fields and the `item` sublist. — fixture ✅ (unit + E2E), real account pending
+- [x] Searching "memo" finds the `memo` field in < 100 ms. — unit test on 300 fields + E2E
+- [x] Clicking a field ID copies it to the clipboard and shows a toast. — unit + E2E
+- [ ] Show Field IDs places a badge on ≥ 90% of field labels on standard forms. — fixture form 100%; real standard forms pending (`VERIFY` label DOM)
+- [ ] Automation Map shows at least the UE and CS scripts deployed to the record type (verified on a real account). — fixture ✅, real account pending (`VERIFY` SuiteQL)
+- [x] When the automation query fails, the UI explains likely causes (permission, table unavailable) without crashing. — unit tests
+- [x] The Environment Guard banner appears on sandbox in the configured color. — E2E
+- [x] Cached data from account A never appears while viewing account B. — unit tests (cache + loader)
+- [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm build` is green in CI. — green locally; CI workflow added, first run pending
+- [ ] The extension loads unpacked with no unnecessary permission warnings. — manifest reviewed (ADR 0003); manual load check pending
+
+### Implementation checklist
+
+- [x] F-1.1 – F-1.5 Foundation (adapter, bridge, context, side panel, empty states)
+- [x] F-1.6 – F-1.10 Field Explorer
+- [x] F-1.11 Show field IDs on page
+- [x] F-1.12 – F-1.17 Automation Map (queries tagged `VERIFY`)
+- [x] F-1.18 – F-1.20 Environment Guard
+- [x] F-1.21 – F-1.22 Quick Go-to and keyboard shortcuts
+- [x] F-1.23 – F-1.25 Settings and About
 
 ## 6. Out of scope for v0.1
 
