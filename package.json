@@ -3,6 +3,7 @@
   "displayName": "SuiteLens for NetSuite",
   "description": "Developer and admin productivity tools for NetSuite.",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.28.2",
