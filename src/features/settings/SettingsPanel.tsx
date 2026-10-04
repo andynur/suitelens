@@ -5,6 +5,7 @@ import { EnvironmentSchema } from '../../netsuite/types';
 import { effectiveAdapterMode, FIXTURES_AVAILABLE } from '../../shared/adapter';
 import { FEATURES } from '../../shared/features';
 import { t } from '../../shared/i18n';
+import { clearAccountData } from '../../shared/storage/accountData';
 import { getMetadataCache } from '../../shared/storage/cache';
 import {
   clearAllStorage,
@@ -104,11 +105,9 @@ export function SettingsPanel({ context }: { context: PageContext | null }) {
             disabled={!context}
             onClick={() => {
               if (!context) return;
-              void getMetadataCache()
-                .clearAccount(context.accountId)
-                .then(() =>
-                  toast(t('settings.clearAccountCache.done', { accountId: context.accountId })),
-                );
+              void clearAccountData(context.accountId).then(() =>
+                toast(t('settings.clearAccountCache.done', { accountId: context.accountId })),
+              );
             }}
           >
             {t('settings.clearAccountCache')}
