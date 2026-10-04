@@ -14,3 +14,16 @@ All notable changes to this project are documented here. Format: [Keep a Changel
 - Quick Go-to with per-account history and keyboard shortcuts.
 - Settings: theme, feature toggles, environment colors, clear account cache, delete all data, About.
 - `NetSuiteAdapter` with `LiveAdapter` (nonce-checked MAIN-world bridge) and `FixtureAdapter` (fake fixtures).
+
+### Fixed (first sandbox check)
+
+- Session token fields such as `_csrf` and `_eml_nkey_` are never read, shown or copied.
+- Workflows load again: the `workflow` table uses `internalid`, not `id`; multi-record workflows match through `recordtypes`.
+- Field ID badges keep the real case inside uppercase NetSuite labels.
+
+### Changed (first sandbox check)
+
+- Automation cards summarize execution contexts ("All contexts", "All except …", "+N more").
+- Field Explorer lists form fields first in page order and folds hidden and system fields.
+- View mode shows field types through a read-only `N/record.load`.
+- Address values show line breaks instead of literal `<br>`.
