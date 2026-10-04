@@ -35,7 +35,7 @@ export type CurrentRecordFields = z.infer<typeof CurrentRecordFieldsSchema>;
  * VERIFY: list is complete for the field types Loupe shows.
  */
 const CUSTOM_PREFIX_RE =
-  /^(custbody|custcol|custentity|custitem|custevent|custrecord|custitemnumber|custpage|custom)/;
+  /^(custbody|custcol|custentity|custitem|custevent|custrecord|custitemnumber|custpage)[_\d]/;
 
 export function isCustomFieldId(id: string): boolean {
   return CUSTOM_PREFIX_RE.test(id);
