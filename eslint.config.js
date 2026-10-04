@@ -38,6 +38,11 @@ export default tseslint.config(
     },
   },
   {
+    // Playwright fixtures use a `use` callback that is not a React hook.
+    files: ['tests/**'],
+    rules: { 'react-hooks/rules-of-hooks': 'off' },
+  },
+  {
     // CLAUDE.md rule 8: UI code never calls fetch against NetSuite; only the adapter does.
     files: ['src/features/**', 'src/shared/**', 'src/entrypoints/sidepanel/**'],
     rules: {

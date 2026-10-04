@@ -10,7 +10,7 @@
     "dev": "wxt",
     "dev:fixtures": "cross-env VITE_LOUPE_ADAPTER=fixture wxt",
     "build": "wxt build",
-    "build:e2e": "cross-env VITE_LOUPE_ADAPTER=fixture wxt build --mode e2e -o .output/e2e",
+    "build:e2e": "cross-env VITE_LOUPE_ADAPTER=fixture wxt build --mode e2e",
     "zip": "wxt zip",
     "postinstall": "wxt prepare",
     "lint": "eslint . && prettier --check .",

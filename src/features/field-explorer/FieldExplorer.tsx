@@ -4,7 +4,6 @@ import { LoupeError } from '../../netsuite/errors';
 import type { PageContext, RecordFieldInfo, RecordFieldsResult } from '../../netsuite/types';
 import { useAsync } from '../../shared/hooks/useAsync';
 import { isMessageKey, t } from '../../shared/i18n';
-import { updateSettings } from '../../shared/storage/settings';
 import { useAppStore } from '../../shared/store';
 import { Badge } from '../../shared/ui/Badge';
 import { Button } from '../../shared/ui/Button';
@@ -35,6 +34,7 @@ export function FieldExplorer({
   context: PageContext & { recordType: string };
 }) {
   const settings = useAppStore((s) => s.settings);
+  const saveSettings = useAppStore((s) => s.saveSettings);
   const [filters, setFilters] = useState<FieldFilters>(EMPTY_FILTERS);
   const [copyFormat, setCopyFormat] = useState<CopyFormat>('id');
   const deferredQuery = useDeferredValue(filters.query);
@@ -112,7 +112,7 @@ export function FieldExplorer({
         <Switch
           label={t('record.showIdsOnPage')}
           checked={settings.showFieldIdsOnPage}
-          onCheckedChange={(checked) => void updateSettings({ showFieldIdsOnPage: checked })}
+          onCheckedChange={(checked) => void saveSettings({ showFieldIdsOnPage: checked })}
         />
       )}
 

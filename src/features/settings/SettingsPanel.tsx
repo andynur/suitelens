@@ -10,7 +10,6 @@ import {
   clearAllStorage,
   getAccountSettings,
   updateAccountSettings,
-  updateSettings,
   type AccountSettings,
   type Theme,
 } from '../../shared/storage/settings';
@@ -33,6 +32,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 
 export function SettingsPanel({ context }: { context: PageContext | null }) {
   const settings = useAppStore((s) => s.settings);
+  const saveSettings = useAppStore((s) => s.saveSettings);
   const toast = useAppStore((s) => s.toast);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -48,7 +48,7 @@ export function SettingsPanel({ context }: { context: PageContext | null }) {
                 name="theme"
                 value={theme}
                 checked={settings.theme === theme}
-                onChange={() => void updateSettings({ theme })}
+                onChange={() => void saveSettings({ theme })}
               />
               {t(`settings.theme.${theme}`)}
             </label>
@@ -64,7 +64,7 @@ export function SettingsPanel({ context }: { context: PageContext | null }) {
             description={t(feature.descriptionKey)}
             checked={settings.features[feature.id]}
             onCheckedChange={(checked) =>
-              void updateSettings({ features: { ...settings.features, [feature.id]: checked } })
+              void saveSettings({ features: { ...settings.features, [feature.id]: checked } })
             }
           />
         ))}
@@ -78,7 +78,7 @@ export function SettingsPanel({ context }: { context: PageContext | null }) {
                 type="color"
                 value={settings.envColors[env]}
                 onChange={(e) =>
-                  void updateSettings({
+                  void saveSettings({
                     envColors: { ...settings.envColors, [env]: e.target.value },
                   })
                 }
@@ -154,7 +154,7 @@ export function SettingsPanel({ context }: { context: PageContext | null }) {
             <select
               value={effectiveAdapterMode(settings)}
               onChange={(e) =>
-                void updateSettings({ adapterMode: e.target.value as 'live' | 'fixture' })
+                void saveSettings({ adapterMode: e.target.value as 'live' | 'fixture' })
               }
               className="rounded border border-line bg-surface px-1 py-0.5 text-xs"
             >

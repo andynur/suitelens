@@ -2,7 +2,12 @@ import { create } from 'zustand';
 import type { NetSuiteAdapter } from '../netsuite/adapter/NetSuiteAdapter';
 import { toLoupeError, type LoupeErrorShape } from '../netsuite/errors';
 import type { PageContext } from '../netsuite/types';
-import { DEFAULT_SETTINGS, type Settings } from './storage/settings';
+import {
+  DEFAULT_SETTINGS,
+  SettingsSchema,
+  updateSettings,
+  type Settings,
+} from './storage/settings';
 
 /** Side panel UI state (Zustand). Persistent data lives in storage, not here. */
 
@@ -22,6 +27,8 @@ type AppState = {
   toasts: Toast[];
 
   setSettings(settings: Settings): void;
+  /** Optimistic settings update: UI first, then storage (other contexts follow via onChanged). */
+  saveSettings(patch: Partial<Settings>): Promise<void>;
   setAdapter(adapter: NetSuiteAdapter): void;
   refreshContext(): Promise<void>;
   setActiveTab(tab: PanelTab): void;
@@ -43,6 +50,10 @@ export const useAppStore = create<AppState>()((set, get) => ({
   toasts: [],
 
   setSettings: (settings) => set({ settings, settingsLoaded: true }),
+  async saveSettings(patch) {
+    set((s) => ({ settings: SettingsSchema.parse({ ...s.settings, ...patch }) }));
+    await updateSettings(patch);
+  },
   setAdapter: (adapter) => {
     set({ adapter });
     void get().refreshContext();

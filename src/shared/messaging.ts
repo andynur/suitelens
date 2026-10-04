@@ -15,16 +15,17 @@ export async function sendToTabViaBackground(
 /**
  * The tab Loupe works against: the active tab of the side panel's window. When the side
  * panel page itself is open as a tab (development/E2E), falls back to the most recently
- * used NetSuite tab.
+ * used NetSuite tab. (`tabs.getCurrent()` is only defined for pages shown in a tab.)
  */
 export async function getTargetTab(): Promise<TargetTab | undefined> {
-  const [active] = await browser.tabs.query({ active: true, currentWindow: true });
-  const ownPage = active?.url?.startsWith(browser.runtime.getURL('/'));
-  if (active?.id !== undefined && !ownPage) return { id: active.id, url: active.url };
-
+  const ownTab = await browser.tabs.getCurrent();
+  if (!ownTab) {
+    const [active] = await browser.tabs.query({ active: true, currentWindow: true });
+    return active?.id !== undefined ? { id: active.id, url: active.url } : undefined;
+  }
   const tabs = await browser.tabs.query({});
   const netsuite = tabs
-    .filter((t) => t.id !== undefined && isNetSuiteUrl(t.url))
+    .filter((t) => t.id !== undefined && t.id !== ownTab.id && isNetSuiteUrl(t.url))
     .sort((a, b) => (b.lastAccessed ?? 0) - (a.lastAccessed ?? 0))[0];
   return netsuite?.id !== undefined ? { id: netsuite.id, url: netsuite.url } : undefined;
 }

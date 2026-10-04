@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /** Test helpers to read files from /fixtures. */
-const root = resolve(__dirname, '../../fixtures');
+const root = resolve(import.meta.dirname, '../../fixtures');
 
 export const readFixture = (path: string): string => readFileSync(resolve(root, path), 'utf8');
 
