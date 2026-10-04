@@ -22,10 +22,14 @@ docs/architecture.md §3 sketches `NetSuiteAdapter` and puts the cache in the ba
    button bypasses it. Results whose `accountId` differs from the current context are rejected
    with `ACCOUNT_MISMATCH` and never cached (protects against tab switches during a load).
 6. **Record field values are not cached** (they change with every edit).
-7. Field metadata comes from three sources merged in `parsers/mergeFields.ts`: record XML
-   (IDs + values), page labels from the DOM (labels + mandatory marker, view mode) and
-   `N/currentRecord` (label, type, flags, display text — edit/create mode only). The UI shows
-   which sources were used (F-1.10).
+7. Field metadata comes from four sources merged in `parsers/mergeFields.ts`: record XML
+   (IDs + values), page labels from the DOM (labels + mandatory marker), `N/currentRecord`
+   (label, type, flags, display text — edit/create mode only) and, in view mode, a read-only
+   `N/record.load` (type, default label, display text). In view mode `N/currentRecord`
+   reports the rendered type (a sandbox showed `text` for the `entity` select), so it is not
+   used there. Form fields come first in page order; fields without a page label are folded.
+   Token fields (`_csrf`, `_eml_nkey_`, any `_`-prefixed ID) are dropped by every source and
+   never reach the side panel. The UI shows which sources were used (F-1.10).
 8. When the side panel page is open as a normal tab (development, E2E), it targets the most
    recently used NetSuite tab (`tabs.getCurrent()` tells the two cases apart).
 9. "Clear cache for this account" removes the metadata cache and Quick Go-to history for that

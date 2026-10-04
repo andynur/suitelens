@@ -124,39 +124,35 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
     },
 
     async getCurrentRecordFields(op: Extract<BridgeOp, { op: 'getCurrentRecordFields' }>) {
-      const rec = await getCurrentRecord();
-      const result: CurrentRecordFields = { fields: [], sublists: [] };
-      const type = asString(rec.type);
-      const id = asString(rec.id);
-      if (type) result.recordType = type;
-      if (id) result.recordId = id;
+      return describeRecord(await getCurrentRecord(), op);
+    },
 
-      for (const fieldId of op.fieldIds) {
-        // Never read token fields, even when asked (see sensitiveFields.ts).
-        if (isSensitiveFieldId(fieldId)) continue;
-        const field = safe(() => rec.getField?.({ fieldId }));
-        const info = describeField(fieldId, field);
-        const value = stringifyValue(safe(() => rec.getValue?.({ fieldId })));
-        const text = stringifyValue(safe(() => rec.getText?.({ fieldId })));
-        if (value !== undefined) info.value = value;
-        if (text !== undefined) info.text = text;
-        result.fields.push(info);
+    /**
+     * View mode: N/currentRecord reports the rendered type ("text" for a select), so field
+     * metadata comes from a read-only `record.load`. Never saves.
+     * VERIFY: N/record is loadable on view pages, `load.promise` exists, and loading does
+     * not run beforeLoad user event scripts with side effects.
+     */
+    async getLoadedRecordFields(op: Extract<BridgeOp, { op: 'getLoadedRecordFields' }>) {
+      const mod = (await loadModule('N/record')) as RecordModule;
+      if (typeof mod.load !== 'function') {
+        throw new LoupeError('MODULE_UNAVAILABLE', 'N/record.load is not available.');
       }
-
-      for (const sublist of op.sublists) {
-        const lineCount = Number(safe(() => rec.getLineCount?.({ sublistId: sublist.id })) ?? 0);
-        const fields: BridgeField[] = [];
-        for (const fieldId of sublist.fieldIds) {
-          if (isSensitiveFieldId(fieldId)) continue;
-          const field =
-            lineCount > 0
-              ? safe(() => rec.getSublistField?.({ sublistId: sublist.id, fieldId, line: 0 }))
-              : undefined;
-          fields.push(describeField(fieldId, field));
-        }
-        result.sublists.push({ id: sublist.id, lineCount: lineCount > 0 ? lineCount : 0, fields });
+      const options = { type: op.recordType, id: op.recordId, isDynamic: false };
+      let rec: CurrentRecordLike;
+      try {
+        rec =
+          typeof mod.load.promise === 'function'
+            ? await mod.load.promise(options)
+            : mod.load(options);
+      } catch (err) {
+        throw new LoupeError(
+          'MODULE_UNAVAILABLE',
+          'The record could not be loaded through N/record.',
+          errText(err),
+        );
       }
-      return result;
+      return describeRecord(rec, op);
     },
 
     async runSuiteQL(op: Extract<BridgeOp, { op: 'runSuiteQL' }>) {
@@ -191,6 +187,8 @@ export function createBridgeHandler(options: BridgeHandlerOptions) {
           return { ok: true, data: await ops.getRecordType() };
         case 'getCurrentRecordFields':
           return { ok: true, data: await ops.getCurrentRecordFields(op) };
+        case 'getLoadedRecordFields':
+          return { ok: true, data: await ops.getLoadedRecordFields(op) };
         case 'runSuiteQL':
           return { ok: true, data: await ops.runSuiteQL(op) };
       }
@@ -219,12 +217,60 @@ type CurrentRecordLike = {
   getSublistField?: (o: { sublistId: string; fieldId: string; line: number }) => unknown;
 };
 
+type RecordLoadOptions = { type: string; id: string; isDynamic: boolean };
+type RecordModule = {
+  load?: ((o: RecordLoadOptions) => CurrentRecordLike) & {
+    promise?: (o: RecordLoadOptions) => Promise<CurrentRecordLike>;
+  };
+};
+
 type QueryModule = {
   runSuiteQL: ((o: { query: string }) => ResultSetLike) & {
     promise?: (o: { query: string }) => Promise<ResultSetLike>;
   };
 };
 type ResultSetLike = { asMappedResults: () => Record<string, unknown>[] };
+
+type FieldsRequest = {
+  fieldIds: readonly string[];
+  sublists: readonly { id: string; fieldIds: readonly string[] }[];
+};
+
+/** Field metadata and values of a current or loaded record. Token fields are never read. */
+function describeRecord(rec: CurrentRecordLike, op: FieldsRequest): CurrentRecordFields {
+  const result: CurrentRecordFields = { fields: [], sublists: [] };
+  const type = asString(rec.type);
+  const id = asString(rec.id);
+  if (type) result.recordType = type;
+  if (id) result.recordId = id;
+
+  for (const fieldId of op.fieldIds) {
+    // Never read token fields, even when asked (see sensitiveFields.ts).
+    if (isSensitiveFieldId(fieldId)) continue;
+    const field = safe(() => rec.getField?.({ fieldId }));
+    const info = describeField(fieldId, field);
+    const value = stringifyValue(safe(() => rec.getValue?.({ fieldId })));
+    const text = stringifyValue(safe(() => rec.getText?.({ fieldId })));
+    if (value !== undefined) info.value = value;
+    if (text !== undefined) info.text = text;
+    result.fields.push(info);
+  }
+
+  for (const sublist of op.sublists) {
+    const lineCount = Number(safe(() => rec.getLineCount?.({ sublistId: sublist.id })) ?? 0);
+    const fields: BridgeField[] = [];
+    for (const fieldId of sublist.fieldIds) {
+      if (isSensitiveFieldId(fieldId)) continue;
+      const field =
+        lineCount > 0
+          ? safe(() => rec.getSublistField?.({ sublistId: sublist.id, fieldId, line: 0 }))
+          : undefined;
+      fields.push(describeField(fieldId, field));
+    }
+    result.sublists.push({ id: sublist.id, lineCount: lineCount > 0 ? lineCount : 0, fields });
+  }
+  return result;
+}
 
 // VERIFY: Field object property names (label, type, isMandatory, isDisabled, isDisplay, isVisible).
 function describeField(fieldId: string, raw: unknown): BridgeField {

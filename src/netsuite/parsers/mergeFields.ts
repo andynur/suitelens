@@ -46,6 +46,8 @@ export type MergeInput = {
   xml?: ParsedRecordXml;
   domLabels?: DomFieldLabel[];
   currentRecord?: CurrentRecordFields;
+  /** View mode: read-only N/record.load, used for types and display text. */
+  loadedRecord?: CurrentRecordFields;
 };
 
 export type MergeOutput = {
@@ -55,15 +57,18 @@ export type MergeOutput = {
 };
 
 /**
- * Combines the three field sources (F-1.10). Fields with a form label come first, in page
+ * Combines the field sources (F-1.10). Fields with a form label come first, in page
  * order. Precedence:
- * label: currentRecord > DOM; type/flags: currentRecord; value: currentRecord text > value > XML.
+ * label: currentRecord > DOM > loadedRecord; type: currentRecord > loadedRecord;
+ * flags: currentRecord; value: currentRecord text > value > loadedRecord text > XML.
+ * A loaded record has no form, so its labels and flags are field defaults and only fill gaps.
  */
 export function mergeFieldSources(input: MergeInput): MergeOutput {
   const sources: FieldSource[] = [];
   if (input.xml) sources.push('xml');
   if (input.domLabels && input.domLabels.length > 0) sources.push('dom');
   if (input.currentRecord) sources.push('currentRecord');
+  if (input.loadedRecord) sources.push('loadedRecord');
 
   const order: string[] = [];
   const byId = new Map<string, RecordFieldInfo>();
@@ -95,6 +100,12 @@ export function mergeFieldSources(input: MergeInput): MergeOutput {
     if (isSensitiveFieldId(b.id)) continue;
     applyBridgeField(get(b.id), b);
   }
+  for (const b of input.loadedRecord?.fields ?? []) {
+    if (isSensitiveFieldId(b.id)) continue;
+    // Only fields already known from the page or XML; never add new ones.
+    const field = byId.get(b.id);
+    if (field) applyLoadedField(field, b);
+  }
 
   // Fields on the form come first, in the order the page shows them; the rest keep the
   // record data order.
@@ -123,6 +134,14 @@ function mergeSublists(input: MergeInput): SublistInfo[] {
         .map((id) => ({ id, custom: isCustomFieldId(id), sources: ['xml'] })),
     });
   }
+  for (const s of input.loadedRecord?.sublists ?? []) {
+    const existing = out.get(s.id);
+    if (!existing) continue;
+    for (const b of s.fields) {
+      const field = existing.fields.find((f) => f.id === b.id);
+      if (field && !isSensitiveFieldId(b.id)) applyLoadedField(field, b);
+    }
+  }
   for (const s of input.currentRecord?.sublists ?? []) {
     const existing = out.get(s.id) ?? { id: s.id, lineCount: s.lineCount, fields: [] };
     existing.lineCount = Math.max(existing.lineCount, s.lineCount);
@@ -149,6 +168,15 @@ function applyBridgeField(field: RecordFieldInfo, b: BridgeField): void {
   const value = b.text ?? b.value;
   if (value !== undefined && value !== '') field.value = value;
   addSource(field, 'currentRecord');
+}
+
+function applyLoadedField(field: RecordFieldInfo, b: BridgeField): void {
+  if (b.label && !field.label) field.label = b.label;
+  if (b.type && !field.type) field.type = b.type;
+  if (b.text !== undefined && b.text !== '' && !field.sources.includes('currentRecord')) {
+    field.value = b.text;
+  }
+  addSource(field, 'loadedRecord');
 }
 
 function addSource(field: RecordFieldInfo, source: FieldSource): void {

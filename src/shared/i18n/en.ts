@@ -67,8 +67,11 @@ export const en = {
   'record.source.xml': 'record XML',
   'record.source.dom': 'page labels',
   'record.source.currentRecord': 'N/currentRecord',
+  'record.source.loadedRecord': 'N/record',
   'record.unknown': '—',
   'record.xml_unavailable': 'Record XML was not available; values may be incomplete.',
+  'record.loaded_record_unavailable':
+    'Field types could not be read through N/record; the Type column may be incomplete.',
   'record.current_record_unavailable':
     'N/currentRecord was not available; labels and types come from the page only.',
 

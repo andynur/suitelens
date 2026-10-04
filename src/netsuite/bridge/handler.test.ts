@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createBridgeHandler, stringifyValue, type AmdRequire } from './handler';
 
 type Modules = Record<string, unknown>;
@@ -127,6 +127,65 @@ describe('createBridgeHandler', () => {
     expect(reads).toEqual(['memo']);
     expect(JSON.stringify(res)).not.toContain('_csrf');
     expect(JSON.stringify(res)).not.toContain('_eml_nkey_');
+  });
+
+  it('getLoadedRecordFields loads read-only through N/record, preferring the promise API', async () => {
+    const load = Object.assign(
+      vi.fn(() => {
+        throw new Error('sync path must not be used');
+      }),
+      { promise: vi.fn(async () => record) },
+    );
+    const handle = createBridgeHandler({
+      globals: { require: fakeRequire({ 'N/record': { load } }) },
+    });
+    const res = await handle({
+      op: 'getLoadedRecordFields',
+      recordType: 'salesorder',
+      recordId: '1001',
+      fieldIds: ['memo', '_csrf'],
+      sublists: [],
+    });
+    expect(load.promise).toHaveBeenCalledWith({ type: 'salesorder', id: '1001', isDynamic: false });
+    expect(res).toMatchObject({
+      ok: true,
+      data: { recordType: 'salesorder', fields: [{ id: 'memo', type: 'textarea' }] },
+    });
+  });
+
+  it('getLoadedRecordFields falls back to the sync API and reports failures', async () => {
+    const op = {
+      op: 'getLoadedRecordFields' as const,
+      recordType: 'salesorder',
+      recordId: '1001',
+      fieldIds: ['memo'],
+      sublists: [],
+    };
+    const sync = createBridgeHandler({
+      globals: { require: fakeRequire({ 'N/record': { load: () => record } }) },
+    });
+    expect(await sync(op)).toMatchObject({ ok: true, data: { fields: [{ id: 'memo' }] } });
+
+    const failing = createBridgeHandler({
+      globals: {
+        require: fakeRequire({
+          'N/record': {
+            load: () => {
+              throw new Error('INSUFFICIENT_PERMISSION');
+            },
+          },
+        }),
+      },
+    });
+    expect(await failing(op)).toMatchObject({
+      ok: false,
+      error: { code: 'MODULE_UNAVAILABLE', detail: 'INSUFFICIENT_PERMISSION' },
+    });
+
+    const noLoad = createBridgeHandler({
+      globals: { require: fakeRequire({ 'N/record': {} }) },
+    });
+    expect(await noLoad(op)).toMatchObject({ ok: false, error: { code: 'MODULE_UNAVAILABLE' } });
   });
 
   it('reports missing loader, missing module, broken get() and timeouts', async () => {

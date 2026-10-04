@@ -76,16 +76,26 @@ export const BRIDGE_RESPONSE_SOURCE = 'netsuite-loupe:bridge';
 
 const NonceSchema = z.string().regex(/^[a-f0-9]{32}$/);
 const FieldIdSchema = z.string().regex(/^[a-z0-9_]{1,100}$/);
+const FieldIdListSchema = z.array(FieldIdSchema).max(1000);
+const SublistRequestSchema = z
+  .array(z.object({ id: FieldIdSchema, fieldIds: z.array(FieldIdSchema).max(300) }))
+  .max(50);
 
 export const BridgeOpSchema = z.discriminatedUnion('op', [
   z.object({ op: z.literal('ping') }),
   z.object({ op: z.literal('getRecordType') }),
   z.object({
     op: z.literal('getCurrentRecordFields'),
-    fieldIds: z.array(FieldIdSchema).max(1000),
-    sublists: z
-      .array(z.object({ id: FieldIdSchema, fieldIds: z.array(FieldIdSchema).max(300) }))
-      .max(50),
+    fieldIds: FieldIdListSchema,
+    sublists: SublistRequestSchema,
+  }),
+  // Read-only `N/record.load` for view mode, where N/currentRecord reports rendered types.
+  z.object({
+    op: z.literal('getLoadedRecordFields'),
+    recordType: FieldIdSchema,
+    recordId: z.string().regex(/^\d{1,20}$/),
+    fieldIds: FieldIdListSchema,
+    sublists: SublistRequestSchema,
   }),
   z.object({ op: z.literal('runSuiteQL'), queryId: QueryIdSchema, variantId: VariantIdSchema }),
 ]);
@@ -117,5 +127,6 @@ export const BridgeDataSchemas = {
     recordId: z.string().nullable(),
   }),
   getCurrentRecordFields: CurrentRecordFieldsSchema,
+  getLoadedRecordFields: CurrentRecordFieldsSchema,
   runSuiteQL: RowsSchema,
 } as const;

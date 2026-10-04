@@ -103,6 +103,65 @@ describe('mergeFieldSources', () => {
     expect(out.sublists[0]?.fields.map((f) => f.id)).toEqual(['a']);
   });
 
+  it('uses a loaded record only to fill types, default labels and display text', () => {
+    const out = mergeFieldSources({
+      xml: {
+        fields: [
+          { id: 'entity', value: '42' },
+          { id: 'approvalstatus', value: '1' },
+        ],
+        sublists: [{ id: 'item', lineCount: 1, fieldIds: ['item'] }],
+      },
+      domLabels: [{ id: 'entity', label: 'Vendor', mandatory: true }],
+      loadedRecord: {
+        fields: [
+          { id: 'entity', label: 'Entity', type: 'select', text: 'Able (fake)', mandatory: false },
+          { id: 'approvalstatus', label: 'Approval Status', type: 'select', text: '' },
+          { id: 'extra', label: 'Not in XML', type: 'text' },
+        ],
+        sublists: [
+          { id: 'item', lineCount: 1, fields: [{ id: 'item', label: 'Item', type: 'select' }] },
+          { id: 'unknown', lineCount: 1, fields: [{ id: 'x', type: 'text' }] },
+        ],
+      },
+    });
+    expect(out.sources).toEqual(['xml', 'dom', 'loadedRecord']);
+    expect(out.fields).toEqual([
+      {
+        id: 'entity',
+        label: 'Vendor',
+        type: 'select',
+        value: 'Able (fake)',
+        mandatory: true,
+        custom: false,
+        sources: ['xml', 'dom', 'loadedRecord'],
+      },
+      {
+        id: 'approvalstatus',
+        label: 'Approval Status',
+        type: 'select',
+        value: '1',
+        custom: false,
+        sources: ['xml', 'loadedRecord'],
+      },
+    ]);
+    expect(out.sublists).toEqual([
+      {
+        id: 'item',
+        lineCount: 1,
+        fields: [
+          {
+            id: 'item',
+            label: 'Item',
+            type: 'select',
+            custom: false,
+            sources: ['xml', 'loadedRecord'],
+          },
+        ],
+      },
+    ]);
+  });
+
   it('handles empty input', () => {
     expect(mergeFieldSources({})).toEqual({ fields: [], sublists: [], sources: [] });
     expect(mergeFieldSources({ domLabels: [] }).sources).toEqual([]);

@@ -16,6 +16,7 @@ import type { PageContext, RecordFieldsResult, RecordRef } from '../types';
 export const RECORD_WARNINGS = {
   xmlUnavailable: 'record.xml_unavailable',
   currentRecordUnavailable: 'record.current_record_unavailable',
+  loadedRecordUnavailable: 'record.loaded_record_unavailable',
 } as const;
 
 export type ContentServiceDeps = {
@@ -65,20 +66,39 @@ export function createContentService(deps: ContentServiceDeps) {
 
     const domLabels = readFieldLabels(deps.doc);
 
+    const fieldIds = unique([
+      ...(xml?.fields.map((f) => f.id) ?? []),
+      ...domLabels.map((l) => l.id),
+    ]).slice(0, 1000);
+    const sublists = (xml?.sublists ?? [])
+      .slice(0, 50)
+      .map((s) => ({ id: s.id, fieldIds: s.fieldIds.slice(0, 300) }));
+
     let currentRecord: CurrentRecordFields | undefined;
+    let loadedRecord: CurrentRecordFields | undefined;
     if (ctx.pageKind === 'record_edit' || ctx.pageKind === 'record_create') {
       try {
         const bridge = await deps.getBridge();
-        const fieldIds = unique([
-          ...(xml?.fields.map((f) => f.id) ?? []),
-          ...domLabels.map((l) => l.id),
-        ]).slice(0, 1000);
-        const sublists = (xml?.sublists ?? [])
-          .slice(0, 50)
-          .map((s) => ({ id: s.id, fieldIds: s.fieldIds.slice(0, 300) }));
         currentRecord = await bridge.call({ op: 'getCurrentRecordFields', fieldIds, sublists });
       } catch {
         warnings.push(RECORD_WARNINGS.currentRecordUnavailable);
+      }
+    } else if (ctx.recordId && /^\d+$/.test(ctx.recordId) && fieldIds.length > 0) {
+      // View mode: types come from a read-only N/record.load (see bridge/handler.ts).
+      try {
+        const bridge = await deps.getBridge();
+        loadedRecord = await bridge.call(
+          {
+            op: 'getLoadedRecordFields',
+            recordType: ref.recordType,
+            recordId: ctx.recordId,
+            fieldIds,
+            sublists,
+          },
+          15_000,
+        );
+      } catch {
+        warnings.push(RECORD_WARNINGS.loadedRecordUnavailable);
       }
     }
 
@@ -89,7 +109,7 @@ export function createContentService(deps: ContentServiceDeps) {
       );
     }
 
-    const merged = mergeFieldSources({ xml, domLabels, currentRecord });
+    const merged = mergeFieldSources({ xml, domLabels, currentRecord, loadedRecord });
     const result: RecordFieldsResult = {
       accountId: ctx.accountId,
       recordType: ref.recordType,

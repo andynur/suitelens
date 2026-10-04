@@ -42,7 +42,7 @@ export const RecordRefSchema = z.object({
 });
 export type RecordRef = z.infer<typeof RecordRefSchema>;
 
-export const FieldSourceSchema = z.enum(['xml', 'dom', 'currentRecord']);
+export const FieldSourceSchema = z.enum(['xml', 'dom', 'currentRecord', 'loadedRecord']);
 export type FieldSource = z.infer<typeof FieldSourceSchema>;
 
 export const RecordFieldInfoSchema = z.object({

@@ -19,7 +19,10 @@ needed, and page scripts must not be able to drive it.
 - Both sides accept `window.postMessage` events only when `event.source === window`,
   `event.origin === location.origin`, the payload matches the Zod schema in `bridge/protocol.ts`
   and the nonce matches (constant-time compare).
-- **Operation allow-list:** `ping`, `getRecordType`, `getCurrentRecordFields`, `runSuiteQL`.
+- **Operation allow-list:** `ping`, `getRecordType`, `getCurrentRecordFields`,
+  `getLoadedRecordFields`, `runSuiteQL`. `getLoadedRecordFields` calls `N/record.load` for the
+  record open in the tab only (type + numeric ID, schema-checked) and never saves. Token
+  fields (`_`-prefixed IDs such as `_csrf`) are refused even when requested.
   `runSuiteQL` takes a **query ID + variant ID**, not SQL: the bridge looks the statement up in
   `src/netsuite/queries`. No eval, no arbitrary code, no arbitrary SQL in v0.1.
 - Every module load has a timeout and a clear error code (`REQUIRE_UNAVAILABLE`,
