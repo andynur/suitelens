@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { NetSuiteAdapter } from '../../netsuite/adapter/NetSuiteAdapter';
 import type { AutomationItem, AutomationKind, PageContext } from '../../netsuite/types';
 import {
@@ -13,6 +14,7 @@ import { Badge } from '../../shared/ui/Badge';
 import { Button } from '../../shared/ui/Button';
 import { EmptyState } from '../../shared/ui/EmptyState';
 import { ErrorPanel } from '../../shared/ui/ErrorPanel';
+import { summarizeContexts } from './contexts';
 import { loadAutomationsCached } from './load';
 
 const GROUPS: readonly AutomationKind[] = ['client', 'user_event', 'workflow_action', 'workflow'];
@@ -135,17 +137,12 @@ function AutomationCard({ item, accountId }: { item: AutomationItem; accountId: 
         {item.isDeployed === false && <Badge tone="danger">{t('automation.notDeployed')}</Badge>}
         {item.isInactive && <Badge tone="danger">{t('automation.inactive')}</Badge>}
       </div>
+      {item.scriptId && <p className="font-mono break-all text-fg-muted">{item.scriptId}</p>}
       <dl className="mt-1 grid grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 text-fg-muted">
-        {item.scriptId && (
-          <>
-            <dt>ID</dt>
-            <dd className="font-mono text-fg break-all">{item.scriptId}</dd>
-          </>
-        )}
         {item.deploymentId && (
           <>
             <dt>{t('automation.deployment')}</dt>
-            <dd className="font-mono text-fg break-all">{item.deploymentId}</dd>
+            <dd className="font-mono break-all text-fg">{item.deploymentId}</dd>
           </>
         )}
         {item.logLevel && (
@@ -157,7 +154,9 @@ function AutomationCard({ item, accountId }: { item: AutomationItem; accountId: 
         {item.executionContexts && item.executionContexts.length > 0 && (
           <>
             <dt>{t('automation.contexts')}</dt>
-            <dd className="text-fg">{item.executionContexts.join(', ')}</dd>
+            <dd className="text-fg">
+              <ContextList contexts={item.executionContexts} />
+            </dd>
           </>
         )}
         {item.trigger && (
@@ -169,7 +168,7 @@ function AutomationCard({ item, accountId }: { item: AutomationItem; accountId: 
         {item.scriptFileName && (
           <>
             <dt>{t('automation.openFile')}</dt>
-            <dd className="font-mono text-fg break-all">{item.scriptFileName}</dd>
+            <dd className="font-mono break-all text-fg">{item.scriptFileName}</dd>
           </>
         )}
       </dl>
@@ -189,5 +188,41 @@ function AutomationCard({ item, accountId }: { item: AutomationItem; accountId: 
           ))}
       </div>
     </li>
+  );
+}
+
+/** NetSuite lists every context for "All"; summarize so cards stay short. */
+function ContextList({ contexts }: { contexts: string[] }) {
+  const [expanded, setExpanded] = useState(false);
+  const summary = summarizeContexts(contexts);
+  const full = contexts.join(', ');
+  if (summary.kind === 'all') return <span title={full}>{t('automation.contexts.all')}</span>;
+  if (summary.kind === 'allExcept') {
+    return (
+      <span title={full}>
+        {t('automation.contexts.allExcept', { list: summary.missing.join(', ') })}
+      </span>
+    );
+  }
+  const shown = expanded ? [...summary.shown, ...summary.hidden] : summary.shown;
+  return (
+    <span>
+      {shown.join(', ')}
+      {summary.hidden.length > 0 && (
+        <>
+          {' '}
+          <button
+            type="button"
+            aria-expanded={expanded}
+            onClick={() => setExpanded(!expanded)}
+            className="text-accent underline-offset-2 hover:underline"
+          >
+            {expanded
+              ? t('automation.contexts.less')
+              : t('automation.contexts.more', { count: summary.hidden.length })}
+          </button>
+        </>
+      )}
+    </span>
   );
 }

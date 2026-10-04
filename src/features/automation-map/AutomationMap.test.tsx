@@ -22,6 +22,10 @@ describe('AutomationMap', () => {
     expect(ue.getByText('customdeploy_loupe_so_ue')).toBeInTheDocument();
     expect(ue.getByText('USERINTERFACE, WEBSERVICES, CSVIMPORT')).toBeInTheDocument();
     expect(ue.getByText('Not deployed')).toBeInTheDocument();
+    // A deployment set to all contexts reads "All contexts", not a list of 36 names.
+    const client = within(groups[0]!);
+    expect(client.getByText('All contexts')).toBeInTheDocument();
+    expect(client.queryByText(/ADVANCEDREVREC/)).toBeNull();
     const scriptLink = ue.getAllByRole('link', { name: /Script/ })[0];
     expect(scriptLink).toHaveAttribute(
       'href',
