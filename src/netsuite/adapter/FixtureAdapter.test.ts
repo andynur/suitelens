@@ -83,7 +83,7 @@ describe('FixtureAdapter', () => {
 
   it('returns automations and can simulate failures', async () => {
     const res = await adapterFor(SO_URL, { latencyMs: 1 }).getAutomations('salesorder');
-    expect(res.items).toHaveLength(6);
+    expect(res.items).toHaveLength(7);
     expect(res.fetchedAt).toBe(7);
     await expect(
       adapterFor(SO_URL, { failAutomations: 'PERMISSION_DENIED' }).getAutomations('salesorder'),

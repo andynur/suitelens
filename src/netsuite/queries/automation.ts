@@ -90,18 +90,40 @@ WHERE s.scripttype IN ('CLIENT', 'USEREVENT', 'ACTION', 'WORKFLOWACTION')`,
 };
 
 // VERIFY: workflow table and columns (record type column name, release status, triggers).
+/**
+ * Confirmed in a sandbox (2026-10-04): the `workflow` table has `internalid` (no `id`),
+ * `scriptid`, `name`, `recordtype`, `recordtypes`, `releasestatus`, `isinactive` and
+ * `inittriggertype`. VERIFY: value format of `recordtype` / `recordtypes`, and whether
+ * BUILTIN.DF works on them; the mapper accepts raw IDs, names and comma lists.
+ */
 export const WORKFLOWS_QUERY: QueryDefinition = {
   id: 'automation.workflows',
   variants: [
     {
       id: 'full',
-      optionalColumns: ['releasestatus', 'inittriggertype'],
+      optionalColumns: ['recordtypename', 'recordtypesname', 'releasestatus', 'inittriggertype'],
       sql: `SELECT
-  w.id AS id,
+  w.internalid AS id,
   w.scriptid AS scriptid,
   w.name AS name,
-  w.recordtypes AS recordtype,
-  BUILTIN.DF(w.recordtypes) AS recordtypename,
+  w.recordtype AS recordtype,
+  BUILTIN.DF(w.recordtype) AS recordtypename,
+  w.recordtypes AS recordtypes,
+  BUILTIN.DF(w.recordtypes) AS recordtypesname,
+  w.releasestatus AS releasestatus,
+  w.isinactive AS isinactive,
+  w.inittriggertype AS inittriggertype
+FROM workflow w`,
+    },
+    {
+      id: 'nodf',
+      optionalColumns: ['releasestatus', 'inittriggertype'],
+      sql: `SELECT
+  w.internalid AS id,
+  w.scriptid AS scriptid,
+  w.name AS name,
+  w.recordtype AS recordtype,
+  w.recordtypes AS recordtypes,
   w.releasestatus AS releasestatus,
   w.isinactive AS isinactive,
   w.inittriggertype AS inittriggertype
@@ -111,10 +133,10 @@ FROM workflow w`,
       id: 'base',
       optionalColumns: [],
       sql: `SELECT
-  w.id AS id,
+  w.internalid AS id,
   w.scriptid AS scriptid,
   w.name AS name,
-  w.recordtypes AS recordtype,
+  w.recordtype AS recordtype,
   w.isinactive AS isinactive
 FROM workflow w`,
     },
@@ -161,6 +183,8 @@ export const WorkflowRowSchema = z.object({
   name: looseString,
   recordtype: looseString,
   recordtypename: looseString,
+  recordtypes: looseString,
+  recordtypesname: looseString,
   releasestatus: looseString,
   isinactive: looseString,
   inittriggertype: looseString,
@@ -174,19 +198,15 @@ export type WorkflowRow = z.infer<typeof WorkflowRowSchema>;
 const normalize = (v: string) => v.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /**
- * True when a stored record type value (raw or display, possibly a comma list for
+ * True when any stored record type value (raw or display, possibly a comma list for
  * multi-select columns) refers to `recordType`. Compares against the SuiteScript ID and the
  * English label from the mapping table. VERIFY: actual stored value format.
  */
-export function matchesRecordType(
-  recordType: string,
-  raw: string | undefined,
-  display: string | undefined,
-): boolean {
+export function matchesRecordType(recordType: string, ...values: (string | undefined)[]): boolean {
   const wanted = new Set([normalize(recordType)]);
   const label = findMappingByType(recordType)?.label;
   if (label) wanted.add(normalize(label));
-  const candidates = [raw, display]
+  const candidates = values
     .filter((v): v is string => !!v)
     .flatMap((v) => v.split(','))
     .map((v) => normalize(v))
@@ -240,7 +260,14 @@ export function mapWorkflowRows(rows: unknown[], recordType: string): Automation
     if (!parsed.success) continue;
     const row = parsed.data;
     if (!row.id) continue;
-    if (!matchesRecordType(recordType, row.recordtype, row.recordtypename)) continue;
+    const matches = matchesRecordType(
+      recordType,
+      row.recordtype,
+      row.recordtypename,
+      row.recordtypes,
+      row.recordtypesname,
+    );
+    if (!matches) continue;
     const item: AutomationItem = {
       kind: 'workflow',
       name: row.name ?? row.scriptid ?? row.id,

@@ -6,6 +6,7 @@ import {
   mapWorkflowRows,
   matchesRecordType,
   sortAutomations,
+  WORKFLOWS_QUERY,
 } from './automation';
 
 const rows = (name: string): unknown[] =>
@@ -114,7 +115,8 @@ describe('mapScriptDeploymentRows', () => {
 describe('mapWorkflowRows', () => {
   it('maps workflows for the record type', () => {
     const items = mapWorkflowRows(rows('automation.workflows.full'), 'salesorder');
-    expect(items).toHaveLength(2);
+    // 301 and 302 by `recordtype`, 304 only through the multi-select `recordtypes`.
+    expect(items.map((i) => i.internalId)).toEqual(['301', '302', '304']);
     expect(items[0]).toEqual({
       kind: 'workflow',
       name: 'Loupe SO Approval',
@@ -125,6 +127,18 @@ describe('mapWorkflowRows', () => {
       isInactive: false,
     });
     expect(items[1]?.isInactive).toBe(true);
+  });
+
+  it('maps the nodf and base variants', () => {
+    expect(mapWorkflowRows(rows('automation.workflows.nodf'), 'salesorder')).toHaveLength(3);
+    expect(mapWorkflowRows(rows('automation.workflows.base'), 'salesorder')).toHaveLength(2);
+  });
+
+  it('every variant selects internalid, never the missing id column', () => {
+    for (const variant of WORKFLOWS_QUERY.variants) {
+      expect(variant.sql).toContain('w.internalid AS id');
+      expect(variant.sql).not.toMatch(/\bw\.id\b/);
+    }
   });
 
   it('skips invalid rows and uses fallbacks', () => {

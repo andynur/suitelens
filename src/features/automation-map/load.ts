@@ -3,6 +3,12 @@ import { LoupeError } from '../../netsuite/errors';
 import { AutomationResultSchema, type AutomationResult } from '../../netsuite/types';
 import type { MetadataCache } from '../../shared/storage/cache';
 
+/**
+ * Part of the cache key. Bump it when the queries or the mapping change, so results cached
+ * by an older version are not shown for up to 24 h.
+ */
+export const AUTOMATION_CACHE_VERSION = 2;
+
 export type AutomationLoad = { result: AutomationResult; fromCache: boolean; storedAt: number };
 
 /**
@@ -16,7 +22,7 @@ export async function loadAutomationsCached(
   recordType: string,
   force: boolean,
 ): Promise<AutomationLoad> {
-  const key = `${adapter.kind}:${recordType}`;
+  const key = `v${AUTOMATION_CACHE_VERSION}:${adapter.kind}:${recordType}`;
   if (!force) {
     const hit = await cache.get<unknown>(accountId, 'automations', key).catch(() => undefined);
     const parsed = hit ? AutomationResultSchema.safeParse(hit.value) : undefined;

@@ -68,6 +68,7 @@ describe('loadAutomations', () => {
       'workflow_action',
       'workflow',
       'workflow',
+      'workflow',
     ]);
   });
 
@@ -95,7 +96,8 @@ describe('loadAutomations', () => {
       AUTOMATION_WARNINGS.scriptsUnavailable,
       AUTOMATION_WARNINGS.reducedColumns,
     ]);
-    expect(result.items).toHaveLength(2);
+    // Falls back to the `nodf` variant: three sales order workflows.
+    expect(result.items).toHaveLength(3);
   });
 
   it('throws when both queries fail', async () => {

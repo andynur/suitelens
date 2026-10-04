@@ -19,7 +19,7 @@ describe('loadAutomationsCached', () => {
     expect(first.fromCache).toBe(false);
     const second = await loadAutomationsCached(adapter, c, '1234567-sb1', 'salesorder', false);
     expect(second.fromCache).toBe(true);
-    expect(second.result.items).toHaveLength(6);
+    expect(second.result.items).toHaveLength(7);
     await loadAutomationsCached(adapter, c, '1234567-sb1', 'salesorder', true);
     expect(spy).toHaveBeenCalledTimes(2);
   });
@@ -43,6 +43,28 @@ describe('loadAutomationsCached', () => {
     ).rejects.toMatchObject({
       code: 'ACCOUNT_MISMATCH',
     });
-    expect(await c.get('1234567', 'automations', 'fixture:salesorder')).toBeUndefined();
+    expect(await c.get('1234567', 'automations', 'v2:fixture:salesorder')).toBeUndefined();
+  });
+
+  it('ignores entries cached by an older query version', async () => {
+    const c = cache();
+    const stale = {
+      accountId: '1234567-sb1',
+      recordType: 'salesorder',
+      items: [],
+      complete: true,
+      warnings: [],
+      fetchedAt: 1,
+    };
+    await c.set('1234567-sb1', 'automations', 'fixture:salesorder', stale);
+    const res = await loadAutomationsCached(
+      fixtureAdapter(SB_URL),
+      c,
+      '1234567-sb1',
+      'salesorder',
+      false,
+    );
+    expect(res.fromCache).toBe(false);
+    expect(res.result.items.length).toBeGreaterThan(0);
   });
 });

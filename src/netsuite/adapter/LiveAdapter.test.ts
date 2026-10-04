@@ -96,7 +96,7 @@ describe('LiveAdapter', () => {
       sendToTab: send,
     }).getAutomations('salesorder');
     expect(res.accountId).toBe('1234567-sb1');
-    expect(res.items).toHaveLength(6);
+    expect(res.items).toHaveLength(7);
     expect(send).toHaveBeenCalledWith(3, {
       op: 'runQuery',
       queryId: 'automation.scriptDeployments',

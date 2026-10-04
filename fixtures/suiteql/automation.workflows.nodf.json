@@ -4,9 +4,7 @@
     "scriptid": "customworkflow_loupe_so_approval",
     "name": "Loupe SO Approval",
     "recordtype": "SALESORDER",
-    "recordtypename": "Sales Order",
     "recordtypes": "SALESORDER",
-    "recordtypesname": "Sales Order",
     "releasestatus": "RELEASED",
     "isinactive": "F",
     "inittriggertype": "BEFORESUBMIT"
@@ -16,9 +14,7 @@
     "scriptid": "customworkflow_loupe_so_legacy",
     "name": "Loupe SO Legacy Flow",
     "recordtype": "SALESORDER",
-    "recordtypename": "Sales Order",
     "recordtypes": "SALESORDER",
-    "recordtypesname": "Sales Order",
     "releasestatus": "NOTRUNNING",
     "isinactive": "T",
     "inittriggertype": null
@@ -28,9 +24,7 @@
     "scriptid": "customworkflow_loupe_cust_onboard",
     "name": "Loupe Customer Onboarding",
     "recordtype": "CUSTOMER",
-    "recordtypename": "Customer",
     "recordtypes": "CUSTOMER",
-    "recordtypesname": "Customer",
     "releasestatus": "TESTING",
     "isinactive": "F",
     "inittriggertype": "AFTERSUBMIT"
@@ -40,9 +34,7 @@
     "scriptid": "customworkflow_loupe_multi_notify",
     "name": "Loupe Multi-Record Notify",
     "recordtype": null,
-    "recordtypename": null,
     "recordtypes": "INVOICE,SALESORDER",
-    "recordtypesname": "Invoice, Sales Order",
     "releasestatus": "RELEASED",
     "isinactive": "F",
     "inittriggertype": "AFTERSUBMIT"
