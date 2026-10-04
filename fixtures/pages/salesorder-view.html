@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- Simplified, fake NetSuite page snapshot for E2E tests. VERIFY DOM structure in a real account. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sales Order - NetSuite (Fake Fixture)</title>
+  <link rel="icon" href="/favicon.ico" />
+  <style>body{font-family:Arial,sans-serif;font-size:13px;margin:0} #div__header{height:48px;background:#1f3a5f;color:#fff;padding:8px} table{border-collapse:collapse;margin:16px} td{padding:4px 8px}</style>
+</head>
+<body>
+  <div id="div__header">NetSuite (fake fixture)</div>
+  <form id="main_form" name="main_form">
+    <input type="hidden" name="baserecordtype" value="salesorder" />
+    <input type="hidden" name="id" value="1001" />
+    <h1 class="uir-record-type">Sales Order</h1>
+    <table id="fields">
+      <tr>
+        <td><span id="tranid_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="tranid_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Order #</a></span></span></td>
+        <td><span id="tranid_fs" class="uir-field inputreadonly">SO-FAKE-1001</span></td>
+      </tr>
+      <tr>
+        <td><span id="entity_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="entity_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Customer</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="entity_fs" class="uir-field inputreadonly">CUST-FAKE-2001 Example Trading Co (Fake)</span></td>
+      </tr>
+      <tr>
+        <td><span id="trandate_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="trandate_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Date</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="trandate_fs" class="uir-field inputreadonly">1/15/2026</span></td>
+      </tr>
+      <tr>
+        <td><span id="orderstatus_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="orderstatus_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Status</a></span></span></td>
+        <td><span id="orderstatus_fs" class="uir-field inputreadonly">Pending Fulfillment</span></td>
+      </tr>
+      <tr>
+        <td><span id="memo_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="memo_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Memo</a></span></span></td>
+        <td><span id="memo_fs" class="uir-field inputreadonly">Fake order for Loupe fixtures</span></td>
+      </tr>
+      <tr>
+        <td><span id="otherrefnum_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="otherrefnum_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">PO #</a></span></span></td>
+        <td><span id="otherrefnum_fs" class="uir-field inputreadonly">PO-0042</span></td>
+      </tr>
+      <tr>
+        <td><span id="subsidiary_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="subsidiary_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Subsidiary</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="subsidiary_fs" class="uir-field inputreadonly">Fake Holdings Inc</span></td>
+      </tr>
+      <tr>
+        <td><span id="location_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="location_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Location</a></span></span></td>
+        <td><span id="location_fs" class="uir-field inputreadonly">Fake Warehouse East</span></td>
+      </tr>
+      <tr>
+        <td><span id="currency_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="currency_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Currency</a></span></span></td>
+        <td><span id="currency_fs" class="uir-field inputreadonly">USD</span></td>
+      </tr>
+      <tr>
+        <td><span id="total_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="total_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Total</a></span></span></td>
+        <td><span id="total_fs" class="uir-field inputreadonly">1,250.00</span></td>
+      </tr>
+      <tr>
+        <td><span id="custbody_loupe_priority_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="custbody_loupe_priority_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Loupe Priority</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="custbody_loupe_priority_fs" class="uir-field inputreadonly">Normal</span></td>
+      </tr>
+      <tr>
+        <td><span id="custbody_loupe_approved_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="custbody_loupe_approved_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Loupe Approved</a></span></span></td>
+        <td><span id="custbody_loupe_approved_fs" class="uir-field inputreadonly">Yes</span></td>
+      </tr>
+    </table>
+  </form>
+  
+</body>
+</html>

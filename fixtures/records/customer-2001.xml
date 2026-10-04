@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsResponse>
+  <record recordType="customer" id="2001" perm="4">
+    <entityid>CUST-FAKE-2001</entityid>
+    <companyname>Example Trading Co (Fake)</companyname>
+    <isperson>F</isperson>
+    <email>buyer@example.invalid</email>
+    <phone>555-0100</phone>
+    <subsidiary>1</subsidiary>
+    <terms>2</terms>
+    <creditlimit>50000.00</creditlimit>
+    <entitystatus>13</entitystatus>
+    <custentity_loupe_segment>Wholesale</custentity_loupe_segment>
+    <custentity_loupe_vip>F</custentity_loupe_vip>
+    <machine name="addressbook" type="edit">
+      <line>
+        <label>HQ</label>
+        <defaultbilling>T</defaultbilling>
+        <defaultshipping>T</defaultshipping>
+      </line>
+    </machine>
+  </record>
+</nsResponse>

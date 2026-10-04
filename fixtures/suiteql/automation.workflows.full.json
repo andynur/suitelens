@@ -1,0 +1,32 @@
+[
+  {
+    "id": 301,
+    "scriptid": "customworkflow_loupe_so_approval",
+    "name": "Loupe SO Approval",
+    "recordtype": "SALESORDER",
+    "recordtypename": "Sales Order",
+    "releasestatus": "RELEASED",
+    "isinactive": "F",
+    "inittriggertype": "BEFORESUBMIT"
+  },
+  {
+    "id": 302,
+    "scriptid": "customworkflow_loupe_so_legacy",
+    "name": "Loupe SO Legacy Flow",
+    "recordtype": "SALESORDER",
+    "recordtypename": "Sales Order",
+    "releasestatus": "NOTRUNNING",
+    "isinactive": "T",
+    "inittriggertype": null
+  },
+  {
+    "id": 303,
+    "scriptid": "customworkflow_loupe_cust_onboard",
+    "name": "Loupe Customer Onboarding",
+    "recordtype": "CUSTOMER",
+    "recordtypename": "Customer",
+    "releasestatus": "TESTING",
+    "isinactive": "F",
+    "inittriggertype": "AFTERSUBMIT"
+  }
+]

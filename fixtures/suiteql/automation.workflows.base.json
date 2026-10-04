@@ -1,0 +1,23 @@
+[
+  {
+    "id": 301,
+    "scriptid": "customworkflow_loupe_so_approval",
+    "name": "Loupe SO Approval",
+    "recordtype": "SALESORDER",
+    "isinactive": "F"
+  },
+  {
+    "id": 302,
+    "scriptid": "customworkflow_loupe_so_legacy",
+    "name": "Loupe SO Legacy Flow",
+    "recordtype": "SALESORDER",
+    "isinactive": "T"
+  },
+  {
+    "id": 303,
+    "scriptid": "customworkflow_loupe_cust_onboard",
+    "name": "Loupe Customer Onboarding",
+    "recordtype": "CUSTOMER",
+    "isinactive": "F"
+  }
+]

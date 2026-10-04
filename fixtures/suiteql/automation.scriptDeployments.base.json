@@ -1,0 +1,98 @@
+[
+  {
+    "scriptinternalid": 101,
+    "scriptid": "customscript_loupe_so_ue",
+    "scriptname": "Loupe SO Validation UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9001,
+    "deploymentinternalid": 201,
+    "deploymentid": "customdeploy_loupe_so_ue",
+    "recordtype": "SALESORDER",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 102,
+    "scriptid": "customscript_loupe_so_cs",
+    "scriptname": "Loupe SO Client Helpers",
+    "scripttype": "CLIENT",
+    "scriptfile": 9002,
+    "deploymentinternalid": 202,
+    "deploymentid": "customdeploy_loupe_so_cs",
+    "recordtype": "SALESORDER",
+    "status": "TESTING",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 103,
+    "scriptid": "customscript_loupe_tax_ue",
+    "scriptname": "Loupe Tax Sync UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9003,
+    "deploymentinternalid": 203,
+    "deploymentid": "customdeploy_loupe_tax_so",
+    "recordtype": "SALESORDER",
+    "status": "RELEASED",
+    "isdeployed": "F"
+  },
+  {
+    "scriptinternalid": 103,
+    "scriptid": "customscript_loupe_tax_ue",
+    "scriptname": "Loupe Tax Sync UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9003,
+    "deploymentinternalid": 204,
+    "deploymentid": "customdeploy_loupe_tax_inv",
+    "recordtype": "INVOICE",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 104,
+    "scriptid": "customscript_loupe_wfa_notify",
+    "scriptname": "Loupe Notify Action",
+    "scripttype": "ACTION",
+    "scriptfile": 9004,
+    "deploymentinternalid": 205,
+    "deploymentid": "customdeploy_loupe_wfa_notify",
+    "recordtype": "SALESORDER",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 105,
+    "scriptid": "customscript_loupe_cust_ue",
+    "scriptname": "Loupe Customer Defaults UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9005,
+    "deploymentinternalid": 206,
+    "deploymentid": "customdeploy_loupe_cust_ue",
+    "recordtype": "CUSTOMER",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 106,
+    "scriptid": "customscript_loupe_demo_cs",
+    "scriptname": "Loupe Demo Record CS",
+    "scripttype": "CLIENT",
+    "scriptfile": 9006,
+    "deploymentinternalid": 207,
+    "deploymentid": "customdeploy_loupe_demo_cs",
+    "recordtype": "CUSTOMRECORD_LOUPE_DEMO",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 107,
+    "scriptid": "customscript_loupe_sched",
+    "scriptname": "Loupe Nightly Sync",
+    "scripttype": "SCHEDULED",
+    "scriptfile": 9007,
+    "deploymentinternalid": 208,
+    "deploymentid": "customdeploy_loupe_sched",
+    "recordtype": null,
+    "status": "SCHEDULED",
+    "isdeployed": "T"
+  }
+]

@@ -1,0 +1,181 @@
+{
+  "recordType": "salesorder",
+  "recordId": "1001",
+  "fields": [
+    {
+      "id": "tranid",
+      "label": "Order #",
+      "type": "text",
+      "mandatory": false,
+      "disabled": true
+    },
+    {
+      "id": "entity",
+      "label": "Customer",
+      "type": "select",
+      "mandatory": true,
+      "value": "2001",
+      "text": "CUST-FAKE-2001 Example Trading Co (Fake)"
+    },
+    {
+      "id": "trandate",
+      "label": "Date",
+      "type": "date",
+      "mandatory": true
+    },
+    {
+      "id": "orderstatus",
+      "label": "Status",
+      "type": "select",
+      "text": "Pending Fulfillment"
+    },
+    {
+      "id": "memo",
+      "label": "Memo",
+      "type": "textarea",
+      "mandatory": false
+    },
+    {
+      "id": "otherrefnum",
+      "label": "PO #",
+      "type": "text"
+    },
+    {
+      "id": "subsidiary",
+      "label": "Subsidiary",
+      "type": "select",
+      "mandatory": true,
+      "text": "Fake Holdings Inc"
+    },
+    {
+      "id": "location",
+      "label": "Location",
+      "type": "select",
+      "text": "Fake Warehouse East"
+    },
+    {
+      "id": "currency",
+      "label": "Currency",
+      "type": "select",
+      "text": "USD"
+    },
+    {
+      "id": "exchangerate",
+      "label": "Exchange Rate",
+      "type": "currency2"
+    },
+    {
+      "id": "subtotal",
+      "label": "Subtotal",
+      "type": "currency",
+      "disabled": true
+    },
+    {
+      "id": "taxtotal",
+      "label": "Tax",
+      "type": "currency",
+      "disabled": true
+    },
+    {
+      "id": "total",
+      "label": "Total",
+      "type": "currency",
+      "disabled": true
+    },
+    {
+      "id": "shipdate",
+      "label": "Ship Date",
+      "type": "date"
+    },
+    {
+      "id": "shipmethod",
+      "label": "Shipping Method",
+      "type": "select"
+    },
+    {
+      "id": "custbody_loupe_priority",
+      "label": "Loupe Priority",
+      "type": "select",
+      "mandatory": true,
+      "text": "Normal"
+    },
+    {
+      "id": "custbody_loupe_approved",
+      "label": "Loupe Approved",
+      "type": "checkbox"
+    },
+    {
+      "id": "custbody_loupe_notes",
+      "label": "Loupe Internal Notes",
+      "type": "textarea"
+    },
+    {
+      "id": "custbody_loupe_hidden_key",
+      "label": "Loupe Hidden Key",
+      "type": "text",
+      "hidden": true,
+      "value": "HK-1"
+    }
+  ],
+  "sublists": [
+    {
+      "id": "item",
+      "lineCount": 2,
+      "fields": [
+        {
+          "id": "item",
+          "label": "Item",
+          "type": "select",
+          "mandatory": true
+        },
+        {
+          "id": "description",
+          "label": "Description",
+          "type": "textarea"
+        },
+        {
+          "id": "quantity",
+          "label": "Quantity",
+          "type": "float",
+          "mandatory": true
+        },
+        {
+          "id": "rate",
+          "label": "Rate",
+          "type": "currency"
+        },
+        {
+          "id": "amount",
+          "label": "Amount",
+          "type": "currency"
+        },
+        {
+          "id": "custcol_loupe_batch",
+          "label": "Loupe Batch",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "salesteam",
+      "lineCount": 1,
+      "fields": [
+        {
+          "id": "employee",
+          "label": "Sales Rep",
+          "type": "select"
+        },
+        {
+          "id": "salesrole",
+          "label": "Sales Role",
+          "type": "select"
+        },
+        {
+          "id": "contribution",
+          "label": "Contribution %",
+          "type": "percent"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- Simplified, fake NetSuite page snapshot for E2E tests. VERIFY DOM structure in a real account. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Customer - NetSuite (Fake Fixture)</title>
+  <link rel="icon" href="/favicon.ico" />
+  <style>body{font-family:Arial,sans-serif;font-size:13px;margin:0} #div__header{height:48px;background:#1f3a5f;color:#fff;padding:8px} table{border-collapse:collapse;margin:16px} td{padding:4px 8px}</style>
+</head>
+<body>
+  <div id="div__header">NetSuite (fake fixture)</div>
+  <form id="main_form" name="main_form">
+    <input type="hidden" name="baserecordtype" value="customer" />
+    <input type="hidden" name="id" value="2001" />
+    <h1 class="uir-record-type">Customer</h1>
+    <table id="fields">
+      <tr>
+        <td><span id="entityid_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="entityid_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Customer ID</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="entityid_fs" class="uir-field inputreadonly">CUST-FAKE-2001</span></td>
+      </tr>
+      <tr>
+        <td><span id="companyname_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="companyname_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Company Name</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="companyname_fs" class="uir-field inputreadonly">Example Trading Co (Fake)</span></td>
+      </tr>
+      <tr>
+        <td><span id="email_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="email_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Email</a></span></span></td>
+        <td><span id="email_fs" class="uir-field inputreadonly">buyer@example.invalid</span></td>
+      </tr>
+      <tr>
+        <td><span id="phone_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="phone_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Phone</a></span></span></td>
+        <td><span id="phone_fs" class="uir-field inputreadonly">555-0100</span></td>
+      </tr>
+      <tr>
+        <td><span id="subsidiary_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="subsidiary_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Primary Subsidiary</a><label class="uir-required-icon">*</label></span></span></td>
+        <td><span id="subsidiary_fs" class="uir-field inputreadonly">Fake Holdings Inc</span></td>
+      </tr>
+      <tr>
+        <td><span id="terms_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="terms_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Terms</a></span></span></td>
+        <td><span id="terms_fs" class="uir-field inputreadonly">Net 30</span></td>
+      </tr>
+      <tr>
+        <td><span id="custentity_loupe_segment_fs_lbl_uir_label" class="smallgraytextnolink uir-label"><span id="custentity_loupe_segment_fs_lbl" class="labelSpanEdit smallgraytextnolink"><a class="smallgraytextnolink" href="#">Loupe Segment</a></span></span></td>
+        <td><span id="custentity_loupe_segment_fs" class="uir-field inputreadonly">Wholesale</span></td>
+      </tr>
+    </table>
+  </form>
+  
+</body>
+</html>
