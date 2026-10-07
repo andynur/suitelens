@@ -264,7 +264,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
     await toggle.click();
     await expect(panel.getByText('Scan complete', { exact: true })).toHaveCount(0);
     await panel.getByRole('button', { name: 'Scan', exact: true }).click();
-    await expect(panel.getByText('2 of 2 sources processed')).toBeVisible();
+    await expect(panel.getByRole('status').getByText('2 of 2 sources processed')).toBeVisible();
     await expect(panel.getByRole('region', { name: 'Script files', exact: true })).toContainText(
       'ue_demo_flag.js',
     );
