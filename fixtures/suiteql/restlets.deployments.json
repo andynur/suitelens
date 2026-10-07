@@ -1,0 +1,46 @@
+[
+  {
+    "scriptinternalid": 501,
+    "scriptid": "customscript_demo_orders",
+    "scriptname": "Demo Order API",
+    "scripttype": "RESTLET",
+    "scriptinactive": "F",
+    "deploymentinternalid": 601,
+    "deploymentid": "customdeploy_demo_orders",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 501,
+    "scriptid": "customscript_demo_orders",
+    "scriptname": "Demo Order API",
+    "scripttype": "RESTLET",
+    "scriptinactive": "F",
+    "deploymentinternalid": 602,
+    "deploymentid": "customdeploy_demo_orders_test",
+    "status": "TESTING",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 502,
+    "scriptid": "customscript_demo_inventory",
+    "scriptname": "Demo Inventory API",
+    "scripttype": "RESTLET",
+    "scriptinactive": "F",
+    "deploymentinternalid": 603,
+    "deploymentid": "customdeploy_demo_inventory",
+    "status": "RELEASED",
+    "isdeployed": "F"
+  },
+  {
+    "scriptinternalid": 503,
+    "scriptid": "customscript_demo_legacy",
+    "scriptname": "Demo Legacy API",
+    "scripttype": "RESTLET",
+    "scriptinactive": "T",
+    "deploymentinternalid": 604,
+    "deploymentid": "customdeploy_demo_legacy",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "searchId": 503,
+  "id": "customsearch_demo_flag",
+  "title": "Demo flagged orders",
+  "isPublic": true,
+  "filters": [{ "name": "custbody_demo_flag", "operator": "is", "values": ["T"] }],
+  "columns": [
+    { "name": "internalid" },
+    {
+      "name": "formulatext",
+      "formula": "CASE WHEN {custbody_demo_flag} = 'T' THEN 'Flagged' ELSE 'Other' END"
+    }
+  ]
+}

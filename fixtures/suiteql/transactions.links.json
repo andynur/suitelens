@@ -1,0 +1,38 @@
+[
+  {
+    "previousid": 1001,
+    "previousnumber": "SO-FAKE-1001",
+    "previoustype": "SalesOrd",
+    "nextid": 1101,
+    "nextnumber": "IF-FAKE-1101",
+    "nexttype": "ItemShip",
+    "linktype": "ShipRcpt"
+  },
+  {
+    "previousid": 1001,
+    "previousnumber": "SO-FAKE-1001",
+    "previoustype": "SalesOrd",
+    "nextid": 1101,
+    "nextnumber": "IF-FAKE-1101",
+    "nexttype": "ItemShip",
+    "linktype": "ShipRcpt"
+  },
+  {
+    "previousid": 1001,
+    "previousnumber": "SO-FAKE-1001",
+    "previoustype": "SalesOrd",
+    "nextid": 1201,
+    "nextnumber": "INV-FAKE-1201",
+    "nexttype": "CustInvc",
+    "linktype": "OrdBill"
+  },
+  {
+    "previousid": 1201,
+    "previousnumber": "INV-FAKE-1201",
+    "previoustype": "CustInvc",
+    "nextid": 1301,
+    "nextnumber": "PAY-FAKE-1301",
+    "nexttype": "CustPymt",
+    "linktype": "Payment"
+  }
+]

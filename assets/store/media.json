@@ -1,0 +1,29 @@
+{
+  "source": "FixtureAdapter; fabricated NetSuite pages only",
+  "panelViewport": {
+    "width": 420,
+    "height": 652
+  },
+  "screenshots": [
+    "01-field-explorer.png",
+    "02-automation-map.png",
+    "03-suiteql-console.png",
+    "04-command-palette.png",
+    "05-trust.png"
+  ],
+  "promo": [
+    "promo-small-440x280.png",
+    "promo-marquee-1400x560.png"
+  ],
+  "social": "github-social-1280x640.png",
+  "linkedin": [
+    "linkedin/carousel-01.png",
+    "linkedin/carousel-02.png",
+    "linkedin/carousel-03.png",
+    "linkedin/carousel-04.png",
+    "linkedin/carousel-05.png",
+    "linkedin/carousel-06.png",
+    "linkedin/carousel-07.png",
+    "linkedin/suitelens-carousel.pdf"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "netsuite-suitelens-mcp",
+  "version": "1.0.0-beta.1",
+  "description": "Read-only local MCP bridge for SuiteLens for NetSuite",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andynur/suitelens",
+    "directory": "packages/mcp-bridge"
+  },
+  "bin": {
+    "netsuite-suitelens-mcp": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.mjs",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "~6.0.3"
+  }
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "scriptid": "CUSTBODY_SUITELENS_PRIORITY",
+    "fieldtype": "BODY",
+    "fieldvaluetype": "List/Record",
+    "fieldvaluetyperecord": 7,
+    "source_label": "Demo Priority"
+  }
+]

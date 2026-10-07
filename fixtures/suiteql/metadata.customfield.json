@@ -1,0 +1,8 @@
+[
+  { "scriptid": "custbody_demo", "recordtype": -30, "tablename": null },
+  {
+    "scriptid": "custrecord_demo_field",
+    "recordtype": 1,
+    "tablename": "customrecord_suitelens_demo"
+  }
+]

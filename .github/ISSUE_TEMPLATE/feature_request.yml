@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest an idea or improvement for SuiteLens.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [prd/](../../prd/) first — your idea may already be planned for a future version.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: What are you trying to do, and what's missing or awkward today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like SuiteLens to do?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

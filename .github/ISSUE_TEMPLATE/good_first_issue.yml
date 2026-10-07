@@ -1,0 +1,18 @@
+name: Maintainer-scoped first contribution
+description: Define a small, safe task with acceptance criteria and fixture validation.
+labels: [good first issue]
+body:
+  - type: textarea
+    id: scope
+    attributes:
+      label: Problem and bounded scope
+      description: Name the affected files and behavior. Exclude unrelated work and live client data.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and fixture validation
+      description: Include the focused test command and pnpm verify; add E2E for UI changes.
+    validations:
+      required: true

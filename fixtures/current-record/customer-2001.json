@@ -1,0 +1,91 @@
+{
+  "recordType": "customer",
+  "recordId": "2001",
+  "fields": [
+    {
+      "id": "entityid",
+      "label": "Customer ID",
+      "type": "text",
+      "mandatory": true
+    },
+    {
+      "id": "companyname",
+      "label": "Company Name",
+      "type": "text",
+      "mandatory": true
+    },
+    {
+      "id": "isperson",
+      "label": "Type",
+      "type": "radio"
+    },
+    {
+      "id": "email",
+      "label": "Email",
+      "type": "email"
+    },
+    {
+      "id": "phone",
+      "label": "Phone",
+      "type": "phone"
+    },
+    {
+      "id": "subsidiary",
+      "label": "Primary Subsidiary",
+      "type": "select",
+      "mandatory": true,
+      "text": "Fake Holdings Inc"
+    },
+    {
+      "id": "terms",
+      "label": "Terms",
+      "type": "select",
+      "text": "Net 30"
+    },
+    {
+      "id": "creditlimit",
+      "label": "Credit Limit",
+      "type": "currency"
+    },
+    {
+      "id": "entitystatus",
+      "label": "Status",
+      "type": "select",
+      "mandatory": true,
+      "text": "CUSTOMER-Closed Won"
+    },
+    {
+      "id": "custentity_suitelens_segment",
+      "label": "SuiteLens Segment",
+      "type": "text"
+    },
+    {
+      "id": "custentity_suitelens_vip",
+      "label": "SuiteLens VIP",
+      "type": "checkbox"
+    }
+  ],
+  "sublists": [
+    {
+      "id": "addressbook",
+      "lineCount": 1,
+      "fields": [
+        {
+          "id": "label",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "id": "defaultbilling",
+          "label": "Default Billing",
+          "type": "checkbox"
+        },
+        {
+          "id": "defaultshipping",
+          "label": "Default Shipping",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens = Atlassian Design System tokens (@atlaskit/tokens 20.x,
+ * atlassian-light / atlassian-dark themes). Each --c-* maps 1:1 to the ADS
+ * token in its comment. See DESIGN.md before adding or changing a token.
+ */
+:root {
+  --c-surface: #ffffff; /* elevation.surface */
+  --c-surface-overlay: #ffffff; /* elevation.surface.overlay */
+  --c-canvas: #f8f8f8; /* elevation.surface.sunken */
+  --c-muted: #0515240f; /* color.background.neutral */
+  --c-muted-hovered: #0b120e24; /* color.background.neutral.hovered */
+  --c-muted-pressed: #080f214a; /* color.background.neutral.pressed */
+  --c-selected: #e9f2fe; /* color.background.selected */
+  --c-selected-hovered: #cfe1fd; /* color.background.selected.hovered */
+  --c-line: #0b120e24; /* color.border */
+  --c-line-input: #8c8f97; /* color.border.input */
+  --c-focus: #4688ec; /* color.border.focused */
+  --c-fg: #292a2e; /* color.text */
+  --c-fg-muted: #505258; /* color.text.subtle */
+  --c-fg-subtlest: #6b6e76; /* color.text.subtlest */
+  --c-fg-inverse: #ffffff; /* color.text.inverse */
+  --c-accent: #1868db; /* color.background.brand.bold, color.text.selected, color.link */
+  --c-accent-hovered: #1558bc; /* color.background.brand.bold.hovered */
+  --c-accent-pressed: #144794; /* color.background.brand.bold.pressed */
+  --c-info: #1558bc; /* color.text.information */
+  --c-info-bg: #e9f2fe; /* color.background.information */
+  --c-discovery: #803fa5; /* color.text.discovery */
+  --c-discovery-bg: #f8eefe; /* color.background.discovery */
+  --c-discovery-bg-hovered: #efd9fb; /* color.background.discovery.hovered */
+  --c-success: #4c6b1f; /* color.text.success */
+  --c-success-bg: #efffd6; /* color.background.success */
+  --c-warning: #9e4c00; /* color.text.warning */
+  --c-warning-bg: #fff5db; /* color.background.warning */
+  --c-danger: #ae2e24; /* color.text.danger */
+  --c-danger-bg: #ffeceb; /* color.background.danger */
+  --c-danger-bold: #c9372c; /* color.background.danger.bold */
+  --c-danger-bold-hovered: #ae2e24; /* color.background.danger.bold.hovered */
+  --c-shadow-raised: 0px 1px 1px #1e1f2140, 0px 0px 1px #1e1f214f; /* elevation.shadow.raised */
+  --c-shadow-overlay: 0px 8px 12px #1e1f2126, 0px 0px 1px #1e1f214f; /* elevation.shadow.overlay */
+  /* font.family.body / font.family.code minus the Atlassian Sans/Mono webfonts (not bundled). */
+  --c-font-sans:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, 'Helvetica Neue',
+    sans-serif;
+  --c-font-mono: ui-monospace, Menlo, 'Segoe UI Mono', 'Ubuntu Mono', monospace;
+  color-scheme: light;
+}
+
+.dark {
+  --c-surface: #1f1f21;
+  --c-surface-overlay: #2b2c2f;
+  --c-canvas: #18191a;
+  --c-muted: #ceced912;
+  --c-muted-hovered: #e3e4f21f;
+  --c-muted-pressed: #e5e9f640;
+  --c-selected: #1c2b42;
+  --c-selected-hovered: #123263;
+  --c-line: #e3e4f21f;
+  --c-line-input: #7e8188;
+  --c-focus: #8fb8f6;
+  --c-fg: #cecfd2;
+  --c-fg-muted: #a9abaf;
+  --c-fg-subtlest: #96999e;
+  --c-fg-inverse: #1f1f21;
+  --c-accent: #669df1;
+  --c-accent-hovered: #8fb8f6;
+  --c-accent-pressed: #adcbfb;
+  --c-info: #8fb8f6;
+  --c-info-bg: #1c2b42;
+  --c-discovery: #d8a0f7;
+  --c-discovery-bg: #35243f;
+  --c-discovery-bg-hovered: #48245d;
+  --c-success: #b3df72;
+  --c-success-bg: #28311b;
+  --c-warning: #fbc828;
+  --c-warning-bg: #3a2c1f;
+  --c-danger: #fd9891;
+  --c-danger-bg: #42221f;
+  --c-danger-bold: #f87168;
+  --c-danger-bold-hovered: #fd9891;
+  --c-shadow-raised: 0px 0px 0px 1px #00000000, 0px 1px 1px #01040480, 0px 0px 1px #01040480;
+  --c-shadow-overlay: 0px 0px 0px 1px #bdbdbd1f, 0px 8px 12px #0104045c, 0px 0px 1px 1px #01040480;
+  color-scheme: dark;
+}
+
+/* Tailwind's default radius scale already equals ADS radius tokens:
+   rounded-xs 2px, rounded-sm 4px, rounded-md 6px, rounded-lg 8px, rounded-xl 12px. */
+@theme inline {
+  --color-surface: var(--c-surface);
+  --color-surface-overlay: var(--c-surface-overlay);
+  --color-canvas: var(--c-canvas);
+  --color-muted: var(--c-muted);
+  --color-muted-hovered: var(--c-muted-hovered);
+  --color-muted-pressed: var(--c-muted-pressed);
+  --color-selected: var(--c-selected);
+  --color-selected-hovered: var(--c-selected-hovered);
+  --color-line: var(--c-line);
+  --color-line-input: var(--c-line-input);
+  --color-focus: var(--c-focus);
+  --color-fg: var(--c-fg);
+  --color-fg-muted: var(--c-fg-muted);
+  --color-fg-subtlest: var(--c-fg-subtlest);
+  --color-fg-inverse: var(--c-fg-inverse);
+  --color-accent: var(--c-accent);
+  --color-accent-hovered: var(--c-accent-hovered);
+  --color-accent-pressed: var(--c-accent-pressed);
+  --color-info: var(--c-info);
+  --color-info-bg: var(--c-info-bg);
+  --color-discovery: var(--c-discovery);
+  --color-discovery-bg: var(--c-discovery-bg);
+  --color-discovery-bg-hovered: var(--c-discovery-bg-hovered);
+  --color-success: var(--c-success);
+  --color-success-bg: var(--c-success-bg);
+  --color-warning: var(--c-warning);
+  --color-warning-bg: var(--c-warning-bg);
+  --color-danger: var(--c-danger);
+  --color-danger-bg: var(--c-danger-bg);
+  --color-danger-bold: var(--c-danger-bold);
+  --color-danger-bold-hovered: var(--c-danger-bold-hovered);
+  --shadow-raised: var(--c-shadow-raised);
+  --shadow-overlay: var(--c-shadow-overlay);
+  --font-sans: var(--c-font-sans);
+  --font-mono: var(--c-font-mono);
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--c-canvas);
+  color: var(--c-fg);
+  font-family: var(--c-font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  accent-color: var(--c-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+/* Tour: outline the element a coach mark explains. */
+.tour-highlight {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

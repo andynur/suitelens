@@ -1,0 +1,22 @@
+node_modules/
+.output/
+.wxt/
+dist/
+coverage/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+.env*.local
+web-ext.config.ts
+.claude/settings.local.json
+
+packages/*/dist/
+
+.site/
+artifacts/
+
+# Local-only notes and marketing material
+prompts/
+assets/store/linkedin/
+docs/launch/publishing-kit.md

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsResponse>
+  <record recordType="customrecord_suitelens_demo" id="5" perm="4">
+    <name>Demo Config 5</name>
+    <isinactive>F</isinactive>
+    <custrecord_suitelens_demo_threshold>42</custrecord_suitelens_demo_threshold>
+    <custrecord_suitelens_demo_customer>2001</custrecord_suitelens_demo_customer>
+    <custrecord_suitelens_demo_mode>2</custrecord_suitelens_demo_mode>
+  </record>
+</nsResponse>

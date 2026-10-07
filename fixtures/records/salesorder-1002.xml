@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsResponse><record recordType="salesorder" id="1002" perm="4"><_csrf>FAKE-CSRF</_csrf><tranid>SO-FAKE-1002</tranid><entity>2001</entity><memo>Fake comparison order</memo><email>other@example.invalid</email><total>1500.00</total><machine name="item" type="edit"><line><item>501</item><description>Fake Widget A</description><quantity>15</quantity></line></machine></record></nsResponse>

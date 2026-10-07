@@ -1,0 +1,17 @@
+.output/
+.wxt/
+coverage/
+pnpm-lock.yaml
+fixtures/pages/
+playwright-report/
+test-results/
+**/*.md
+
+packages/*/dist/
+website/assets/
+
+.site/
+artifacts/
+
+# Generated store media (pnpm store:assets)
+assets/store/

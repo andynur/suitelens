@@ -1,0 +1,5 @@
+{
+  "recordType": "ScriptNote",
+  "source": "Sandbox Records Catalog, SuiteScript and REST Query API, 2026-10-04",
+  "fields": ["date", "detail", "internalId", "scriptType", "title", "type"]
+}

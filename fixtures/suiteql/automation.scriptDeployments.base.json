@@ -1,0 +1,98 @@
+[
+  {
+    "scriptinternalid": 101,
+    "scriptid": "customscript_suitelens_so_ue",
+    "scriptname": "SuiteLens SO Validation UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9001,
+    "deploymentinternalid": 201,
+    "deploymentid": "customdeploy_suitelens_so_ue",
+    "recordtype": "SALESORDER",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 102,
+    "scriptid": "customscript_suitelens_so_cs",
+    "scriptname": "SuiteLens SO Client Helpers",
+    "scripttype": "CLIENT",
+    "scriptfile": 9002,
+    "deploymentinternalid": 202,
+    "deploymentid": "customdeploy_suitelens_so_cs",
+    "recordtype": "SALESORDER",
+    "status": "TESTING",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 103,
+    "scriptid": "customscript_suitelens_tax_ue",
+    "scriptname": "SuiteLens Tax Sync UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9003,
+    "deploymentinternalid": 203,
+    "deploymentid": "customdeploy_suitelens_tax_so",
+    "recordtype": "SALESORDER",
+    "status": "RELEASED",
+    "isdeployed": "F"
+  },
+  {
+    "scriptinternalid": 103,
+    "scriptid": "customscript_suitelens_tax_ue",
+    "scriptname": "SuiteLens Tax Sync UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9003,
+    "deploymentinternalid": 204,
+    "deploymentid": "customdeploy_suitelens_tax_inv",
+    "recordtype": "INVOICE",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 104,
+    "scriptid": "customscript_suitelens_wfa_notify",
+    "scriptname": "SuiteLens Notify Action",
+    "scripttype": "ACTION",
+    "scriptfile": 9004,
+    "deploymentinternalid": 205,
+    "deploymentid": "customdeploy_suitelens_wfa_notify",
+    "recordtype": "SALESORDER",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 105,
+    "scriptid": "customscript_suitelens_cust_ue",
+    "scriptname": "SuiteLens Customer Defaults UE",
+    "scripttype": "USEREVENT",
+    "scriptfile": 9005,
+    "deploymentinternalid": 206,
+    "deploymentid": "customdeploy_suitelens_cust_ue",
+    "recordtype": "CUSTOMER",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 106,
+    "scriptid": "customscript_suitelens_demo_cs",
+    "scriptname": "SuiteLens Demo Record CS",
+    "scripttype": "CLIENT",
+    "scriptfile": 9006,
+    "deploymentinternalid": 207,
+    "deploymentid": "customdeploy_suitelens_demo_cs",
+    "recordtype": "CUSTOMRECORD_SUITELENS_DEMO",
+    "status": "RELEASED",
+    "isdeployed": "T"
+  },
+  {
+    "scriptinternalid": 107,
+    "scriptid": "customscript_suitelens_sched",
+    "scriptname": "SuiteLens Nightly Sync",
+    "scripttype": "SCHEDULED",
+    "scriptfile": 9007,
+    "deploymentinternalid": 208,
+    "deploymentid": "customdeploy_suitelens_sched",
+    "recordtype": null,
+    "status": "SCHEDULED",
+    "isdeployed": "T"
+  }
+]

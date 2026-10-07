@@ -1,0 +1,18 @@
+[
+  {
+    "name": "good first issue",
+    "color": "7057ff",
+    "description": "Small, documented tasks suitable for a first contribution"
+  },
+  {
+    "name": "bug",
+    "color": "d73a4a",
+    "description": "Unexpected behavior with a reproducible case"
+  },
+  { "name": "documentation", "color": "0075ca", "description": "Documentation and examples" },
+  {
+    "name": "security",
+    "color": "b60205",
+    "description": "Public tracking for already disclosed security work; report vulnerabilities privately"
+  }
+]

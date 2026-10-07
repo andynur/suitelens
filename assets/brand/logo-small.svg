@@ -1,0 +1,6 @@
+<!-- SuiteLens for NetSuite: simplified 16px toolbar icon (no inner lines, thicker strokes). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <rect width="16" height="16" rx="4" fill="#1868DB"/>
+  <circle cx="7" cy="7" r="3.6" fill="#FFFFFF" fill-opacity="0.22" stroke="#FFFFFF" stroke-width="1.8"/>
+  <path d="M9.8 9.8l2.6 2.6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+</svg>

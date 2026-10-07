@@ -1,0 +1,30 @@
+[
+  {
+    "id": 501,
+    "name": "ue_demo_flag.js",
+    "folder": 668,
+    "filesize": 1200,
+    "lastmodified": "1/1/2026"
+  },
+  {
+    "id": 999,
+    "name": "missing_fixture.js",
+    "folder": 668,
+    "filesize": 10,
+    "lastmodified": "1/1/2026"
+  },
+  {
+    "id": 501,
+    "name": "duplicate.js",
+    "folder": 668,
+    "filesize": 1,
+    "lastmodified": "1/1/2026"
+  },
+  {
+    "id": 888,
+    "name": "bundle_lib.js",
+    "folder": 900,
+    "filesize": 44,
+    "lastmodified": "1/1/2026"
+  }
+]

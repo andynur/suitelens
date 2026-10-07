@@ -1,0 +1,68 @@
+[
+  {
+    "id": "700",
+    "loggedat": "2026-10-04 09:10:00",
+    "level": "ERROR",
+    "title": "Order lookup failed",
+    "detail": "Record 1001 not found",
+    "scriptinternalid": "501",
+    "scriptid": "customscript_orders",
+    "deploymentinternalid": null,
+    "deploymentid": null
+  },
+  {
+    "id": "701",
+    "loggedat": "2026-10-04 09:11:00",
+    "level": "ERROR",
+    "title": "Order lookup failed",
+    "detail": "Record 1002 not found",
+    "scriptinternalid": "501",
+    "scriptid": "customscript_orders",
+    "deploymentinternalid": null,
+    "deploymentid": null
+  },
+  {
+    "id": "702",
+    "loggedat": "2026-10-04 09:12:00",
+    "level": "ERROR",
+    "title": "Order lookup failed",
+    "detail": "Record 1003 not found",
+    "scriptinternalid": "501",
+    "scriptid": "customscript_orders",
+    "deploymentinternalid": null,
+    "deploymentid": null
+  },
+  {
+    "id": "703",
+    "loggedat": "2026-10-04 09:13:00",
+    "level": "AUDIT",
+    "title": "Order received",
+    "detail": "{\"order\": 1001, \"status\": \"received\"}",
+    "scriptinternalid": "501",
+    "scriptid": "customscript_orders",
+    "deploymentinternalid": null,
+    "deploymentid": null
+  },
+  {
+    "id": "704",
+    "loggedat": "2026-10-04 09:14:00",
+    "level": "DEBUG",
+    "title": "Worker details",
+    "detail": "Worker started",
+    "scriptinternalid": "502",
+    "scriptid": "customscript_worker",
+    "deploymentinternalid": null,
+    "deploymentid": null
+  },
+  {
+    "id": "705",
+    "loggedat": "2026-10-04 09:15:00",
+    "level": "EMERGENCY",
+    "title": "System failure",
+    "detail": "Permission denied",
+    "scriptinternalid": "502",
+    "scriptid": "customscript_worker",
+    "deploymentinternalid": null,
+    "deploymentid": null
+  }
+]

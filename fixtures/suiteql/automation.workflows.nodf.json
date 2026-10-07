@@ -1,0 +1,42 @@
+[
+  {
+    "id": 301,
+    "scriptid": "customworkflow_suitelens_so_approval",
+    "name": "SuiteLens SO Approval",
+    "recordtype": "SALESORDER",
+    "recordtypes": "SALESORDER",
+    "releasestatus": "RELEASED",
+    "isinactive": "F",
+    "inittriggertype": "BEFORESUBMIT"
+  },
+  {
+    "id": 302,
+    "scriptid": "customworkflow_suitelens_so_legacy",
+    "name": "SuiteLens SO Legacy Flow",
+    "recordtype": "SALESORDER",
+    "recordtypes": "SALESORDER",
+    "releasestatus": "NOTRUNNING",
+    "isinactive": "T",
+    "inittriggertype": null
+  },
+  {
+    "id": 303,
+    "scriptid": "customworkflow_suitelens_cust_onboard",
+    "name": "SuiteLens Customer Onboarding",
+    "recordtype": "CUSTOMER",
+    "recordtypes": "CUSTOMER",
+    "releasestatus": "TESTING",
+    "isinactive": "F",
+    "inittriggertype": "AFTERSUBMIT"
+  },
+  {
+    "id": 304,
+    "scriptid": "customworkflow_suitelens_multi_notify",
+    "name": "SuiteLens Multi-Record Notify",
+    "recordtype": null,
+    "recordtypes": "INVOICE,SALESORDER",
+    "releasestatus": "RELEASED",
+    "isinactive": "F",
+    "inittriggertype": "AFTERSUBMIT"
+  }
+]

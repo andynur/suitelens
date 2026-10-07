@@ -1,0 +1,23 @@
+[
+  {
+    "id": 301,
+    "scriptid": "customworkflow_suitelens_so_approval",
+    "name": "SuiteLens SO Approval",
+    "recordtype": "SALESORDER",
+    "isinactive": "F"
+  },
+  {
+    "id": 302,
+    "scriptid": "customworkflow_suitelens_so_legacy",
+    "name": "SuiteLens SO Legacy Flow",
+    "recordtype": "SALESORDER",
+    "isinactive": "T"
+  },
+  {
+    "id": 303,
+    "scriptid": "customworkflow_suitelens_cust_onboard",
+    "name": "SuiteLens Customer Onboarding",
+    "recordtype": "CUSTOMER",
+    "isinactive": "F"
+  }
+]

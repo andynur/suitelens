@@ -1,0 +1,48 @@
+name: Bug report
+description: Something in SuiteLens isn't working as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found a **security vulnerability**? Do not file it here — see [SECURITY.md](../../SECURITY.md)
+        for private reporting instructions.
+  - type: input
+    id: version
+    attributes:
+      label: SuiteLens version
+      placeholder: '0.1.0'
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: NetSuite environment
+      options:
+        - Production
+        - Sandbox
+        - Release Preview
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open a Sales Order record in view mode
+        2. Open the side panel, Record tab
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Console errors, screenshots, record type, custom fields involved. Do not paste real customer data, session tokens or cookies.

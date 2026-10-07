@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!-- Fake Advanced PDF template; contains no client data. -->
+<pdf>
+  <body>
+    <p>${record.custbody_demo_flag}</p>
+  </body>
+</pdf>
