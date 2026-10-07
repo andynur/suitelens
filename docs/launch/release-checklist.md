@@ -18,7 +18,7 @@ and sandbox/manual checks. Closing PRD-06 packaging tasks does not close earlier
 ## Required maintainer inputs and external proof
 
 - Dedicated security email (required by docs/security-privacy.md); confirm it routes privately.
-- Services contact and verified active GitHub Sponsors/Ko-fi/Buy Me a Coffee destinations.
+- Verified active GitHub Sponsors/Ko-fi/Buy Me a Coffee destinations.
 - Hosting choice and live docs/privacy URL (static output is `.site/`, no server dependency).
 - GitHub private vulnerability reporting **enabled and rechecked October 6, 2026**.
 - `good first issue` **verified on GitHub October 6, 2026**; `.github/labels.json` documents scoped label definitions. Do not overwrite other repository labels.

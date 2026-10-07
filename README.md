@@ -188,6 +188,18 @@ Inspired by the NetSuite developer community and existing free tools such as fie
 scripted-record viewers and SuiteQL consoles. No code, UI text or assets were copied from other
 extensions.
 
+## Author
+
+Built and maintained by **Andy Nur**. I am available for freelance and contract NetSuite work:
+SuiteScript, SuiteQL, integrations and account discovery. See [Hire / Services](docs/launch/services.md).
+
+- Email: [andynur.id@gmail.com](mailto:andynur.id@gmail.com)
+- LinkedIn: [linkedin.com/in/andynur](https://linkedin.com/in/andynur)
+- Website: [andynur.my.id](https://www.andynur.my.id)
+
+Use GitHub issues for bugs and feature requests, and [SECURITY.md](SECURITY.md) for
+vulnerabilities.
+
 ## License
 
 [MIT](LICENSE)

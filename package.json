@@ -14,6 +14,7 @@
     "url": "https://github.com/andynur/suitelens/issues"
   },
   "homepage": "https://github.com/andynur/suitelens#readme",
+  "author": "Andy Nur <andynur.id@gmail.com> (https://www.andynur.my.id)",
   "packageManager": "pnpm@10.28.2",
   "scripts": {
     "dev": "wxt",
